@@ -1,0 +1,5 @@
+.venv/
+work/
+out/*.wav
+*.mp3
+.DS_Store

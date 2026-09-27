@@ -1,0 +1,11 @@
+# lofi 33rpm 档 (bin/finish.sh 内置默认值, 此处为存档)
+SPEED=0.92            # asetrate 倍率, 33rpm 感
+VOC_LP=8000           # 人声 lowpass
+ACC_LP=7000           # 伴奏 lowpass
+ACC_LOW_GAIN=3        # 伴奏 120Hz 提升 dB
+ACC_MID_CUT=-2        # 伴奏 3kHz 衰减 dB
+TREMOLO_F=0.8         # 磁带抖动频率 Hz
+TREMOLO_D=0.12        # 磁带抖动深度
+VINYL_AMP=0.045       # 黑胶粉噪床振幅
+VINYL_MIX=0.55        # 底噪混入电平
+LUFS=-16              # 目标响度

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>LofiRemix · 慢速黑胶房</title>
+<style>
+  :root{
+    --bg:#0d0e12; --panel:#15171d; --panel2:#1a1d24; --line:#262a33;
+    --text:#e8e6df; --dim:#8b8f9a; --amber:#d4a86a; --amber2:#e8c894;
+    --ok:#7fb98a;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Segoe UI",sans-serif;
+    min-height:100vh; padding-bottom:120px;
+  }
+  .wrap{max-width:720px;margin:0 auto;padding:20px 18px 30px}
+  header{padding:14px 0 22px}
+  .eyebrow{font-size:11px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase;margin-bottom:8px}
+  h1{font-size:26px;font-weight:700;letter-spacing:-.01em}
+  .sub{color:var(--dim);font-size:13.5px;margin-top:6px;line-height:1.6}
+
+  .track{
+    background:var(--panel); border:1px solid var(--line); border-radius:14px;
+    padding:14px; margin-bottom:14px; display:flex; gap:14px; align-items:center;
+    transition:border-color .2s; position:relative; overflow:hidden;
+  }
+  .track.playing{border-color:rgba(212,168,106,.55)}
+  .cover{
+    width:76px;height:76px;border-radius:10px;object-fit:cover;flex:none;
+    box-shadow:0 4px 14px rgba(0,0,0,.4);
+  }
+  .meta{flex:1;min-width:0}
+  .name{font-size:15.5px;font-weight:600}
+  .artist{color:var(--dim);font-size:12.5px;margin-top:3px}
+  .tags{margin-top:7px;display:flex;flex-wrap:wrap;gap:5px}
+  .tag{
+    font-size:10px;letter-spacing:.06em;color:var(--amber2);
+    border:1px solid rgba(212,168,106,.35);border-radius:4px;padding:2px 6px;
+    background:rgba(212,168,106,.07); white-space:nowrap;
+  }
+  .tag.g{color:var(--ok);border-color:rgba(127,185,138,.35);background:rgba(127,185,138,.07)}
+  .bars{display:flex;gap:2px;align-items:flex-end;height:22px;margin-top:8px}
+  .bars i{width:3px;background:var(--line);border-radius:1px;min-height:2px}
+  .track.playing .bars i{background:var(--amber);animation:eq 1s ease-in-out infinite alternate}
+  .bars i:nth-child(2){animation-delay:.18s}.bars i:nth-child(3){animation-delay:.36s}
+  .bars i:nth-child(4){animation-delay:.10s}.bars i:nth-child(5){animation-delay:.28s}
+  @keyframes eq{from{height:3px}to{height:20px}}
+  .playbtn{
+    flex:none;width:44px;height:44px;border-radius:50%;
+    border:1px solid var(--line);background:var(--panel2);color:var(--text);
+    font-size:15px;display:flex;align-items:center;justify-content:center;cursor:pointer;
+  }
+  .track.playing .playbtn{background:var(--amber);color:#141414;border-color:var(--amber)}
+  .stat{
+    background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:14px 16px;margin-top:20px;
+  }
+  .stat .row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--line);font-size:13px}
+  .stat .row:last-child{border-bottom:none}
+  .stat .k{color:var(--dim)}
+  .stat .v{font-variant-numeric:tabular-nums}
+  .pipeline{
+    margin-top:20px;padding:14px 16px;border:1px dashed var(--line);border-radius:14px;
+    font-size:12px;color:var(--dim);line-height:1.9;
+  }
+  .pipeline b{color:var(--amber2);font-weight:600}
+
+  /* 吸底播放器 */
+  .dock{
+    position:fixed;left:0;right:0;bottom:0;z-index:50;
+    background:rgba(13,14,18,.92);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+    border-top:1px solid var(--line);
+    padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+    transform:translateZ(0);
+  }
+  .dock .inner{max-width:720px;margin:0 auto}
+  .drow{display:flex;align-items:center;gap:12px}
+  .dcover{width:42px;height:42px;border-radius:8px;object-fit:cover}
+  .dmeta{flex:1;min-width:0}
+  .dname{font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .dartist{font-size:11.5px;color:var(--dim);margin-top:2px}
+  .dtime{font-size:11px;color:var(--dim);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .dbtn{
+    width:40px;height:40px;border-radius:50%;flex:none;cursor:pointer;
+    border:1px solid rgba(212,168,106,.4);background:rgba(212,168,106,.12);color:var(--amber2);
+    font-size:14px;display:flex;align-items:center;justify-content:center;
+  }
+  .prog{height:3px;background:var(--line);border-radius:2px;margin-top:9px;overflow:hidden;cursor:pointer}
+  .prog i{display:block;height:100%;width:0%;background:var(--amber);border-radius:2px}
+  .empty{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">LofiRemix Room</div>
+    <h1>慢速黑胶房</h1>
+    <p class="sub">热门歌曲的 lofi 改编 · demucs 分轨 → DSP 黑胶化 → 响度精修<br>33rpm 降速 · 高频收暗 · 磁带抖动 · 粉噪黑胶床</p>
+  </header>
+
+  <div id="list"></div>
+
+  <div class="stat">
+    <div class="row"><span class="k">曲目数</span><span class="v" id="stCount">–</span></div>
+    <div class="row"><span class="k">处理引擎</span><span class="v">demucs htdemucs + ffmpeg DSP</span></div>
+    <div class="row"><span class="k">目标响度</span><span class="v">−16 LUFS (lofi 审美)</span></div>
+    <div class="row"><span class="k">更新</span><span class="v" id="stDate">–</span></div>
+  </div>
+
+  <div class="pipeline">
+    <b>流水线</b>：源曲 → demucs 分离人声/伴奏 → 人声轨 lowpass 8k + 压缩 + 0.8Hz 磁带抖动 → 伴奏轨 lowpass 7k + 120Hz 暖化 → 0.92x 降速变调(33rpm) → 粉噪黑胶床 → limiter + 响度归一 → 成品 m4a/mp3<br>
+    <b>队列</b>：Out of Time (The Weeknd) — 等源文件；下一首候选可点歌
+  </div>
+</div>
+
+<div class="dock" id="dock" style="display:none">
+  <div class="inner">
+    <div class="drow">
+      <img class="dcover" id="dCover" alt="">
+      <div class="dmeta">
+        <div class="dname" id="dName">–</div>
+        <div class="dartist" id="dArtist">–</div>
+      </div>
+      <div class="dtime" id="dTime">0:00</div>
+      <div class="dbtn" id="dBtn">▶</div>
+    </div>
+    <div class="prog" id="dProg"><i id="dBar"></i></div>
+  </div>
+</div>
+
+<audio id="au" preload="none"></audio>
+
+<script>
+const TRACKS = [
+  {id:"ltz", name:"Less Than Zero", artist:"The Weeknd · lofi remix", src:"/lofi-ltz-cde18313c9f2.mp3",
+   cover:"/covers-au/lofi-ltz.jpg", dur:"3:50", tags:["33rpm 0.92x","lowpass 7-8k","tremolo 磁带抖动","vinyl 底噪","−15.7 LUFS"]},
+];
+
+const list = document.getElementById("list");
+const au = document.getElementById("au");
+const dock = document.getElementById("dock");
+let cur = null, lockUI = 0;
+
+TRACKS.forEach((t, i) => {
+  const el = document.createElement("div");
+  el.className = "track";
+  el.innerHTML = `
+    <img class="cover" src="${t.cover}" alt="" loading="lazy">
+    <div class="meta">
+      <div class="name">${t.name}</div>
+      <div class="artist">${t.artist} · ${t.dur}</div>
+      <div class="tags">${t.tags.map(x=>`<span class="tag${x.indexOf('LUFS')>=0?' g':''}">${x}</span>`).join("")}</div>
+      <div class="bars"><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+    <div class="playbtn">▶</div>`;
+  el.querySelector(".playbtn").onclick = () => toggle(i);
+  list.appendChild(el);
+});
+document.getElementById("stCount").textContent = TRACKS.length;
+document.getElementById("stDate").textContent = "2026-09-27";
+
+function toggle(i){
+  const t = TRACKS[i];
+  const el = list.children[i];
+  if (cur === i && !au.paused) { au.pause(); syncAll(); return; }
+  if (cur === i && au.paused)  { au.play().catch(()=>{}); syncAll(); return; }
+  // 切歌: 重置 audio 状态机
+  try{au.pause()}catch(e){}
+  au.removeAttribute("src"); try{au.load()}catch(e){}
+  au.src = t.src;
+  const go = () => { au.play().catch(()=>{}); };
+  if (au.readyState >= 3) go();
+  else au.addEventListener("canplay", go, {once:true});
+  cur = i; lockUI = Date.now() + 2500;
+  syncAll();
+}
+
+function syncAll(){
+  [...list.children].forEach((el, i) => {
+    el.classList.toggle("playing", i === cur && !au.paused);
+    el.querySelector(".playbtn").textContent = (i === cur && !au.paused) ? "❚❚" : "▶";
+  });
+  if (cur !== null){
+    dock.style.display = "block";
+    const t = TRACKS[cur];
+    document.getElementById("dCover").src = t.cover;
+    document.getElementById("dName").textContent = t.name;
+    document.getElementById("dArtist").textContent = t.artist;
+    document.getElementById("dBtn").textContent = au.paused ? "▶" : "❚❚";
+  }
+}
+
+document.getElementById("dBtn").onclick = () => {
+  if (cur === null) return;
+  if (au.paused) au.play().catch(()=>{}); else au.pause();
+};
+au.addEventListener("play", syncAll);
+au.addEventListener("pause", syncAll);
+let lastTick = 0;
+au.addEventListener("timeupdate", () => {
+  if (Date.now() < lockUI) return;
+  if (Date.now() - lastTick < 250) return;
+  lastTick = Date.now();
+  const d = au.duration || TRACKS[cur].durSec || 0;
+  const pct = d ? (au.currentTime / d * 100) : 0;
+  document.getElementById("dBar").style.width = pct + "%";
+  const fmt = s => Math.floor(s/60) + ":" + String(Math.floor(s%60)).padStart(2,"0");
+  document.getElementById("dTime").textContent = fmt(au.currentTime) + " / " + fmt(d);
+});
+document.getElementById("dProg").onclick = (e) => {
+  if (!au.duration) return;
+  const r = e.currentTarget.getBoundingClientRect();
+  au.currentTime = (e.clientX - r.left) / r.width * au.duration;
+};
+</script>
+</body>
+</html>
