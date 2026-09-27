@@ -115,7 +115,7 @@
 
   <div class="pipeline">
     <b>流水线</b>：源曲 → demucs 分离人声/伴奏 → 人声轨 lowpass 8k + 压缩 + 0.8Hz 磁带抖动 → 伴奏轨 lowpass 7k + 120Hz 暖化 → 0.92x 降速变调(33rpm) → 粉噪黑胶床 → limiter + 响度归一 → 成品 m4a/mp3<br>
-    <b>队列</b>：Out of Time (The Weeknd) — 等源文件；下一首候选可点歌
+    <b>队列</b>：Out of Time (The Weeknd) — 等源文件
   </div>
 </div>
 
@@ -140,6 +140,10 @@
 const TRACKS = [
   {id:"ltz", name:"Less Than Zero", artist:"The Weeknd · lofi remix", src:"/lofi-ltz-cde18313c9f2.mp3",
    cover:"/covers-au/lofi-ltz.jpg", dur:"3:50", tags:["33rpm 0.92x","lowpass 7-8k","tremolo 磁带抖动","vinyl 底噪","−15.7 LUFS"]},
+  {id:"softlips", name:"Soft Lips", artist:"BlankCh3ck & Nathaniel Davis · lofi remix", src:"/lofi-softlips-cde18313c9f2.mp3",
+   cover:"/covers-au/lofi-softlips.jpg", dur:"2:47", tags:["原版 lofi intro 保留","intro 后接管","lowpass 7-8k","vinyl 底噪","−16.0 LUFS"]},
+  {id:"wilder", name:"To the Wilder (Piano Version)", artist:"Woodkid · lofi remix", src:"/lofi-wilder-cde18313c9f2.mp3",
+   cover:"/covers-au/lofi-wilder.jpg", dur:"4:44", tags:["钢琴慢板 preset","tremolo 减弱 0.6Hz","lowpass 6.5-7.5k","vinyl 底噪","−15.0 LUFS"]},
 ];
 
 const list = document.getElementById("list");
