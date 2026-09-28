@@ -8,10 +8,12 @@
 #   合成:     + vinyl 黑胶噪声床 + 低频提升 + 整体响度 -16 LUFS(lofi 审美比 -14 更轻)
 set -e
 WD="$1"
-S="$WD/stems/htdemucs/src"
+[ -d "$WD/stems" ] || { echo "缺 $WD/stems (先跑 bin/separate.sh)"; exit 1; }
+# 自动定位 vocals.wav (demucs 输出目录名随输入文件名: src.mp3→src, <id>.flac→<id>)
+VOC=$(find "$WD/stems" -name vocals.wav | head -1)
+[ -n "$VOC" ] || { echo "找不到 vocals.wav 于 $WD/stems"; exit 1; }
+S=$(dirname "$VOC")
 SPEED=0.92
-
-[ -f "$S/vocals.wav" ] || { echo "缺 $S/vocals.wav (先跑 bin/separate.sh)"; exit 1; }
 
 # 成品时长 = stem 时长 / 降速倍率 (asetrate 降速会拉长音频)
 SRC_DUR=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$S/vocals.wav")
