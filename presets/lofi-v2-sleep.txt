@@ -1,0 +1,14 @@
+# v2 睡眠档 (jeez mix 实测数据反推: -20 LUFS / rolloff85 323Hz / 温暖区 71%)
+SPEED=0.92            # 同 33rpm 降速
+VOC_LP=4500           # 人声 lowpass 更狠 (v1: 8000)
+ACC_LP=4000           # 伴奏 lowpass (v1: 7000)
+ACC_LOW_GAIN=0        # 不推 120Hz (v1: +3dB)
+ACC_MID_CUT=-1        # 3kHz 轻收
+SUB_HIGHPASS=90       # 切掉 90Hz 以下嗡嗡
+TREMOLO_F=0.6         # 抖动减弱 (v1: 0.8)
+TREMOLO_D=0.08        # 深度减弱 (v1: 0.12)
+VINYL_AMP=0.06        # vinyl 床略抬 (v1: 0.045)
+VINYL_MIX=0.65        # 底噪混入电平抬 (v1: 0.55)
+LUFS=-19              # 睡眠/学习档响度 (v1: -16)
+BUS_LP=4500           # 总线 lowpass (v1: 9500)
+BUS_HPF=70            # 总线 highpass (v1: 55)
