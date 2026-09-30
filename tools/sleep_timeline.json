@@ -1,0 +1,256 @@
+{
+ "setlist": [
+  {
+   "title": "Love Me Harder",
+   "bpm": 92.3,
+   "key": "D",
+   "rms": 0.0945,
+   "phase": "intro",
+   "start": 0.0,
+   "dur": 155.0,
+   "f": "lofi-love_me_harder-v2-cde18313c9f2.mp3"
+  },
+  {
+   "title": "Out Of Time",
+   "bpm": 86.1,
+   "key": "F#",
+   "rms": 0.0821,
+   "phase": "intro",
+   "start": 155.0,
+   "dur": 153.1,
+   "f": "lofi-out_of_time-v2-cde18313c9f2.mp3"
+  },
+  {
+   "title": "Blinding Lights",
+   "bpm": 78.3,
+   "key": "E",
+   "rms": 0.0814,
+   "phase": "warmup",
+   "start": 308.1,
+   "dur": 151.2,
+   "f": "lofi-blinding_lights-v2-cde18313c9f2.mp3"
+  },
+  {
+   "title": "Wake Me Up",
+   "bpm": 103.4,
+   "key": "B",
+   "rms": 0.0871,
+   "phase": "warmup",
+   "start": 459.3,
+   "dur": 149.4,
+   "f": "lofi-wake_me_up-v2-cde18313c9f2.mp3"
+  },
+  {
+   "title": "The Hills",
+   "bpm": 103.4,
+   "key": "B",
+   "rms": 0.0833,
+   "phase": "warmup",
+   "start": 608.7,
+   "dur": 147.5,
+   "f": "lofi-the_hills-v2-cde18313c9f2.mp3"
+  },
+  {
+   "title": "Moth To A Flame",
+   "bpm": 112.3,
+   "key": "B",
+   "rms": 0.0806,
+   "phase": "warmup",
+   "start": 756.2,
+   "dur": 145.6,
+   "f": "lofi-moth_to_a_flame-v2-cde18313c9f2.mp3"
+  },
+  {
+   "title": "Starry Eyes",
+   "bpm": 112.3,
+   "key": "G#",
+   "rms": 0.0833,
+   "phase": "warmup",
+   "start": 901.8,
+   "dur": 140.8,
+   "f": "lofi-starry_eyes-v2-cde18313c9f2.mp3"
+  },
+  {
+   "title": "Save Your Tears",
+   "bpm": 107.7,
+   "key": "D#",
+   "rms": 0.0805,
+   "phase": "warmup",
+   "start": 1042.6,
+   "dur": 141.9,
+   "f": "lofi-save_your_tears-v2-cde18313c9f2.mp3"
+  },
+  {
+   "title": "Less Than Zero",
+   "bpm": 129.2,
+   "key": "D#",
+   "rms": 0.0838,
+   "phase": "warmup",
+   "start": 1184.5,
+   "dur": 140.0,
+   "f": "lofi-less_than_zero-v2-cde18313c9f2.mp3"
+  },
+  {
+   "title": "Ordinary Life",
+   "bpm": 136.0,
+   "key": "F#",
+   "rms": 0.0804,
+   "phase": "build",
+   "start": 1324.5,
+   "dur": 138.1,
+   "f": "lofi-ordinary_life-v2-cde18313c9f2.mp3"
+  },
+  {
+   "title": "True Colors",
+   "bpm": 143.6,
+   "key": "F",
+   "rms": 0.0821,
+   "phase": "build",
+   "start": 1462.6,
+   "dur": 136.2,
+   "f": "lofi-true_colors-v2-cde18313c9f2.mp3"
+  },
+  {
+   "title": "Dancing In The Flames",
+   "bpm": 143.6,
+   "key": "C",
+   "rms": 0.0812,
+   "phase": "build",
+   "start": 1598.8,
+   "dur": 134.4,
+   "f": "lofi-dancing_in_the_flames-v2-cde18313c9f2.mp3"
+  },
+  {
+   "title": "Earned It",
+   "bpm": 112.3,
+   "key": "G#",
+   "rms": 0.0658,
+   "phase": "build",
+   "start": 1733.2,
+   "dur": 132.5,
+   "f": "lofi-earned_it-v2-cde18313c9f2.mp3"
+  },
+  {
+   "title": "Best Friends",
+   "bpm": 83.4,
+   "key": "D",
+   "rms": 0.0716,
+   "phase": "build",
+   "start": 1865.7,
+   "dur": 130.6,
+   "f": "lofi-best_friends-v2-cde18313c9f2.mp3"
+  },
+  {
+   "title": "A Lonely Night",
+   "bpm": 103.4,
+   "key": "F#",
+   "rms": 0.0729,
+   "phase": "build",
+   "start": 1996.3,
+   "dur": 128.8,
+   "f": "lofi-a_lonely_night-v2-cde18313c9f2.mp3"
+  },
+  {
+   "title": "Creepin",
+   "bpm": 89.1,
+   "key": "D#",
+   "rms": 0.0742,
+   "phase": "build",
+   "start": 2125.1,
+   "dur": 126.9,
+   "f": "lofi-creepin-v2-cde18313c9f2.mp3"
+  },
+  {
+   "title": "After Hours",
+   "bpm": 99.4,
+   "key": "F#",
+   "rms": 0.0756,
+   "phase": "build",
+   "start": 2252.0,
+   "dur": 125.0,
+   "f": "lofi-after_hours-v2-cde18313c9f2.mp3"
+  },
+  {
+   "title": "How Do I Make You Love Me",
+   "bpm": 112.3,
+   "key": "F#",
+   "rms": 0.0762,
+   "phase": "peak",
+   "start": 2377.0,
+   "dur": 123.1,
+   "f": "lofi-how_do_i_make_you_love_me-v2-cde18313c9f2.mp3"
+  },
+  {
+   "title": "The Abyss",
+   "bpm": 129.2,
+   "key": "B",
+   "rms": 0.0764,
+   "phase": "peak",
+   "start": 2500.1,
+   "dur": 121.2,
+   "f": "lofi-the_abyss-v2-cde18313c9f2.mp3"
+  },
+  {
+   "title": "Is There Someone Else",
+   "bpm": 123.0,
+   "key": "C#",
+   "rms": 0.0765,
+   "phase": "peak",
+   "start": 2621.3,
+   "dur": 119.4,
+   "f": "lofi-is_there_someone_else-v2-cde18313c9f2.mp3"
+  },
+  {
+   "title": "Die For You",
+   "bpm": 123.0,
+   "key": "G",
+   "rms": 0.0774,
+   "phase": "peak",
+   "start": 2740.7,
+   "dur": 117.5,
+   "f": "lofi-die_for_you-v2-cde18313c9f2.mp3"
+  },
+  {
+   "title": "Cry For Me",
+   "bpm": 112.3,
+   "key": "F#",
+   "rms": 0.0788,
+   "phase": "peak",
+   "start": 2858.2,
+   "dur": 115.6,
+   "f": "lofi-cry_for_me-v2-cde18313c9f2.mp3"
+  },
+  {
+   "title": "Reminder",
+   "bpm": 143.6,
+   "key": "B",
+   "rms": 0.08,
+   "phase": "outro",
+   "start": 2973.8,
+   "dur": 113.8,
+   "f": "lofi-reminder-v2-cde18313c9f2.mp3"
+  },
+  {
+   "title": "Niagara Falls",
+   "bpm": 89.1,
+   "key": "F",
+   "rms": 0.0802,
+   "phase": "outro",
+   "start": 3087.6,
+   "dur": 111.9,
+   "f": "lofi-niagara_falls-v2-cde18313c9f2.mp3"
+  },
+  {
+   "title": "Sacrifice",
+   "bpm": 112.3,
+   "key": "A#",
+   "rms": 0.0803,
+   "phase": "outro",
+   "start": 3199.5,
+   "dur": 110.0,
+   "f": "lofi-sacrifice-v2-cde18313c9f2.mp3"
+  }
+ ],
+ "total": 3309.5,
+ "xf": 12.0
+}

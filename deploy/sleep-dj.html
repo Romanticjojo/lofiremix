@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Sleep DJ · Lofi Night Shift</title>
+<style>
+:root{
+  --bg:#0c1017; --panel:#151c27; --line:#2a3648; --text:#e4eaf4; --muted:#96a4b8;
+  --mint:#8fb6de; --violet:#9d8fd4; --gold:#c9b98a; --blue:#6b8fd8; --red:#f85149;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.65 "Segoe UI","Microsoft YaHei",-apple-system,sans-serif;padding-bottom:120px}
+main{max-width:1240px;margin:28px auto;padding:0 22px}
+a{color:var(--mint)}
+.eyebrow{color:var(--mint);letter-spacing:.17em;font-size:12px}
+header{display:flex;justify-content:space-between;gap:24px;align-items:center;margin-bottom:22px;flex-wrap:wrap}.badge{white-space:nowrap}
+h1{font-size:32px;line-height:1.22;letter-spacing:-.03em;margin:8px 0}
+h2{font-size:19px;margin:26px 0 10px}
+.badge{display:inline-block;padding:5px 12px;border:1px solid var(--line);border-radius:18px;color:var(--mint);font-size:12px}
+.panel{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:20px;margin-bottom:18px}
+.muted{color:var(--muted)} .small{font-size:12px}
+
+/* 吸底播放器 */
+.player-dock{position:fixed;left:0;right:0;bottom:0;z-index:50;background:rgba(16,20,25,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));transform:translateZ(0)}
+.dock-inner{max-width:1240px;margin:0 auto;display:flex;gap:14px;align-items:center}
+.dock-cover{width:52px;height:52px;border-radius:10px;object-fit:cover;flex-shrink:0;background:#1b232e}
+.dock-meta{flex:1;min-width:0}
+.dock-title{font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dock-sub{color:var(--muted);font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player-dock audio{width:100%;height:40px;margin-top:6px;display:block}
+
+/* Hero 曲目卡 */
+.hero{display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap}
+.hero-art{width:180px;height:180px;border-radius:14px;object-fit:cover;flex-shrink:0;box-shadow:0 8px 32px rgba(0,0,0,.45)}
+.hero-info{flex:1;min-width:0;overflow:hidden}
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-top:14px}
+.stat{border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.stat .k{color:var(--muted);font-size:11px;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stat .v{font-size:19px;font-weight:700;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* 能量地形 */
+.energy-map{height:90px;display:flex;align-items:flex-end;gap:2px;margin:14px 0 2px}
+.energy-map .bar{flex:1;border-radius:2px 2px 0 0;min-height:4px;background:linear-gradient(180deg,var(--violet),var(--blue));opacity:.65;cursor:pointer;transition:opacity .15s}
+.energy-map .bar.cur{opacity:1;background:linear-gradient(180deg,var(--mint),var(--gold))}
+.energy-map .bar:hover{opacity:.95}
+.emap-labels{display:flex;color:var(--muted);font-size:11px;margin-bottom:6px}
+.emap-labels span{flex:1;text-align:left}
+.emap-labels span:last-child{text-align:right}
+
+/* Setlist 表 */
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-weight:600;font-size:11.5px;letter-spacing:.06em}
+tr.play-row{cursor:pointer}
+tr.play-row:hover td{background:rgba(117,212,194,.06)}
+tr.cur td{background:transparent}tr.cur{border-color:var(--mint)!important;background:rgba(117,212,194,.07)!important}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.ph{font-size:10.5px;padding:2px 9px;border-radius:10px;font-weight:600;white-space:nowrap}
+.ph.intro{background:rgba(182,165,227,.18);color:var(--violet)}.ph.warmup{background:rgba(143,182,222,.13);color:var(--mint)}
+.ph.build{background:rgba(91,141,239,.16);color:var(--blue)}
+.ph.peak{background:rgba(223,183,122,.16);color:var(--gold)}
+.ph.outro{background:rgba(163,178,191,.15);color:var(--muted)}
+.tec{font-size:11px;color:var(--violet);white-space:nowrap}
+.tec.cut{color:var(--red)}
+.tr-title{display:flex;align-items:center;gap:9px;min-width:0}.tr-title>span{min-width:0;overflow-wrap:anywhere}
+.tr-cover{width:26px;height:26px;border-radius:5px;object-fit:cover;flex-shrink:0}
+.mood-tag{font-size:10.5px;color:var(--gold)}
+
+/* 转场带 */
+.transitions{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.tcard{border:1px solid var(--line);border-radius:11px;padding:12px 14px;font-size:12.5px;background:rgba(27,35,46,.5)}
+.tcard b{display:block;font-size:13px;margin-bottom:3px}
+.tcard .pair{color:var(--muted);font-size:11.5px;margin-bottom:6px}
+.tcard audio{width:100%;height:32px}
+
+/* 管线说明 */
+.pipeline{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.pipe-card{border:1px solid var(--line);border-radius:12px;padding:15px;font-size:13px;color:var(--muted)}
+.pipe-card b{color:var(--text);display:block;margin-bottom:5px;font-size:13.5px}
+.pipe-card .n{display:inline-block;width:22px;height:22px;border-radius:50%;background:rgba(117,212,194,.14);color:var(--mint);text-align:center;line-height:22px;font-weight:700;margin-bottom:8px}
+
+footer{color:var(--muted);font-size:11.5px;text-align:center;margin-top:34px;line-height:1.9}
+@media(max-width:760px){
+  main{margin:16px auto;padding:0 14px 170px}
+  h1{font-size:22px}
+  .badge{font-size:11px;padding:4px 10px;margin:2px 3px 2px 0}
+  header{margin-bottom:14px}
+
+  /* hero 卡: 竖向紧凑 */
+  .panel{padding:14px;border-radius:12px}
+  .hero{gap:12px}
+  .hero-art{width:96px;height:96px;border-radius:10px}
+  .hero-info{min-width:0}
+  .hero-info>div[style*="21px"]{font-size:16px!important}
+  .stat-row{grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}
+  .stat{padding:7px 9px;border-radius:8px}
+  .stat .k{font-size:10px}
+  .stat .v{font-size:15px}
+  .stat{padding:8px 10px}
+  .stat .v{font-size:15px}
+
+  /* 能量柱触摸目标 */
+  .energy-map{height:70px;gap:1.5px}
+  .energy-map .bar{min-width:5px}
+
+  /* setlist: 表格→卡片列表 */
+  table,thead,tbody,tr,td,th{display:block}
+  table{border:0}
+  thead{display:none}
+  tr{border:1px solid var(--line);border-radius:11px;margin-bottom:8px;padding:10px 12px;background:rgba(27,35,46,.45);position:relative}
+  tr[style*="background"]{}
+  td{border:0;padding:2px 0;font-size:13px}
+  /* 序号+时间+阶段 一行 */
+  td:nth-child(1),td:nth-child(2),td:nth-child(3){display:inline-block}
+  td:nth-child(1){color:var(--muted);font-size:11px;min-width:26px}
+  td:nth-child(2){color:var(--muted);font-size:11px}
+  /* BPM+调性 一行 */
+  td:nth-child(4),td:nth-child(5){display:inline-block;color:var(--muted);font-size:12px}
+  td:nth-child(4)::after{content:" ·";color:var(--line)}
+  /* 切歌技术 */
+  td:nth-child(6){margin-top:2px}
+  /* 曲目行 */
+  td:nth-child(7){margin-top:6px}
+  .tr-title>span{font-size:13.5px;font-weight:600}
+
+  /* 管线卡竖排 */
+  .pipeline{grid-template-columns:1fr}
+
+  /* 吸底播放器 */
+  .player-dock{padding:8px 12px calc(8px + env(safe-area-inset-bottom))}
+  .dock-inner{gap:10px}
+  .dock-cover{width:44px;height:44px}
+  .dock-title{font-size:13px}
+  .dock-sub{font-size:10.5px}
+  .player-dock audio{height:36px}
+}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <div>
+    <div class="eyebrow">SLEEP SET · 25 TRACKS · V2 SLEEP MASTERS</div>
+    <h1>Sleep DJ<br><span style="font-size:15px;color:var(--muted);font-weight:400">v2 助眠母带 · 55 分钟长夜 · 12s 长交叉渐变 · 能量缓降曲线</span></h1>
+    <div style="margin-top:10px">
+      <span class="badge">25 首 v2 睡眠档</span><span class="badge">55:14 连续播放</span><span class="badge">12s 长交叉渐变</span><span class="badge">能量缓降 · 入梦→深睡</span><span class="badge">−19 LUFS 母带</span>
+    </div>
+  </div>
+</header>
+
+<div class="panel hero">
+  <img class="hero-art" id="heroArt" src="/covers-au/lofi-love_me_harder.jpg" alt="cover">
+  <div class="hero-info">
+    <div class="eyebrow" id="heroPhase">WARMUP</div>
+    <div style="font-size:21px;font-weight:700;margin:4px 0;overflow-wrap:anywhere" id="heroTitle">— 点击任意曲目开始 · 建议戴耳机 —</div>
+    <div class="muted small" style="overflow-wrap:anywhere" id="heroSub">编排: RMS 能量缓降排序 + 调性/BPM 邻接 · acrossfade 12s 三角窗交叉</div>
+    <div class="stat-row">
+      <div class="stat"><div class="k">当前 BPM</div><div class="v" id="stBpm">—</div></div>
+      <div class="stat"><div class="k">调性</div><div class="v" id="stKey">—</div></div>
+      <div class="stat"><div class="k">曲目</div><div class="v" id="stPos">—</div></div>
+      <div class="stat"><div class="k">SET 进度</div><div class="v" id="stSet">—</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="panel">
+  <h2 style="margin-top:0">能量地形 · 越夜越静 · 点击柱跳播</h2>
+  <div class="energy-map" id="emap"></div>
+  <div class="emap-labels"><span>入梦引导</span><span>浅睡</span><span>渐深</span><span>深睡</span><span>沉入</span></div>
+</div>
+
+<div class="panel">
+  <h2 style="margin-top:0">Setlist</h2>
+  <table id="tbl"><thead><tr><th>#</th><th>时间</th><th>阶段</th><th>BPM</th><th>调性</th><th>混合</th><th>曲目</th></tr></thead><tbody></tbody></table>
+</div>
+
+<div class="panel">
+  <h2 style="margin-top:0">决策管线</h2>
+  <div class="pipeline">
+    <div class="pipe-card"><span class="n">1</span><b>特征提取 · librosa</b>25 首 v2 睡眠档全量分析: BPM 折叠、chroma 调性、RMS 能量均值。</div>
+    <div class="pipe-card"><span class="n">2</span><b>选曲 · 能量缓降</b>按 RMS 从 0.094 递减排序(醒→睡), 相邻段优先同调性或 BPM 差&lt;8。</div>
+    <div class="pipe-card"><span class="n">3</span><b>段长调度</b>开场 155s 完整欣赏 → 越往后越短(110s), 无损 copy 切段跳过前奏。</div>
+    <div class="pipe-card"><span class="n">4</span><b>长交叉混合</b>acrossfade 12s 三角窗 — lofi 慢板不适合快切, 用超长渐变保持氛围连续, 段间呼吸感自然。</div>
+  </div>
+</div>
+
+<footer>Sleep Set · 25 首 v2 睡眠档 × acrossfade 12s · 55:14 · −18.2 LUFS<br>生成于 2026-09-30 · 仅个人试听</footer>
+</main>
+
+<div class="player-dock">
+  <div class="dock-inner">
+    <img class="dock-cover" id="dockCover" src="/covers-au/lofi-love_me_harder.jpg" alt="">
+    <div class="dock-meta">
+      <div class="dock-title" id="dockTitle">Lofi Night Shift · Sleep Megamix</div>
+      <div class="dock-sub" id="dockSub">25 首 v2 睡眠档 · 55:14 · 12s 长交叉 · 能量缓降</div>
+      <audio id="au" controls preload="none" src="/sleep-dj-20edc62ee462.mp3"></audio>
+    </div>
+  </div>
+</div>
+
+<script>
+const SET = [{"title": "Love Me Harder", "artist": "Ariana Grande & The Weeknd", "bpm": 92.3, "key": "D", "cam": "", "phase": "intro", "tec": "xfade", "cover": "/covers-au/lofi-love_me_harder.jpg", "mood": "助眠", "start": 0.0, "dur": 155.0}, {"title": "Out Of Time", "artist": "The Weeknd", "bpm": 86.1, "key": "F#", "cam": "", "phase": "intro", "tec": "xfade", "cover": "/covers-au/lofi-out_of_time.jpg", "mood": "助眠", "start": 155.0, "dur": 153.1}, {"title": "Blinding Lights", "artist": "The Weeknd", "bpm": 78.3, "key": "E", "cam": "", "phase": "warmup", "tec": "xfade", "cover": "/covers-au/lofi-blinding_lights.jpg", "mood": "助眠", "start": 308.1, "dur": 151.2}, {"title": "Wake Me Up", "artist": "The Weeknd & Justice", "bpm": 103.4, "key": "B", "cam": "", "phase": "warmup", "tec": "xfade", "cover": "/covers-au/lofi-wake_me_up.jpg", "mood": "助眠", "start": 459.3, "dur": 149.4}, {"title": "The Hills", "artist": "The Weeknd", "bpm": 103.4, "key": "B", "cam": "", "phase": "warmup", "tec": "xfade", "cover": "/covers-au/lofi-the_hills.jpg", "mood": "助眠", "start": 608.7, "dur": 147.5}, {"title": "Moth To A Flame", "artist": "Swedish House Mafia & The Weeknd", "bpm": 112.3, "key": "B", "cam": "", "phase": "warmup", "tec": "xfade", "cover": "/covers-au/lofi-moth_to_a_flame.jpg", "mood": "助眠", "start": 756.2, "dur": 145.6}, {"title": "Starry Eyes", "artist": "The Weeknd", "bpm": 112.3, "key": "G#", "cam": "", "phase": "warmup", "tec": "xfade", "cover": "/covers-au/lofi-starry_eyes.jpg", "mood": "助眠", "start": 901.8, "dur": 140.8}, {"title": "Save Your Tears", "artist": "The Weeknd", "bpm": 107.7, "key": "D#", "cam": "", "phase": "warmup", "tec": "xfade", "cover": "/covers-au/lofi-save_your_tears.jpg", "mood": "助眠", "start": 1042.6, "dur": 141.9}, {"title": "Less Than Zero", "artist": "The Weeknd", "bpm": 129.2, "key": "D#", "cam": "", "phase": "warmup", "tec": "xfade", "cover": "/covers-au/lofi-less_than_zero.jpg", "mood": "助眠", "start": 1184.5, "dur": 140.0}, {"title": "Ordinary Life", "artist": "The Weeknd", "bpm": 136.0, "key": "F#", "cam": "", "phase": "build", "tec": "xfade", "cover": "/covers-au/lofi-ordinary_life.jpg", "mood": "助眠", "start": 1324.5, "dur": 138.1}, {"title": "True Colors", "artist": "The Weeknd", "bpm": 143.6, "key": "F", "cam": "", "phase": "build", "tec": "xfade", "cover": "/covers-au/lofi-true_colors.jpg", "mood": "助眠", "start": 1462.6, "dur": 136.2}, {"title": "Dancing In The Flames", "artist": "The Weeknd", "bpm": 143.6, "key": "C", "cam": "", "phase": "build", "tec": "xfade", "cover": "/covers-au/lofi-dancing_in_the_flames.jpg", "mood": "助眠", "start": 1598.8, "dur": 134.4}, {"title": "Earned It", "artist": "The Weeknd", "bpm": 112.3, "key": "G#", "cam": "", "phase": "build", "tec": "xfade", "cover": "/covers-au/lofi-earned_it.jpg", "mood": "助眠", "start": 1733.2, "dur": 132.5}, {"title": "Best Friends", "artist": "The Weeknd", "bpm": 83.4, "key": "D", "cam": "", "phase": "build", "tec": "xfade", "cover": "/covers-au/lofi-best_friends.jpg", "mood": "助眠", "start": 1865.7, "dur": 130.6}, {"title": "A Lonely Night", "artist": "The Weeknd", "bpm": 103.4, "key": "F#", "cam": "", "phase": "build", "tec": "xfade", "cover": "/covers-au/lofi-a_lonely_night.jpg", "mood": "助眠", "start": 1996.3, "dur": 128.8}, {"title": "Creepin", "artist": "Metro Boomin & The Weeknd & 21 Savage", "bpm": 89.1, "key": "D#", "cam": "", "phase": "build", "tec": "xfade", "cover": "/covers-au/lofi-creepin.jpg", "mood": "助眠", "start": 2125.1, "dur": 126.9}, {"title": "After Hours", "artist": "The Weeknd", "bpm": 99.4, "key": "F#", "cam": "", "phase": "build", "tec": "xfade", "cover": "/covers-au/lofi-after_hours.jpg", "mood": "助眠", "start": 2252.0, "dur": 125.0}, {"title": "How Do I Make You Love Me", "artist": "The Weeknd", "bpm": 112.3, "key": "F#", "cam": "", "phase": "peak", "tec": "xfade", "cover": "/covers-au/lofi-how_do_i_make_you_love_me.jpg", "mood": "助眠", "start": 2377.0, "dur": 123.1}, {"title": "The Abyss", "artist": "The Weeknd & Lana Del Rey", "bpm": 129.2, "key": "B", "cam": "", "phase": "peak", "tec": "xfade", "cover": "/covers-au/lofi-the_abyss.jpg", "mood": "助眠", "start": 2500.1, "dur": 121.2}, {"title": "Is There Someone Else", "artist": "The Weeknd", "bpm": 123.0, "key": "C#", "cam": "", "phase": "peak", "tec": "xfade", "cover": "/covers-au/lofi-is_there_someone_else.jpg", "mood": "助眠", "start": 2621.3, "dur": 119.4}, {"title": "Die For You", "artist": "The Weeknd", "bpm": 123.0, "key": "G", "cam": "", "phase": "peak", "tec": "xfade", "cover": "/covers-au/lofi-die_for_you.jpg", "mood": "助眠", "start": 2740.7, "dur": 117.5}, {"title": "Cry For Me", "artist": "The Weeknd", "bpm": 112.3, "key": "F#", "cam": "", "phase": "peak", "tec": "xfade", "cover": "/covers-au/lofi-cry_for_me.jpg", "mood": "助眠", "start": 2858.2, "dur": 115.6}, {"title": "Reminder", "artist": "The Weeknd", "bpm": 143.6, "key": "B", "cam": "", "phase": "outro", "tec": "xfade", "cover": "/covers-au/lofi-reminder.jpg", "mood": "助眠", "start": 2973.8, "dur": 113.8}, {"title": "Niagara Falls", "artist": "The Weeknd", "bpm": 89.1, "key": "F", "cam": "", "phase": "outro", "tec": "xfade", "cover": "/covers-au/lofi-niagara_falls.jpg", "mood": "助眠", "start": 3087.6, "dur": 111.9}, {"title": "Sacrifice", "artist": "The Weeknd", "bpm": 112.3, "key": "A#", "cam": "", "phase": "outro", "tec": "xfade", "cover": "/covers-au/lofi-sacrifice.jpg", "mood": "助眠", "start": 3199.5, "dur": 110.0}];
+
+let starts = SET.map(s => s.start);
+const TOTAL = starts[starts.length-1] + (SET[SET.length-1].dur || 78);
+
+const au = document.getElementById('au');
+const emap = document.getElementById('emap');
+const tbl = document.getElementById('tbl');
+const $ = id => document.getElementById(id);
+
+const bpms = SET.map(s => s.bpm), mn = Math.min(...bpms), mx = Math.max(...bpms);
+SET.forEach((s, i) => {
+  const d = document.createElement('div');
+  d.className = 'bar';
+  d.style.height = (10 + 90 * (s.bpm - mn) / (mx - mn)) + '%';
+  d.title = `${fmt(starts[i])} · ${s.title} · ${s.bpm} BPM · ${s.mood}`;
+  d.onclick = () => seek(i);
+  emap.appendChild(d);
+});
+
+SET.forEach((s, i) => {
+  const tr = document.createElement('tr');
+  tr.className = 'play-row';
+  const tec = s.tec || '—';
+  tr.innerHTML = `<td class="num">${i+1}</td><td class="num">${fmt(starts[i])}</td>` +
+    `<td><span class="ph ${s.phase}">${({'intro': '入梦引导', 'warmup': '浅睡', 'build': '渐深', 'peak': '深睡', 'outro': '沉入'})[s.phase]||s.phase}</span></td>` +
+    `<td class="num">${s.bpm.toFixed(1)}</td>` +
+    `<td class="num">${s.key}→${s.cam||'?'}</td>` +
+    `<td class="tec${tec==='cut'?' cut':''}">${({loop_roll:'LOOP ROLL',spinback:'SPINBACK',echo_out:'ECHO OUT',filter_build:'FILTER BUILD',xfade:'BLEND',blend:'BLEND',bass_swap:'BASS SWAP',filter_sweep:'FILTER SWAP',cut:'CUT'})[tec]||tec||'—'}</td>` +
+    `<td><div class="tr-title"><img class="tr-cover" loading="lazy" src="${s.cover}" alt=""><span>${esc(s.title.replace(/^\d+\s*/,''))} <span class="muted" style="font-weight:400">· ${esc(s.artist||'')}</span><br><span class="mood-tag">${s.mood}</span></span></div></td>`;
+  tr.onclick = () => seek(i);
+  tbl.querySelector('tbody').appendChild(tr);
+});
+
+let seekLock = 0;
+function seek(i){
+  seekLock = Date.now() + 3000;
+  const target = starts[i] + 0.6;
+  syncUI(i); curIdx = i;
+  // 强制重置 audio 状态机: 清 src → load() → 回填 src(带 fragment) → 等 canplay → seek
+  const src = au.src.split('#')[0];
+  try { au.pause(); } catch(e){}
+  au.removeAttribute('src');
+  try { au.load(); } catch(e){}   // 重置到 NETWORK_EMPTY, 取消飞行中的请求
+  au.src = src + '#t=' + Math.floor(target);  // media fragment: 浏览器直接发对应 Range
+  const onReady = () => {
+    try { if (Math.abs(au.currentTime - target) > 1.5) au.currentTime = target; } catch(e){}
+    au.play().catch(()=>{});
+  };
+  if (au.readyState >= 3) onReady();
+  else {
+    au.addEventListener('canplay', onReady, { once: true });
+    // 兜底: 网络慢时 4s 后也尝试播(哪怕还在缓冲)
+    setTimeout(() => { if (au.paused && curIdx === i) { try { au.currentTime = target; } catch(e){} au.play().catch(()=>{}); } }, 4000);
+  }
+}
+function fmt(sec){ return String(Math.floor(sec/60)).padStart(2,'0') + ':' + String(Math.floor(sec%60)).padStart(2,'0'); }
+function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+
+let curIdx = -1;
+au.addEventListener('timeupdate', () => {
+  if (Date.now() < seekLock) return;
+  let idx = 0;
+  for (let i = 0; i < starts.length; i++) if (au.currentTime >= starts[i]) idx = i;
+  if (idx !== curIdx) { curIdx = idx; syncUI(idx); }
+});
+function syncUI(i){
+  const s = SET[i];
+  $('heroArt').src = s.cover; $('dockCover').src = s.cover;
+  $('heroPhase').textContent = s.phase.toUpperCase() + ' 阶段';
+  $('heroTitle').textContent = s.title.replace(/^\d+\s*/,'') + ' — ' + (s.artist||'');
+  $('stBpm').textContent = s.bpm.toFixed(1);
+  $('stKey').textContent = s.key;
+  $('stPos').textContent = `${i+1} / ${SET.length}`;
+  $('stSet').textContent = fmt(starts[i]);
+  $('dockTitle').textContent = s.title.replace(/^\d+\s*/,'') + ' · ' + (s.artist||'');
+  $('dockSub').textContent = `${s.bpm.toFixed(1)} BPM · ${s.key} · ${s.mood}`;
+  document.querySelectorAll('.bar').forEach((b, j) => b.classList.toggle('cur', j === i));
+  tbl.querySelectorAll('tbody tr').forEach((r, j) => r.classList.toggle('cur', j === i));
+}
+au.addEventListener('loadedmetadata', () => { /* duration ready */ });
+</script>
+</body>
+</html>
