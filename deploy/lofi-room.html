@@ -7,142 +7,201 @@
 <title>Lofi House</title>
 <style>
   :root{
-    --bg:#0d0e12; --panel:#15171d; --panel2:#1a1d24; --line:#262a33;
-    --text:#e8e6df; --dim:#8b8f9a; --amber:#d4a86a; --amber2:#e8c894;
+    --bg:#0b0c10; --panel:#14161c; --panel2:#191c24; --line:#262a34;
+    --text:#e8e6df; --dim:#8b8f9a;
+    --amber:#d4a86a; --amber2:#e8c894;
+    --v1:#d4a86a; --v1bg:rgba(212,168,106,.08); --v1line:rgba(212,168,106,.32);
+    --v2:#7e9cc4; --v2bg:rgba(126,156,196,.08); --v2line:rgba(126,156,196,.32);
     --ok:#7fb98a;
   }
   *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html{scroll-behavior:smooth}
   body{
     background:var(--bg); color:var(--text);
     font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Segoe UI",sans-serif;
-    min-height:100vh; padding-bottom:120px;overflow-x:hidden;
+    min-height:100vh; padding-bottom:170px; overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
   }
-  .wrap{max-width:720px;margin:0 auto;padding:20px 18px 30px}
-  header{padding:14px 0 22px}
-  .eyebrow{font-size:11px;letter-spacing:.22em;color:var(--amber);text-transform:uppercase;margin-bottom:8px}
-  h1{font-size:26px;font-weight:700;letter-spacing:-.01em}
-  .sub{color:var(--dim);font-size:13.5px;margin-top:6px;line-height:1.6;overflow-wrap:anywhere}
+  .wrap{max-width:680px;margin:0 auto;padding:18px 16px 30px}
 
+  /* ===== 头部 ===== */
+  header{padding:16px 0 18px}
+  .eyebrow{font-size:10.5px;letter-spacing:.24em;color:var(--amber);text-transform:uppercase;margin-bottom:7px}
+  h1{font-size:27px;font-weight:750;letter-spacing:-.015em}
+  .sub{color:var(--dim);font-size:13px;margin-top:7px;line-height:1.65}
+
+  /* ===== Tabs ===== */
+  .tabs{
+    display:flex;gap:8px;margin:20px 0 14px;position:sticky;top:0;z-index:30;
+    background:linear-gradient(to bottom, var(--bg) 72%, rgba(11,12,16,0));
+    padding:10px 0 12px;
+  }
+  .tab{
+    flex:1;text-align:center;padding:11px 8px;border-radius:12px;cursor:pointer;
+    background:var(--panel);border:1px solid var(--line);
+    transition:all .18s ease;user-select:none;
+  }
+  .tab .tname{font-size:14.5px;font-weight:650;letter-spacing:.01em}
+  .tab .tsub{font-size:10.5px;color:var(--dim);margin-top:3px;letter-spacing:.04em}
+  .tab .tcount{font-size:10.5px;color:var(--dim);margin-top:2px}
+  .tab.on-v1{background:var(--v1bg);border-color:var(--v1line)}
+  .tab.on-v1 .tname{color:var(--v1)}
+  .tab.on-v2{background:var(--v2bg);border-color:var(--v2line)}
+  .tab.on-v2 .tname{color:var(--v2)}
+  .room{display:none}
+  .room.active{display:block;animation:fadein .3s ease}
+  @keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  /* ===== 曲目卡 ===== */
   .track{
-    background:var(--panel); border:1px solid var(--line); border-radius:14px;
-    padding:14px; margin-bottom:14px; display:flex; gap:14px; align-items:center;
-    transition:border-color .2s; position:relative; overflow:hidden;
+    background:var(--panel); border:1px solid var(--line); border-radius:13px;
+    padding:11px 12px; margin-bottom:10px; display:flex; gap:12px; align-items:center;
+    transition:border-color .18s, background .18s; position:relative; overflow:hidden;
+    cursor:pointer;
   }
-  .track.playing{border-color:rgba(212,168,106,.55)}
-.track{overflow:hidden}
-.meta{overflow:hidden}
-  .cover{
-    width:68px;height:68px;border-radius:10px;object-fit:cover;flex:none;
-    box-shadow:0 4px 14px rgba(0,0,0,.4);
+  .track:active{background:var(--panel2)}
+  .track.playing{border-color:var(--room)}
+  .track.playing{background:linear-gradient(90deg, var(--roombg), var(--panel) 55%)}
+  .cover{width:54px;height:54px;border-radius:9px;object-fit:cover;flex:none;box-shadow:0 3px 10px rgba(0,0,0,.45)}
+  .meta{flex:1;min-width:0}
+  .name{font-size:14.5px;font-weight:620;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .track.playing .name{color:var(--room)}
+  .artist{color:var(--dim);font-size:11.5px;margin-top:2.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .drow2{display:flex;align-items:center;gap:6px;margin-top:5px;flex-wrap:wrap}
+  .pill{font-size:9.5px;letter-spacing:.05em;border-radius:4px;padding:2px 6px;white-space:nowrap;max-width:130px;overflow:hidden;text-overflow:ellipsis}
+  .pill.l{color:var(--ok);border:1px solid rgba(127,185,138,.3);background:rgba(127,185,138,.07)}
+  .pill.n{color:var(--dim);border:1px solid var(--line);background:rgba(255,255,255,.03)}
+  .pill.dur{color:var(--dim);border:none;background:none;padding:2px 0;font-variant-numeric:tabular-nums}
+  .idx{
+    flex:none;width:26px;text-align:center;color:var(--dim);
+    font-size:12px;font-variant-numeric:tabular-nums;opacity:.75;
   }
-  .meta{flex:1;min-width:0;max-width:100%}
-  .name{font-size:15.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .artist{color:var(--dim);font-size:12.5px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .tags{margin-top:7px;display:flex;flex-wrap:wrap;gap:5px;max-width:100%}
-  .tag{
-    font-size:10px;letter-spacing:.06em;color:var(--amber2);
-    border:1px solid rgba(212,168,106,.35);border-radius:4px;padding:2px 6px;
-    background:rgba(212,168,106,.07); white-space:nowrap;max-width:118px;overflow:hidden;text-overflow:ellipsis;
+  .track .go{
+    flex:none;width:34px;height:34px;border-radius:50%;
+    border:1px solid var(--line);background:var(--panel2);color:var(--dim);
+    font-size:12px;display:flex;align-items:center;justify-content:center;
+    transition:all .15s;
   }
-  .tag.g{color:var(--ok);border-color:rgba(127,185,138,.35);background:rgba(127,185,138,.07)}
-  .bars{display:flex;gap:2px;align-items:flex-end;height:22px;margin-top:8px}
-  .bars i{width:3px;background:var(--line);border-radius:1px;min-height:2px}
-  .track.playing .bars i{background:var(--amber);animation:eq 1s ease-in-out infinite alternate}
-  .bars i:nth-child(2){animation-delay:.18s}.bars i:nth-child(3){animation-delay:.36s}
-  .bars i:nth-child(4){animation-delay:.10s}.bars i:nth-child(5){animation-delay:.28s}
-  @keyframes eq{from{height:3px}to{height:20px}}
-  .playbtn{
-    flex:none;width:44px;height:44px;border-radius:50%;flex:none;
-    border:1px solid var(--line);background:var(--panel2);color:var(--text);
-    font-size:15px;display:flex;align-items:center;justify-content:center;cursor:pointer;
-  }
-  .track.playing .playbtn{background:var(--amber);color:#141414;border-color:var(--amber)}
+  .track.playing .go{background:var(--room);color:#131313;border-color:var(--room)}
+  .eq{display:none;gap:2.5px;align-items:flex-end;height:16px}
+  .track.playing:not(.paused) .eq{display:flex}
+  .track.playing.paused .go{font-size:11px}
+  .eq i{width:2.5px;background:var(--room);border-radius:1px;min-height:2px;animation:eq 1s ease-in-out infinite alternate}
+  .eq i:nth-child(2){animation-delay:.15s}.eq i:nth-child(3){animation-delay:.3s}.eq i:nth-child(4){animation-delay:.1s}
+  @keyframes eq{from{height:2.5px}to{height:15px}}
+
+  /* ===== 底部说明 ===== */
   .stat{
-    background:var(--panel);border:1px solid var(--line);border-radius:14px;
-    padding:14px 16px;margin-top:20px;
+    background:var(--panel);border:1px solid var(--line);border-radius:13px;
+    padding:13px 15px;margin-top:18px;
   }
-  .stat .row{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px solid var(--line);font-size:13px}
+  .stat .row{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-bottom:1px solid var(--line);font-size:12.5px}
   .stat .row:last-child{border-bottom:none}
   .stat .k{color:var(--dim);flex:none}
-  .stat .v{font-variant-numeric:tabular-nums;text-align:right;min-width:0;flex:1;overflow-wrap:anywhere;font-size:12.5px}
-  .pipeline{
-    margin-top:20px;padding:14px 16px;border:1px dashed var(--line);border-radius:14px;
-    font-size:12px;color:var(--dim);line-height:1.9;overflow-wrap:anywhere;
-  }
-  .pipeline b{color:var(--amber2);font-weight:600}
+  .stat .v{font-variant-numeric:tabular-nums;text-align:right;min-width:0;flex:1;overflow-wrap:anywhere;font-size:12px}
 
-  /* 吸底播放器 */
+  /* ===== 吸底播放器 ===== */
   .dock{
     position:fixed;left:0;right:0;bottom:0;z-index:50;
-    background:rgba(13,14,18,.92);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+    background:rgba(11,12,16,.93);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
     border-top:1px solid var(--line);
     padding:10px 16px calc(10px + env(safe-area-inset-bottom));
     transform:translateZ(0);
   }
-  .dock .inner{max-width:720px;margin:0 auto}
-  .drow{display:flex;align-items:center;gap:12px}
-  .dcover{width:42px;height:42px;border-radius:8px;object-fit:cover}
-  .dmeta{flex:1;min-width:0}
-  .dname{font-size:13.5px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .dartist{font-size:11.5px;color:var(--dim);margin-top:2px}
-  .dtime{font-size:11px;color:var(--dim);font-variant-numeric:tabular-nums;white-space:nowrap}
-  .dbtn{
-    width:40px;height:40px;border-radius:50%;flex:none;cursor:pointer;
-    border:1px solid rgba(212,168,106,.4);background:rgba(212,168,106,.12);color:var(--amber2);
-    font-size:14px;display:flex;align-items:center;justify-content:center;
+  .dock .inner{max-width:680px;margin:0 auto}
+  .dockprog{position:absolute;top:-1px;left:0;right:0;height:2.5px;background:transparent}
+  .dockprog i{display:block;height:100%;width:0%;background:var(--room,var(--amber));border-radius:0 2px 2px 0;transition:width .25s linear}
+  .drow{display:flex;align-items:center;gap:11px}
+  .disco{
+    width:46px;height:46px;border-radius:50%;flex:none;position:relative;overflow:hidden;
+    border:1px solid var(--line);
   }
-  .prog{height:3px;background:var(--line);border-radius:2px;margin-top:9px;overflow:hidden;cursor:pointer}
-  .prog i{display:block;height:100%;width:0%;background:var(--amber);border-radius:2px}
-  .empty{display:none}
-  .dbtn.sm{width:32px;height:32px;font-size:12px;border-color:var(--line);background:var(--panel2);color:var(--text);padding:0}
-  .dbtn.sm.on{border-color:rgba(212,168,106,.6);background:rgba(212,168,106,.18);color:var(--amber2)}
-  .prog-row{display:flex;align-items:center;gap:10px;margin-top:9px}
-  .prog-row .prog{flex:1;margin-top:0}
-  .prog-row .dtime{flex:none}
-  .gate{position:fixed;inset:0;z-index:99;background:rgba(13,14,18,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center}
+  .disco img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+  .disco::after{
+    content:"";position:absolute;left:50%;top:50%;width:9px;height:9px;border-radius:50%;
+    transform:translate(-50%,-50%);background:var(--bg);border:1.5px solid rgba(255,255,255,.18);
+  }
+  .disco.spin{animation:spin 7s linear infinite}
+  .disco.spin.paused{animation-play-state:paused}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .dmeta{flex:1;min-width:0}
+  .dname{font-size:13.5px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .dartist{font-size:11px;color:var(--dim);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .dbtn{
+    width:38px;height:38px;border-radius:50%;flex:none;cursor:pointer;
+    border:1px solid var(--room,var(--v1));background:var(--roombg,var(--v1bg));color:var(--room,var(--v1));
+    font-size:13px;display:flex;align-items:center;justify-content:center;
+  }
+  .dock[data-room="v1"] .dbtn{color:var(--amber2)}
+  .dbtn.sm{width:31px;height:31px;font-size:11px;border-color:var(--line);background:var(--panel2);color:var(--dim);padding:0}
+  .dbtn.sm.on{border-color:var(--room,var(--amber));background:var(--roombg,rgba(212,168,106,.12));color:var(--room,var(--amber))}
+  .dtime{font-size:10.5px;color:var(--dim);font-variant-numeric:tabular-nums;white-space:nowrap;min-width:66px;text-align:right}
+  .dock[data-room="v2"]{--room:var(--v2);--roombg:rgba(126,156,196,.12)}
+  .dock[data-room="v2"] .dbtn{color:var(--v2)}
+
+  /* ===== 自动播放遮罩 ===== */
+  .gate{position:fixed;inset:0;z-index:99;background:rgba(11,12,16,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center}
   .gate-in{text-align:center}
-  .gate-btn{width:84px;height:84px;border-radius:50%;margin:0 auto 16px;border:1px solid rgba(212,168,106,.5);background:rgba(212,168,106,.14);color:var(--amber2);font-size:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 10px 40px rgba(212,168,106,.15)}
-  .gate-t{color:var(--dim);font-size:13px;letter-spacing:.08em}
+  .gate-btn{
+    width:88px;height:88px;border-radius:50%;margin:0 auto 18px;
+    border:1px solid rgba(212,168,106,.5);background:rgba(212,168,106,.13);color:var(--amber2);
+    font-size:31px;display:flex;align-items:center;justify-content:center;cursor:pointer;
+    box-shadow:0 12px 46px rgba(212,168,106,.16);
+  }
+  .gate-t{color:var(--dim);font-size:13px;letter-spacing:.1em}
+  .gate-t b{color:var(--amber2);font-weight:600}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <div class="eyebrow">LofiRemix Room</div>
+    <div class="eyebrow">LofiRemix</div>
     <h1>Lofi House</h1>
-    <p class="sub">热门歌曲的 lofi 改编 · demucs 分轨 → DSP 黑胶化 → 响度精修<br>33rpm 降速 · 高频收暗 · 磁带抖动 · 粉噪黑胶床<br>打开即随机自动连播 · 锁屏可控</p>
+    <p class="sub">热门歌曲的 lofi 改编 · demucs 分轨 → DSP 黑胶化 · 打开即随机连播 · 两间房各取所需</p>
   </header>
 
-  <div id="list"></div>
-
-  <div class="stat">
-    <div class="row"><span class="k">曲目数</span><span class="v" id="stCount">–</span></div>
-    <div class="row"><span class="k">处理引擎</span><span class="v">demucs htdemucs + ffmpeg DSP</span></div>
-    <div class="row"><span class="k">目标响度</span><span class="v">−16 LUFS (lofi 审美)</span></div>
-    <div class="row"><span class="k">更新</span><span class="v" id="stDate">–</span></div>
+  <div class="tabs">
+    <div class="tab on-v1" id="tab1" onclick="switchRoom('v1')" style="display:none">
+      <div class="tname">🎵 经典黑胶房</div>
+      <div class="tsub">33rpm 0.92x · 暖调黑胶 · 驾车/工作</div>
+      <div class="tcount" id="cnt1"></div>
+    </div>
+    <div class="tab" id="tab2" onclick="switchRoom('v2')">
+      <div class="tname">🌙 深夜助眠房</div>
+      <div class="tsub">lowpass 4k · −19 LUFS · 入睡/学习</div>
+      <div class="tcount" id="cnt2"></div>
+    </div>
   </div>
 
-  <div class="pipeline">
-    <b>流水线</b>：源曲 → demucs 分离人声/伴奏 → 人声轨 lowpass 8k + 压缩 + 0.8Hz 磁带抖动 → 伴奏轨 lowpass 7k + 120Hz 暖化 → 0.92x 降速变调(33rpm) → 粉噪黑胶床 → limiter + 响度归一 → 成品 m4a/mp3<br>
-    <b>队列</b>：Out of Time (The Weeknd) — 等源文件
+  <div class="room active" id="room1">
+    <div id="list1"></div>
+  </div>
+
+  <div class="room" id="room2">
+    <div id="list2"></div>
+  </div>
+
+  <div class="stat">
+    <div class="row"><span class="k">曲目</span><span class="v" id="stCount">–</span></div>
+    <div class="row"><span class="k">引擎</span><span class="v">demucs htdemucs + ffmpeg DSP</span></div>
+    <div class="row"><span class="k">响度</span><span class="v">v1 −16 LUFS · v2 −19 LUFS</span></div>
+    <div class="row"><span class="k">更新</span><span class="v" id="stDate">2026-09-30</span></div>
   </div>
 </div>
 
 <div class="dock" id="dock" style="display:none">
+  <div class="dockprog"><i id="dBar"></i></div>
   <div class="inner">
     <div class="drow">
-      <img class="dcover" id="dCover" alt="">
+      <div class="disco" id="dDisc"><img id="dCover" alt=""></div>
       <div class="dmeta">
         <div class="dname" id="dName">–</div>
         <div class="dartist" id="dArtist">–</div>
       </div>
-      <div class="dbtn sm" id="dShuf" title="随机播放">🔀</div>
+      <div class="dbtn sm" id="dShuf" title="随机/顺序">🔀</div>
       <div class="dbtn sm" id="dPrev" title="上一首">⏮</div>
-      <div class="dbtn sm" id="dNext" title="下一首">⏭</div>
       <div class="dbtn" id="dBtn">▶</div>
-    </div>
-    <div class="prog-row">
-      <div class="prog" id="dProg"><i id="dBar"></i></div>
+      <div class="dbtn sm" id="dNext" title="下一首">⏭</div>
       <div class="dtime" id="dTime">0:00</div>
     </div>
   </div>
@@ -151,166 +210,137 @@
 <div class="gate" id="gate" style="display:none">
   <div class="gate-in">
     <div class="gate-btn" id="gateBtn">▶</div>
-    <div class="gate-t">点击开始 · 随机连播</div>
+    <div class="gate-t">轻触开始 · <b>随机连播</b></div>
   </div>
 </div>
 
 <audio id="au" preload="none"></audio>
 
 <script>
-const TRACKS = [
-  {id:"ltz", name:"Less Than Zero", artist:"The Weeknd · lofi remix", src:"/lofi-ltz-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-ltz.jpg", dur:"3:50", tags:["33rpm 0.92x","lowpass 7-8k","tremolo 磁带抖动","vinyl 底噪","−15.7 LUFS"]},
-  {id:"softlips", name:"Soft Lips", artist:"BlankCh3ck & Nathaniel Davis · lofi remix", src:"/lofi-softlips-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-softlips.jpg", dur:"2:47", tags:["原版 lofi intro 保留","intro 后接管","lowpass 7-8k","vinyl 底噪","−16.0 LUFS"]},
-  {id:"wilder", name:"To the Wilder (Piano Version)", artist:"Woodkid · lofi remix", src:"/lofi-wilder-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-wilder.jpg", dur:"4:44", tags:["钢琴慢板 preset","tremolo 减弱 0.6Hz","lowpass 6.5-7.5k","vinyl 底噪","−15.0 LUFS"]},
-  {id:"a_lonely_night", name:"A Lonely Night", artist:"The Weeknd · lofi remix", src:"/lofi-a_lonely_night-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-a_lonely_night.jpg", dur:"3:59", tags:["v1 经典档","33rpm 0.92x","vinyl 底噪","−16 LUFS","夜间驾车/氛围"]},
-  {id:"a_lonely_night_v2", name:"A Lonely Night (Sleep V2)", artist:"The Weeknd · lofi remix", src:"/lofi-a_lonely_night-v2-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-a_lonely_night.jpg", dur:"3:59", tags:["v2 睡眠档","lowpass 4-4.5k","−19 LUFS 助眠","深夜/学习","温柔人声"]},
-  {id:"after_hours", name:"After Hours", artist:"The Weeknd · lofi remix", src:"/lofi-after_hours-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-after_hours.jpg", dur:"6:32", tags:["v1 经典档","33rpm 0.92x","vinyl 底噪","−16 LUFS","夜间驾车/氛围"]},
-  {id:"after_hours_v2", name:"After Hours (Sleep V2)", artist:"The Weeknd · lofi remix", src:"/lofi-after_hours-v2-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-after_hours.jpg", dur:"6:32", tags:["v2 睡眠档","lowpass 4-4.5k","−19 LUFS 助眠","深夜/学习","温柔人声"]},
-  {id:"best_friends", name:"Best Friends", artist:"The Weeknd · lofi remix", src:"/lofi-best_friends-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-best_friends.jpg", dur:"2:58", tags:["v1 经典档","33rpm 0.92x","vinyl 底噪","−16 LUFS","夜间驾车/氛围"]},
-  {id:"best_friends_v2", name:"Best Friends (Sleep V2)", artist:"The Weeknd · lofi remix", src:"/lofi-best_friends-v2-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-best_friends.jpg", dur:"2:58", tags:["v2 睡眠档","lowpass 4-4.5k","−19 LUFS 助眠","深夜/学习","温柔人声"]},
-  {id:"blinding_lights", name:"Blinding Lights", artist:"The Weeknd · lofi remix", src:"/lofi-blinding_lights-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-blinding_lights.jpg", dur:"3:37", tags:["v1 经典档","33rpm 0.92x","vinyl 底噪","−16 LUFS","夜间驾车/氛围"]},
-  {id:"blinding_lights_v2", name:"Blinding Lights (Sleep V2)", artist:"The Weeknd · lofi remix", src:"/lofi-blinding_lights-v2-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-blinding_lights.jpg", dur:"3:37", tags:["v2 睡眠档","lowpass 4-4.5k","−19 LUFS 助眠","深夜/学习","温柔人声"]},
-  {id:"cry_for_me", name:"Cry For Me", artist:"The Weeknd · lofi remix", src:"/lofi-cry_for_me-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-cry_for_me.jpg", dur:"4:04", tags:["v1 经典档","33rpm 0.92x","vinyl 底噪","−16 LUFS","夜间驾车/氛围"]},
-  {id:"cry_for_me_v2", name:"Cry For Me (Sleep V2)", artist:"The Weeknd · lofi remix", src:"/lofi-cry_for_me-v2-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-cry_for_me.jpg", dur:"4:04", tags:["v2 睡眠档","lowpass 4-4.5k","−19 LUFS 助眠","深夜/学习","温柔人声"]},
-  {id:"dancing_in_the_flames", name:"Dancing In The Flames", artist:"The Weeknd · lofi remix", src:"/lofi-dancing_in_the_flames-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-dancing_in_the_flames.jpg", dur:"3:59", tags:["v1 经典档","33rpm 0.92x","vinyl 底噪","−16 LUFS","夜间驾车/氛围"]},
-  {id:"dancing_in_the_flames_v2", name:"Dancing In The Flames (Sleep V2)", artist:"The Weeknd · lofi remix", src:"/lofi-dancing_in_the_flames-v2-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-dancing_in_the_flames.jpg", dur:"3:59", tags:["v2 睡眠档","lowpass 4-4.5k","−19 LUFS 助眠","深夜/学习","温柔人声"]},
-  {id:"die_for_you", name:"Die For You", artist:"The Weeknd · lofi remix", src:"/lofi-die_for_you-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-die_for_you.jpg", dur:"4:42", tags:["v1 经典档","33rpm 0.92x","vinyl 底噪","−16 LUFS","夜间驾车/氛围"]},
-  {id:"die_for_you_v2", name:"Die For You (Sleep V2)", artist:"The Weeknd · lofi remix", src:"/lofi-die_for_you-v2-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-die_for_you.jpg", dur:"4:42", tags:["v2 睡眠档","lowpass 4-4.5k","−19 LUFS 助眠","深夜/学习","温柔人声"]},
-  {id:"earned_it", name:"Earned It", artist:"The Weeknd · lofi remix", src:"/lofi-earned_it-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-earned_it.jpg", dur:"4:34", tags:["v1 经典档","33rpm 0.92x","vinyl 底噪","−16 LUFS","夜间驾车/氛围"]},
-  {id:"earned_it_v2", name:"Earned It (Sleep V2)", artist:"The Weeknd · lofi remix", src:"/lofi-earned_it-v2-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-earned_it.jpg", dur:"4:34", tags:["v2 睡眠档","lowpass 4-4.5k","−19 LUFS 助眠","深夜/学习","温柔人声"]},
-  {id:"how_do_i_make_you_love_me", name:"How Do I Make You Love Me", artist:"The Weeknd · lofi remix", src:"/lofi-how_do_i_make_you_love_me-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-how_do_i_make_you_love_me.jpg", dur:"3:53", tags:["v1 经典档","33rpm 0.92x","vinyl 底噪","−16 LUFS","夜间驾车/氛围"]},
-  {id:"how_do_i_make_you_love_me_v2", name:"How Do I Make You Love Me (Sleep V2)", artist:"The Weeknd · lofi remix", src:"/lofi-how_do_i_make_you_love_me-v2-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-how_do_i_make_you_love_me.jpg", dur:"3:53", tags:["v2 睡眠档","lowpass 4-4.5k","−19 LUFS 助眠","深夜/学习","温柔人声"]},
-  {id:"is_there_someone_else", name:"Is There Someone Else?", artist:"The Weeknd · lofi remix", src:"/lofi-is_there_someone_else-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-is_there_someone_else.jpg", dur:"3:36", tags:["v1 经典档","33rpm 0.92x","vinyl 底噪","−16 LUFS","夜间驾车/氛围"]},
-  {id:"is_there_someone_else_v2", name:"Is There Someone Else? (Sleep V2)", artist:"The Weeknd · lofi remix", src:"/lofi-is_there_someone_else-v2-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-is_there_someone_else.jpg", dur:"3:36", tags:["v2 睡眠档","lowpass 4-4.5k","−19 LUFS 助眠","深夜/学习","温柔人声"]},
-  {id:"less_than_zero", name:"Less Than Zero", artist:"The Weeknd · lofi remix", src:"/lofi-less_than_zero-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-less_than_zero.jpg", dur:"3:50", tags:["v1 经典档","33rpm 0.92x","vinyl 底噪","−16 LUFS","夜间驾车/氛围"]},
-  {id:"less_than_zero_v2", name:"Less Than Zero (Sleep V2)", artist:"The Weeknd · lofi remix", src:"/lofi-less_than_zero-v2-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-less_than_zero.jpg", dur:"3:50", tags:["v2 睡眠档","lowpass 4-4.5k","−19 LUFS 助眠","深夜/学习","温柔人声"]},
-  {id:"niagara_falls", name:"Niagara Falls", artist:"The Weeknd · lofi remix", src:"/lofi-niagara_falls-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-niagara_falls.jpg", dur:"5:01", tags:["v1 经典档","33rpm 0.92x","vinyl 底噪","−16 LUFS","夜间驾车/氛围"]},
-  {id:"niagara_falls_v2", name:"Niagara Falls (Sleep V2)", artist:"The Weeknd · lofi remix", src:"/lofi-niagara_falls-v2-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-niagara_falls.jpg", dur:"5:01", tags:["v2 睡眠档","lowpass 4-4.5k","−19 LUFS 助眠","深夜/学习","温柔人声"]},
-  {id:"ordinary_life", name:"Ordinary Life", artist:"The Weeknd · lofi remix", src:"/lofi-ordinary_life-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-ordinary_life.jpg", dur:"4:01", tags:["v1 经典档","33rpm 0.92x","vinyl 底噪","−16 LUFS","夜间驾车/氛围"]},
-  {id:"ordinary_life_v2", name:"Ordinary Life (Sleep V2)", artist:"The Weeknd · lofi remix", src:"/lofi-ordinary_life-v2-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-ordinary_life.jpg", dur:"4:01", tags:["v2 睡眠档","lowpass 4-4.5k","−19 LUFS 助眠","深夜/学习","温柔人声"]},
-  {id:"out_of_time", name:"Out of Time", artist:"The Weeknd · lofi remix", src:"/lofi-out_of_time-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-out_of_time.jpg", dur:"3:53", tags:["v1 经典档","33rpm 0.92x","vinyl 底噪","−16 LUFS","夜间驾车/氛围"]},
-  {id:"out_of_time_v2", name:"Out of Time (Sleep V2)", artist:"The Weeknd · lofi remix", src:"/lofi-out_of_time-v2-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-out_of_time.jpg", dur:"3:53", tags:["v2 睡眠档","lowpass 4-4.5k","−19 LUFS 助眠","深夜/学习","温柔人声"]},
-  {id:"reminder", name:"Reminder", artist:"The Weeknd · lofi remix", src:"/lofi-reminder-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-reminder.jpg", dur:"3:58", tags:["v1 经典档","33rpm 0.92x","vinyl 底噪","−16 LUFS","夜间驾车/氛围"]},
-  {id:"reminder_v2", name:"Reminder (Sleep V2)", artist:"The Weeknd · lofi remix", src:"/lofi-reminder-v2-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-reminder.jpg", dur:"3:58", tags:["v2 睡眠档","lowpass 4-4.5k","−19 LUFS 助眠","深夜/学习","温柔人声"]},
-  {id:"sacrifice", name:"Sacrifice", artist:"The Weeknd · lofi remix", src:"/lofi-sacrifice-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-sacrifice.jpg", dur:"3:25", tags:["v1 经典档","33rpm 0.92x","vinyl 底噪","−16 LUFS","夜间驾车/氛围"]},
-  {id:"sacrifice_v2", name:"Sacrifice (Sleep V2)", artist:"The Weeknd · lofi remix", src:"/lofi-sacrifice-v2-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-sacrifice.jpg", dur:"3:25", tags:["v2 睡眠档","lowpass 4-4.5k","−19 LUFS 助眠","深夜/学习","温柔人声"]},
-  {id:"save_your_tears", name:"Save Your Tears", artist:"The Weeknd · lofi remix", src:"/lofi-save_your_tears-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-save_your_tears.jpg", dur:"3:54", tags:["v1 经典档","33rpm 0.92x","vinyl 底噪","−16 LUFS","夜间驾车/氛围"]},
-  {id:"save_your_tears_v2", name:"Save Your Tears (Sleep V2)", artist:"The Weeknd · lofi remix", src:"/lofi-save_your_tears-v2-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-save_your_tears.jpg", dur:"3:54", tags:["v2 睡眠档","lowpass 4-4.5k","−19 LUFS 助眠","深夜/学习","温柔人声"]},
-  {id:"starry_eyes", name:"Starry Eyes", artist:"The Weeknd · lofi remix", src:"/lofi-starry_eyes-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-starry_eyes.jpg", dur:"2:41", tags:["v1 经典档","33rpm 0.92x","vinyl 底噪","−16 LUFS","夜间驾车/氛围"]},
-  {id:"starry_eyes_v2", name:"Starry Eyes (Sleep V2)", artist:"The Weeknd · lofi remix", src:"/lofi-starry_eyes-v2-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-starry_eyes.jpg", dur:"2:41", tags:["v2 睡眠档","lowpass 4-4.5k","−19 LUFS 助眠","深夜/学习","温柔人声"]},
-  {id:"the_hills", name:"The Hills", artist:"The Weeknd · lofi remix", src:"/lofi-the_hills-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-the_hills.jpg", dur:"4:23", tags:["v1 经典档","33rpm 0.92x","vinyl 底噪","−16 LUFS","夜间驾车/氛围"]},
-  {id:"the_hills_v2", name:"The Hills (Sleep V2)", artist:"The Weeknd · lofi remix", src:"/lofi-the_hills-v2-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-the_hills.jpg", dur:"4:23", tags:["v2 睡眠档","lowpass 4-4.5k","−19 LUFS 助眠","深夜/学习","温柔人声"]},
-  {id:"true_colors", name:"True Colors", artist:"The Weeknd · lofi remix", src:"/lofi-true_colors-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-true_colors.jpg", dur:"3:44", tags:["v1 经典档","33rpm 0.92x","vinyl 底噪","−16 LUFS","夜间驾车/氛围"]},
-  {id:"true_colors_v2", name:"True Colors (Sleep V2)", artist:"The Weeknd · lofi remix", src:"/lofi-true_colors-v2-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-true_colors.jpg", dur:"3:44", tags:["v2 睡眠档","lowpass 4-4.5k","−19 LUFS 助眠","深夜/学习","温柔人声"]},
-  {id:"wake_me_up", name:"Wake Me Up", artist:"The Weeknd & Justice · lofi remix", src:"/lofi-wake_me_up-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-wake_me_up.jpg", dur:"5:35", tags:["v1 经典档","33rpm 0.92x","vinyl 底噪","−16 LUFS","夜间驾车/氛围"]},
-  {id:"wake_me_up_v2", name:"Wake Me Up (Sleep V2)", artist:"The Weeknd & Justice · lofi remix", src:"/lofi-wake_me_up-v2-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-wake_me_up.jpg", dur:"5:35", tags:["v2 睡眠档","lowpass 4-4.5k","−19 LUFS 助眠","深夜/学习","温柔人声"]},
-  {id:"the_abyss", name:"The Abyss", artist:"The Weeknd & Lana Del Rey · lofi remix", src:"/lofi-the_abyss-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-the_abyss.jpg", dur:"5:07", tags:["v1 经典档","33rpm 0.92x","vinyl 底噪","−16 LUFS","夜间驾车/氛围"]},
-  {id:"the_abyss_v2", name:"The Abyss (Sleep V2)", artist:"The Weeknd & Lana Del Rey · lofi remix", src:"/lofi-the_abyss-v2-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-the_abyss.jpg", dur:"5:07", tags:["v2 睡眠档","lowpass 4-4.5k","−19 LUFS 助眠","深夜/学习","温柔人声"]},
-  {id:"love_me_harder", name:"Love Me Harder", artist:"Ariana Grande & The Weeknd · lofi remix", src:"/lofi-love_me_harder-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-love_me_harder.jpg", dur:"4:16", tags:["v1 经典档","33rpm 0.92x","vinyl 底噪","−16 LUFS","夜间驾车/氛围"]},
-  {id:"love_me_harder_v2", name:"Love Me Harder (Sleep V2)", artist:"Ariana Grande & The Weeknd · lofi remix", src:"/lofi-love_me_harder-v2-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-love_me_harder.jpg", dur:"4:16", tags:["v2 睡眠档","lowpass 4-4.5k","−19 LUFS 助眠","深夜/学习","温柔人声"]},
-  {id:"creepin", name:"Creepin'", artist:"Metro Boomin & The Weeknd & 21 Savage · lofi remix", src:"/lofi-creepin-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-creepin.jpg", dur:"4:01", tags:["v1 经典档","33rpm 0.92x","vinyl 底噪","−16 LUFS","夜间驾车/氛围"]},
-  {id:"creepin_v2", name:"Creepin' (Sleep V2)", artist:"Metro Boomin & The Weeknd & 21 Savage · lofi remix", src:"/lofi-creepin-v2-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-creepin.jpg", dur:"4:01", tags:["v2 睡眠档","lowpass 4-4.5k","−19 LUFS 助眠","深夜/学习","温柔人声"]},
-  {id:"moth_to_a_flame", name:"Moth To A Flame", artist:"Swedish House Mafia & The Weeknd · lofi remix", src:"/lofi-moth_to_a_flame-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-moth_to_a_flame.jpg", dur:"4:14", tags:["v1 经典档","33rpm 0.92x","vinyl 底噪","−16 LUFS","夜间驾车/氛围"]},
-  {id:"moth_to_a_flame_v2", name:"Moth To A Flame (Sleep V2)", artist:"Swedish House Mafia & The Weeknd · lofi remix", src:"/lofi-moth_to_a_flame-v2-cde18313c9f2.mp3",
-   cover:"/covers-au/lofi-moth_to_a_flame.jpg", dur:"4:14", tags:["v2 睡眠档","lowpass 4-4.5k","−19 LUFS 助眠","深夜/学习","温柔人声"]},
-];
+const V1 = [{id:"softlips",name:"Soft Lips",artist:"BlankCh3ck &amp; Nathaniel Davis · lofi remix",src:"/lofi-softlips-cde18313c9f2.mp3",cover:"/covers-au/lofi-softlips.jpg",dur:"2:47",lufs:"−16.0 LUFS", note:"原版 lofi intro 保留"},
+{id:"wilder",name:"To the Wilder (Piano Version)",artist:"Woodkid · lofi remix",src:"/lofi-wilder-cde18313c9f2.mp3",cover:"/covers-au/lofi-wilder.jpg",dur:"4:44",lufs:"−15.0 LUFS", note:"钢琴慢板 preset"},
+{id:"a_lonely_night",name:"A Lonely Night",artist:"The Weeknd · lofi remix",src:"/lofi-a_lonely_night-cde18313c9f2.mp3",cover:"/covers-au/lofi-a_lonely_night.jpg",dur:"3:59",lufs:"−16.0 LUFS"},
+{id:"after_hours",name:"After Hours",artist:"The Weeknd · lofi remix",src:"/lofi-after_hours-cde18313c9f2.mp3",cover:"/covers-au/lofi-after_hours.jpg",dur:"6:32",lufs:"−16.0 LUFS"},
+{id:"best_friends",name:"Best Friends",artist:"The Weeknd · lofi remix",src:"/lofi-best_friends-cde18313c9f2.mp3",cover:"/covers-au/lofi-best_friends.jpg",dur:"2:58",lufs:"−16.0 LUFS"},
+{id:"blinding_lights",name:"Blinding Lights",artist:"The Weeknd · lofi remix",src:"/lofi-blinding_lights-cde18313c9f2.mp3",cover:"/covers-au/lofi-blinding_lights.jpg",dur:"3:37",lufs:"−16.0 LUFS"},
+{id:"cry_for_me",name:"Cry For Me",artist:"The Weeknd · lofi remix",src:"/lofi-cry_for_me-cde18313c9f2.mp3",cover:"/covers-au/lofi-cry_for_me.jpg",dur:"4:04",lufs:"−16.0 LUFS"},
+{id:"dancing_in_the_flames",name:"Dancing In The Flames",artist:"The Weeknd · lofi remix",src:"/lofi-dancing_in_the_flames-cde18313c9f2.mp3",cover:"/covers-au/lofi-dancing_in_the_flames.jpg",dur:"3:59",lufs:"−16.0 LUFS"},
+{id:"die_for_you",name:"Die For You",artist:"The Weeknd · lofi remix",src:"/lofi-die_for_you-cde18313c9f2.mp3",cover:"/covers-au/lofi-die_for_you.jpg",dur:"4:42",lufs:"−16.0 LUFS"},
+{id:"earned_it",name:"Earned It",artist:"The Weeknd · lofi remix",src:"/lofi-earned_it-cde18313c9f2.mp3",cover:"/covers-au/lofi-earned_it.jpg",dur:"4:34",lufs:"−16.0 LUFS"},
+{id:"how_do_i_make_you_love_me",name:"How Do I Make You Love Me",artist:"The Weeknd · lofi remix",src:"/lofi-how_do_i_make_you_love_me-cde18313c9f2.mp3",cover:"/covers-au/lofi-how_do_i_make_you_love_me.jpg",dur:"3:53",lufs:"−16.0 LUFS"},
+{id:"is_there_someone_else",name:"Is There Someone Else?",artist:"The Weeknd · lofi remix",src:"/lofi-is_there_someone_else-cde18313c9f2.mp3",cover:"/covers-au/lofi-is_there_someone_else.jpg",dur:"3:36",lufs:"−16.0 LUFS"},
+{id:"less_than_zero",name:"Less Than Zero",artist:"The Weeknd · lofi remix",src:"/lofi-less_than_zero-cde18313c9f2.mp3",cover:"/covers-au/lofi-less_than_zero.jpg",dur:"3:50",lufs:"−16.0 LUFS"},
+{id:"niagara_falls",name:"Niagara Falls",artist:"The Weeknd · lofi remix",src:"/lofi-niagara_falls-cde18313c9f2.mp3",cover:"/covers-au/lofi-niagara_falls.jpg",dur:"5:01",lufs:"−16.0 LUFS"},
+{id:"ordinary_life",name:"Ordinary Life",artist:"The Weeknd · lofi remix",src:"/lofi-ordinary_life-cde18313c9f2.mp3",cover:"/covers-au/lofi-ordinary_life.jpg",dur:"4:01",lufs:"−16.0 LUFS"},
+{id:"out_of_time",name:"Out of Time",artist:"The Weeknd · lofi remix",src:"/lofi-out_of_time-cde18313c9f2.mp3",cover:"/covers-au/lofi-out_of_time.jpg",dur:"3:53",lufs:"−16.0 LUFS"},
+{id:"reminder",name:"Reminder",artist:"The Weeknd · lofi remix",src:"/lofi-reminder-cde18313c9f2.mp3",cover:"/covers-au/lofi-reminder.jpg",dur:"3:58",lufs:"−16.0 LUFS"},
+{id:"sacrifice",name:"Sacrifice",artist:"The Weeknd · lofi remix",src:"/lofi-sacrifice-cde18313c9f2.mp3",cover:"/covers-au/lofi-sacrifice.jpg",dur:"3:25",lufs:"−16.0 LUFS"},
+{id:"save_your_tears",name:"Save Your Tears",artist:"The Weeknd · lofi remix",src:"/lofi-save_your_tears-cde18313c9f2.mp3",cover:"/covers-au/lofi-save_your_tears.jpg",dur:"3:54",lufs:"−16.0 LUFS"},
+{id:"starry_eyes",name:"Starry Eyes",artist:"The Weeknd · lofi remix",src:"/lofi-starry_eyes-cde18313c9f2.mp3",cover:"/covers-au/lofi-starry_eyes.jpg",dur:"2:41",lufs:"−16.0 LUFS"},
+{id:"the_hills",name:"The Hills",artist:"The Weeknd · lofi remix",src:"/lofi-the_hills-cde18313c9f2.mp3",cover:"/covers-au/lofi-the_hills.jpg",dur:"4:23",lufs:"−16.0 LUFS"},
+{id:"true_colors",name:"True Colors",artist:"The Weeknd · lofi remix",src:"/lofi-true_colors-cde18313c9f2.mp3",cover:"/covers-au/lofi-true_colors.jpg",dur:"3:44",lufs:"−16.0 LUFS"},
+{id:"wake_me_up",name:"Wake Me Up",artist:"The Weeknd &amp; Justice · lofi remix",src:"/lofi-wake_me_up-cde18313c9f2.mp3",cover:"/covers-au/lofi-wake_me_up.jpg",dur:"5:35",lufs:"−16.0 LUFS"},
+{id:"the_abyss",name:"The Abyss",artist:"The Weeknd &amp; Lana Del Rey · lofi remix",src:"/lofi-the_abyss-cde18313c9f2.mp3",cover:"/covers-au/lofi-the_abyss.jpg",dur:"5:07",lufs:"−16.0 LUFS"},
+{id:"love_me_harder",name:"Love Me Harder",artist:"Ariana Grande &amp; The Weeknd · lofi remix",src:"/lofi-love_me_harder-cde18313c9f2.mp3",cover:"/covers-au/lofi-love_me_harder.jpg",dur:"4:16",lufs:"−16.0 LUFS"},
+{id:"creepin",name:"Creepin'",artist:"Metro Boomin &amp; The Weeknd &amp; 21 Savage · lofi remix",src:"/lofi-creepin-cde18313c9f2.mp3",cover:"/covers-au/lofi-creepin.jpg",dur:"4:01",lufs:"−16.0 LUFS"},
+{id:"moth_to_a_flame",name:"Moth To A Flame",artist:"Swedish House Mafia &amp; The Weeknd · lofi remix",src:"/lofi-moth_to_a_flame-cde18313c9f2.mp3",cover:"/covers-au/lofi-moth_to_a_flame.jpg",dur:"4:14",lufs:"−16.0 LUFS"}];
+const V2 = [{id:"a_lonely_night_v2",name:"A Lonely Night",artist:"The Weeknd · lofi remix",src:"/lofi-a_lonely_night-v2-cde18313c9f2.mp3",cover:"/covers-au/lofi-a_lonely_night.jpg",dur:"3:59",lufs:"−19.0 LUFS"},
+{id:"after_hours_v2",name:"After Hours",artist:"The Weeknd · lofi remix",src:"/lofi-after_hours-v2-cde18313c9f2.mp3",cover:"/covers-au/lofi-after_hours.jpg",dur:"6:32",lufs:"−19.0 LUFS"},
+{id:"best_friends_v2",name:"Best Friends",artist:"The Weeknd · lofi remix",src:"/lofi-best_friends-v2-cde18313c9f2.mp3",cover:"/covers-au/lofi-best_friends.jpg",dur:"2:58",lufs:"−19.0 LUFS"},
+{id:"blinding_lights_v2",name:"Blinding Lights",artist:"The Weeknd · lofi remix",src:"/lofi-blinding_lights-v2-cde18313c9f2.mp3",cover:"/covers-au/lofi-blinding_lights.jpg",dur:"3:37",lufs:"−19.0 LUFS"},
+{id:"cry_for_me_v2",name:"Cry For Me",artist:"The Weeknd · lofi remix",src:"/lofi-cry_for_me-v2-cde18313c9f2.mp3",cover:"/covers-au/lofi-cry_for_me.jpg",dur:"4:04",lufs:"−19.0 LUFS"},
+{id:"dancing_in_the_flames_v2",name:"Dancing In The Flames",artist:"The Weeknd · lofi remix",src:"/lofi-dancing_in_the_flames-v2-cde18313c9f2.mp3",cover:"/covers-au/lofi-dancing_in_the_flames.jpg",dur:"3:59",lufs:"−19.0 LUFS"},
+{id:"die_for_you_v2",name:"Die For You",artist:"The Weeknd · lofi remix",src:"/lofi-die_for_you-v2-cde18313c9f2.mp3",cover:"/covers-au/lofi-die_for_you.jpg",dur:"4:42",lufs:"−19.0 LUFS"},
+{id:"earned_it_v2",name:"Earned It",artist:"The Weeknd · lofi remix",src:"/lofi-earned_it-v2-cde18313c9f2.mp3",cover:"/covers-au/lofi-earned_it.jpg",dur:"4:34",lufs:"−19.0 LUFS"},
+{id:"how_do_i_make_you_love_me_v2",name:"How Do I Make You Love Me",artist:"The Weeknd · lofi remix",src:"/lofi-how_do_i_make_you_love_me-v2-cde18313c9f2.mp3",cover:"/covers-au/lofi-how_do_i_make_you_love_me.jpg",dur:"3:53",lufs:"−19.0 LUFS"},
+{id:"is_there_someone_else_v2",name:"Is There Someone Else?",artist:"The Weeknd · lofi remix",src:"/lofi-is_there_someone_else-v2-cde18313c9f2.mp3",cover:"/covers-au/lofi-is_there_someone_else.jpg",dur:"3:36",lufs:"−19.0 LUFS"},
+{id:"less_than_zero_v2",name:"Less Than Zero",artist:"The Weeknd · lofi remix",src:"/lofi-less_than_zero-v2-cde18313c9f2.mp3",cover:"/covers-au/lofi-less_than_zero.jpg",dur:"3:50",lufs:"−19.0 LUFS"},
+{id:"niagara_falls_v2",name:"Niagara Falls",artist:"The Weeknd · lofi remix",src:"/lofi-niagara_falls-v2-cde18313c9f2.mp3",cover:"/covers-au/lofi-niagara_falls.jpg",dur:"5:01",lufs:"−19.0 LUFS"},
+{id:"ordinary_life_v2",name:"Ordinary Life",artist:"The Weeknd · lofi remix",src:"/lofi-ordinary_life-v2-cde18313c9f2.mp3",cover:"/covers-au/lofi-ordinary_life.jpg",dur:"4:01",lufs:"−19.0 LUFS"},
+{id:"out_of_time_v2",name:"Out of Time",artist:"The Weeknd · lofi remix",src:"/lofi-out_of_time-v2-cde18313c9f2.mp3",cover:"/covers-au/lofi-out_of_time.jpg",dur:"3:53",lufs:"−19.0 LUFS"},
+{id:"reminder_v2",name:"Reminder",artist:"The Weeknd · lofi remix",src:"/lofi-reminder-v2-cde18313c9f2.mp3",cover:"/covers-au/lofi-reminder.jpg",dur:"3:58",lufs:"−19.0 LUFS"},
+{id:"sacrifice_v2",name:"Sacrifice",artist:"The Weeknd · lofi remix",src:"/lofi-sacrifice-v2-cde18313c9f2.mp3",cover:"/covers-au/lofi-sacrifice.jpg",dur:"3:25",lufs:"−19.0 LUFS"},
+{id:"save_your_tears_v2",name:"Save Your Tears",artist:"The Weeknd · lofi remix",src:"/lofi-save_your_tears-v2-cde18313c9f2.mp3",cover:"/covers-au/lofi-save_your_tears.jpg",dur:"3:54",lufs:"−19.0 LUFS"},
+{id:"starry_eyes_v2",name:"Starry Eyes",artist:"The Weeknd · lofi remix",src:"/lofi-starry_eyes-v2-cde18313c9f2.mp3",cover:"/covers-au/lofi-starry_eyes.jpg",dur:"2:41",lufs:"−19.0 LUFS"},
+{id:"the_hills_v2",name:"The Hills",artist:"The Weeknd · lofi remix",src:"/lofi-the_hills-v2-cde18313c9f2.mp3",cover:"/covers-au/lofi-the_hills.jpg",dur:"4:23",lufs:"−19.0 LUFS"},
+{id:"true_colors_v2",name:"True Colors",artist:"The Weeknd · lofi remix",src:"/lofi-true_colors-v2-cde18313c9f2.mp3",cover:"/covers-au/lofi-true_colors.jpg",dur:"3:44",lufs:"−19.0 LUFS"},
+{id:"wake_me_up_v2",name:"Wake Me Up",artist:"The Weeknd &amp; Justice · lofi remix",src:"/lofi-wake_me_up-v2-cde18313c9f2.mp3",cover:"/covers-au/lofi-wake_me_up.jpg",dur:"5:35",lufs:"−19.0 LUFS"},
+{id:"the_abyss_v2",name:"The Abyss",artist:"The Weeknd &amp; Lana Del Rey · lofi remix",src:"/lofi-the_abyss-v2-cde18313c9f2.mp3",cover:"/covers-au/lofi-the_abyss.jpg",dur:"5:07",lufs:"−19.0 LUFS"},
+{id:"love_me_harder_v2",name:"Love Me Harder",artist:"Ariana Grande &amp; The Weeknd · lofi remix",src:"/lofi-love_me_harder-v2-cde18313c9f2.mp3",cover:"/covers-au/lofi-love_me_harder.jpg",dur:"4:16",lufs:"−19.0 LUFS"},
+{id:"creepin_v2",name:"Creepin'",artist:"Metro Boomin &amp; The Weeknd &amp; 21 Savage · lofi remix",src:"/lofi-creepin-v2-cde18313c9f2.mp3",cover:"/covers-au/lofi-creepin.jpg",dur:"4:01",lufs:"−19.0 LUFS"},
+{id:"moth_to_a_flame_v2",name:"Moth To A Flame",artist:"Swedish House Mafia &amp; The Weeknd · lofi remix",src:"/lofi-moth_to_a_flame-v2-cde18313c9f2.mp3",cover:"/covers-au/lofi-moth_to_a_flame.jpg",dur:"4:14",lufs:"−19.0 LUFS"}];
+const ROOMS = {v1:V1, v2:V2};
+let room = 'v1';
 
-const list = document.getElementById("list");
 const au = document.getElementById("au");
-const dock = document.getElementById("dock");
 const gate = document.getElementById("gate");
+const dock = document.getElementById("dock");
+const dDisc = document.getElementById("dDisc");
 let cur = null, lockUI = 0, started = false;
-let shuffle = true;               // 随机播放默认开
-let hist = [];                    // 播放历史(上一首用)
-
-TRACKS.forEach((t, i) => {
-  const el = document.createElement("div");
-  el.className = "track";
-  el.innerHTML = `
-    <img class="cover" src="${t.cover}" alt="" loading="lazy">
-    <div class="meta">
-      <div class="name">${t.name}</div>
-      <div class="artist">${t.artist} · ${t.dur}</div>
-      <div class="tags">${t.tags.map(x=>`<span class="tag${x.indexOf('LUFS')>=0?' g':''}">${x}</span>`).join("")}</div>
-      <div class="bars"><i></i><i></i><i></i><i></i><i></i></div>
-    </div>
-    <div class="playbtn">▶</div>`;
-  el.querySelector(".playbtn").onclick = () => toggle(i);
-  list.appendChild(el);
-});
-document.getElementById("stCount").textContent = TRACKS.length;
-document.getElementById("stDate").textContent = "2026-09-30";
-
+let shuffle = true;
+let hist = [];
 const fmt = s => Math.floor(s/60) + ":" + String(Math.floor(s%60)).padStart(2,"0");
-const showGate = () => { gate.style.display = "flex"; };
-const hideGate = () => { gate.style.display = "none"; };
 
-function loadTrack(i, autoplay){
-  const t = TRACKS[i];
+function trackOf(i){ return ROOMS[room][i]; }
+
+function buildList(){
+  const list = document.getElementById(room === 'v1' ? 'list1' : 'list2');
+  const arr = ROOMS[room];
+  arr.forEach((t, i) => {
+    const el = document.createElement("div");
+    el.className = "track";
+    el.innerHTML = `
+      <div class="idx">${i+1}</div>
+      <img class="cover" src="${t.cover}" alt="" loading="lazy">
+      <div class="meta">
+        <div class="name">${t.name}</div>
+        <div class="artist">${t.artist} · ${t.dur}</div>
+        <div class="drow2">
+          <span class="pill l">${t.lufs}</span>${t.note ? `<span class="pill n">${t.note}</span>` : ''}
+        </div>
+      </div>
+      <div class="eq"><i></i><i></i><i></i><i></i></div>
+      <div class="go">▶</div>`;
+    el.onclick = () => toggle(i);
+    list.appendChild(el);
+  });
+  document.getElementById(room === 'v1' ? 'cnt1' : 'cnt2').textContent = arr.length + ' 首';
+}
+buildList();
+document.getElementById("stCount").textContent = (V1.length + V2.length) + ' 首 (v1 ' + V1.length + ' + v2 ' + V2.length + ')';
+
+function switchRoom(r){
+  if (room === r) return;
+  room = r;
+  document.getElementById("tab1").style.display = '';
+  document.getElementById("tab2").style.display = '';
+  document.getElementById("tab1").classList.toggle("on-v1", r === 'v1');
+  document.getElementById("tab2").classList.toggle("on-v2", r === 'v2');
+  document.getElementById("room1").classList.toggle("active", r === 'v1');
+  document.getElementById("room2").classList.toggle("active", r === 'v2');
+  if (!document.getElementById(r === 'v1' ? 'list1' : 'list2').children.length) buildList();
+  // 当前播放若是另一房的歌, dock 主题切到当前房间色
+  syncAll();
+}
+document.getElementById("tab1").style.display = '';
+document.getElementById("tab2").style.display = '';
+
+function loadTrack(r, i, autoplay){
+  room = r;
+  const t = ROOMS[r][i];
+  if (room !== (cur === null ? room : curRoom)) { /* noop */ }
   try{au.pause()}catch(e){}
   au.removeAttribute("src"); try{au.load()}catch(e){}
   au.src = t.src;
-  try{au.load()}catch(e){}          // preload=none: 赋 src 后必须 load() 才发请求
-  hist.push(i); if (hist.length > 300) hist.shift();
-  cur = i; lockUI = Date.now() + 2500;
+  try{au.load()}catch(e){}
+  hist.push({r, i}); if (hist.length > 300) hist.shift();
+  cur = i; curRoom = r; lockUI = Date.now() + 2500;
   syncAll();
   if ("mediaSession" in navigator) {
     try {
       navigator.mediaSession.metadata = new MediaMetadata({
         title: t.name, artist: t.artist.replace(" · lofi remix",""),
-        album: "Lofi House",
+        album: r === 'v1' ? "Lofi House · 经典黑胶房" : "Lofi House · 深夜助眠房",
         artwork: [{src: location.origin + t.cover, sizes: "512x512"}]
       });
     } catch(e) {}
@@ -319,33 +349,41 @@ function loadTrack(i, autoplay){
   if (au.readyState >= 3) go();
   else au.addEventListener("canplay", go, {once:true});
 }
+let curRoom = 'v1';
 
-function nextIdx(from){
-  if (!shuffle) return (from + 1) % TRACKS.length;
-  if (TRACKS.length < 2) return 0;
+function nextIdx(){
+  const arr = ROOMS[room], from = cur || 0;
+  if (!shuffle) return (from + 1) % arr.length;
+  if (arr.length < 2) return 0;
   let n;
-  do { n = Math.floor(Math.random() * TRACKS.length); } while (n === from);
+  do { n = Math.floor(Math.random() * arr.length); } while (n === from);
   return n;
 }
-function next(){ loadTrack(cur === null ? Math.floor(Math.random()*TRACKS.length) : nextIdx(cur), true); }
+function next(){ loadTrack(room, cur === null ? Math.floor(Math.random()*ROOMS[room].length) : nextIdx(), true); }
 function prev(){
   hist.pop();
   const p = hist.pop();
-  loadTrack(p === undefined ? (cur === null ? 0 : (cur - 1 + TRACKS.length) % TRACKS.length) : p, true);
+  if (p) loadTrack(p.r, p.i, true);
+  else { const arr = ROOMS[room]; loadTrack(room, (cur - 1 + arr.length) % arr.length, true); }
 }
-
 function toggle(i){
-  if (cur === i && !au.paused) { au.pause(); syncAll(); return; }
-  if (cur === i && au.paused)  { au.play().catch(()=>showGate()); syncAll(); return; }
-  loadTrack(i, true);
+  if (curRoom === room && cur === i && !au.paused) { au.pause(); syncAll(); return; }
+  if (curRoom === room && cur === i && au.paused) { au.play().catch(()=>showGate()); syncAll(); return; }
+  loadTrack(room, i, true);
 }
 
-// 播完自动下一首
 au.addEventListener("ended", () => { if (started) next(); });
 au.addEventListener("play", () => { started = true; hideGate(); syncAll(); });
 au.addEventListener("pause", syncAll);
+au.addEventListener("timeupdate", () => {
+  if (Date.now() < lockUI) return;
+  const d = au.duration || 0;
+  document.getElementById("dBar").style.width = (d ? au.currentTime / d * 100 : 0) + "%";
+  const t = cur !== null ? ROOMS[curRoom][cur] : null;
+  document.getElementById("dTime").textContent = fmt(au.currentTime) + " / " + (d ? fmt(d) : (t ? t.dur : "0:00"));
+});
+document.getElementById("dProg") && null;
 
-// 锁屏 / 耳机线控
 if ("mediaSession" in navigator) {
   try {
     navigator.mediaSession.setActionHandler("nexttrack", next);
@@ -355,8 +393,9 @@ if ("mediaSession" in navigator) {
   } catch(e) {}
 }
 
-const dBtn = document.getElementById("dBtn");
-dBtn.onclick = () => {
+const showGate = () => { gate.style.display = "flex"; };
+const hideGate = () => { gate.style.display = "none"; };
+document.getElementById("dBtn").onclick = () => {
   if (cur === null) { next(); return; }
   if (au.paused) au.play().catch(()=>showGate()); else au.pause();
 };
@@ -366,55 +405,41 @@ const dShuf = document.getElementById("dShuf");
 function syncShuf(){ dShuf.classList.toggle("on", shuffle); dShuf.textContent = shuffle ? "🔀" : "➡"; }
 dShuf.onclick = () => { shuffle = !shuffle; syncShuf(); };
 syncShuf();
-
-const gateBtn = document.getElementById("gateBtn");
-gateBtn.onclick = (e) => { e.stopPropagation(); hideGate(); if (cur !== null && au.paused) au.play().catch(()=>{}); };
+document.getElementById("gateBtn").onclick = (e) => { e.stopPropagation(); hideGate(); if (cur !== null && au.paused) au.play().catch(()=>{}); };
 gate.onclick = () => { hideGate(); if (cur !== null && au.paused) au.play().catch(()=>{}); };
 
 function syncAll(){
-  [...list.children].forEach((el, i) => {
-    el.classList.toggle("playing", i === cur && !au.paused);
-    el.querySelector(".playbtn").textContent = (i === cur && !au.paused) ? "❚❚" : "▶";
+  ["v1","v2"].forEach(r => {
+    const listEl = document.getElementById(r === 'v1' ? 'list1' : 'list2');
+    [...listEl.children].forEach((el, i) => {
+      const isCur = curRoom === r && cur === i;
+      el.classList.toggle("playing", isCur);
+      el.classList.toggle("paused", isCur && au.paused);
+      el.querySelector(".go").textContent = isCur ? (au.paused ? "▶" : "❚❚") : "▶";
+    });
   });
   if (cur !== null){
     dock.style.display = "block";
-    const t = TRACKS[cur];
+    dock.dataset.room = curRoom;
+    const t = ROOMS[curRoom][cur];
     document.getElementById("dCover").src = t.cover;
     document.getElementById("dName").textContent = t.name;
-    document.getElementById("dArtist").textContent = t.artist;
-    dBtn.textContent = au.paused ? "▶" : "❚❚";
+    document.getElementById("dArtist").textContent = (curRoom === 'v1' ? '黑胶房 · ' : '助眠房 · ') + t.artist;
+    document.getElementById("dBtn").textContent = au.paused ? "▶" : "❚❚";
+    dDisc.classList.toggle("spin", !au.paused);
+    dDisc.classList.toggle("paused", au.paused);
   }
 }
 
-let lastTick = 0;
-au.addEventListener("timeupdate", () => {
-  if (Date.now() < lockUI) return;
-  if (Date.now() - lastTick < 250) return;
-  lastTick = Date.now();
-  const d = au.duration || 0;
-  const pct = d ? (au.currentTime / d * 100) : 0;
-  document.getElementById("dBar").style.width = pct + "%";
-  document.getElementById("dTime").textContent = fmt(au.currentTime) + " / " + (d ? fmt(d) : (TRACKS[cur] ? TRACKS[cur].dur : "0:00"));
-});
-document.getElementById("dProg").onclick = (e) => {
-  if (!au.duration) return;
-  const r = e.currentTarget.getBoundingClientRect();
-  au.currentTime = (e.clientX - r.left) / r.width * au.duration;
-};
-
-// ===== 自动播放 =====
-// 打开页面即随机选曲尝试自动播; 被浏览器策略拦截则显示"点击开始"遮罩
-loadTrack(Math.floor(Math.random() * TRACKS.length), true);
-// 微信内置浏览器: JSBridge 可解锁自动播放
+// 自动播放: 进页随机放一首 v1
+loadTrack('v1', Math.floor(Math.random() * V1.length), true);
 function wechatKick(){ if (!started && au.paused) au.play().then(()=>{}).catch(()=>{}); }
 if (typeof WeixinJSBridge === "undefined") {
   document.addEventListener("WeixinJSBridgeReady", wechatKick, false);
 } else { wechatKick(); }
-// 其他移动浏览器: 首次触摸任意位置即续播
 document.addEventListener("touchstart", function onceKick(){
   if (!started && cur !== null && au.paused) au.play().catch(()=>{});
 }, {passive:true});
-
 </script>
 </body>
 </html>
