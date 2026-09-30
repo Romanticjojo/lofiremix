@@ -83,35 +83,62 @@ td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
 .pipe-card .n{display:inline-block;width:22px;height:22px;border-radius:50%;background:rgba(117,212,194,.14);color:var(--mint);text-align:center;line-height:22px;font-weight:700;margin-bottom:8px}
 
 
-/* ===== DJ 调音台监控 ===== */
-.mixer{display:grid;grid-template-columns:1fr 1.35fr 1fr;gap:10px;align-items:stretch}
-.deck{border:1px solid var(--line);border-radius:12px;padding:12px;background:rgba(21,28,39,.5);display:flex;flex-direction:column;gap:8px;min-width:0;position:relative;overflow:hidden}
+/* ===== DDJ-200 调音台 ===== */
+.mixer{display:grid;grid-template-columns:1fr 1.5fr 1fr;gap:9px;align-items:stretch}
+.deck{border:1px solid #36455a;border-radius:10px;padding:10px;background:linear-gradient(160deg,#1a2332,#131a26 60%,#101623);display:flex;flex-direction:column;gap:7px;min-width:0;position:relative;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 3px 10px rgba(0,0,0,.4)}
+.deck::before{content:"";position:absolute;top:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(143,182,222,.35),transparent)}
 .deck.flash{animation:dflash .7s ease}
-@keyframes dflash{0%{border-color:var(--mint);background:rgba(143,182,222,.14)}100%{}}
-.deck .lab{font-size:9.5px;letter-spacing:.14em;color:var(--muted);display:flex;align-items:center;gap:5px}
-.deck .lab b{color:var(--mint);font-weight:700}
-.deck.b .lab b{color:var(--gold)}
-.dot{width:6px;height:6px;border-radius:50%;background:var(--red);animation:pulse 1.4s infinite}
-@keyframes pulse{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(248,81,73,.5)}50%{opacity:.5;box-shadow:0 0 0 5px rgba(248,81,73,0)}}
-.deck .art{width:100%;aspect-ratio:1;border-radius:8px;object-fit:cover;box-shadow:0 4px 14px rgba(0,0,0,.45)}
-.deck.b .art{filter:saturate(.55) brightness(.75)}
-.deck .t{font-weight:700;font-size:13px;line-height:1.25;overflow-wrap:anywhere}
-.deck .m{color:var(--muted);font-size:10.5px;font-variant-numeric:tabular-nums}
-.vu{height:7px;border-radius:4px;background:rgba(42,54,72,.7);overflow:hidden;flex-shrink:0}
-.vu i{display:block;height:100%;width:0%;border-radius:4px;transition:width .12s linear}
-.deck.a .vu i{background:linear-gradient(90deg,var(--mint),var(--blue))}
-.deck.b .vu i{background:linear-gradient(90deg,var(--gold),#e8d5a8)}
-.xf{border:1px solid var(--line);border-radius:12px;padding:12px;background:rgba(21,28,39,.5);display:flex;flex-direction:column;gap:8px;min-width:0}
+@keyframes dflash{0%{border-color:var(--mint);box-shadow:0 0 18px rgba(143,182,222,.35)}100%{}}
+.deck .lab{font-size:9px;letter-spacing:.16em;color:#7d8ea3;display:flex;align-items:center;gap:5px;font-weight:600}
+.deck .lab b{color:var(--mint);font-weight:800;text-shadow:0 0 8px rgba(143,182,222,.4)}
+.deck.b .lab b{color:var(--gold);text-shadow:0 0 8px rgba(201,185,138,.4)}
+.dot{width:6px;height:6px;border-radius:50%;background:#ff5a4e;box-shadow:0 0 8px rgba(255,90,78,.8);animation:pulse 1.4s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
+.deck .art{width:100%;aspect-ratio:1;border-radius:7px;object-fit:cover;box-shadow:0 3px 12px rgba(0,0,0,.5)}
+.deck.b .art{filter:saturate(.5) brightness(.7)}
+.deck .t{font-weight:700;font-size:12.5px;line-height:1.25;overflow-wrap:anywhere}
+.deck .m{color:#8a9ab0;font-size:10px;font-variant-numeric:tabular-nums}
+/* VU 电平表: 分段 LED */
+.vu{display:flex;gap:2px;height:20px;align-items:flex-end;flex-shrink:0;padding:2px 3px;background:#0a0e15;border-radius:4px;border:1px solid #1e2836}
+.vu i{flex:1;border-radius:1.5px;background:#232e3e;transition:background .1s linear,box-shadow .1s linear;min-width:2px}
+.vu i.on1{background:#4fd68c;box-shadow:0 0 4px rgba(79,214,140,.5)}
+.vu i.on2{background:#a8e06c;box-shadow:0 0 4px rgba(168,224,108,.4)}
+.vu i.on3{background:#ffd24f;box-shadow:0 0 4px rgba(255,210,79,.45)}
+.vu i.on4{background:#ff5a4e;box-shadow:0 0 5px rgba(255,90,78,.6)}
+/* 中心区 */
+.xf{border:1px solid #36455a;border-radius:10px;padding:10px 10px 8px;background:linear-gradient(165deg,#1a2332,#121925 55%,#0e1420);display:flex;flex-direction:column;gap:7px;min-width:0;box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 3px 10px rgba(0,0,0,.4);position:relative;overflow:hidden}
+.xf::before{content:"";position:absolute;top:0;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,rgba(143,182,222,.3),transparent)}
 .xf-head{display:flex;justify-content:space-between;align-items:center;gap:6px}
-.mix-badge{font-size:10px;font-weight:700;letter-spacing:.1em;padding:4px 9px;border-radius:20px;background:rgba(107,143,216,.16);color:var(--blue);border:1px solid rgba(107,143,216,.35);white-space:nowrap}
-.mix-count{font-size:15px;font-weight:800;font-variant-numeric:tabular-nums;color:var(--text)}
-.mix-count small{font-size:9.5px;color:var(--muted);font-weight:400;letter-spacing:.08em}
-#xfCurve{width:100%;height:118px;display:block;border-radius:8px;background:rgba(12,16,23,.6);flex:1}
-.mix-why{font-size:10px;color:var(--muted);line-height:1.5;font-variant-numeric:tabular-nums}
-.legend{display:flex;gap:12px;font-size:9.5px;color:var(--muted)}
-.legend i{display:inline-block;width:14px;height:3px;border-radius:2px;margin-right:4px;vertical-align:middle}
-#ovCanvas{width:100%;height:52px;display:block;border-radius:8px;background:rgba(12,16,23,.6);cursor:pointer;margin-top:10px}
-@media(max-width:760px){.mixer{grid-template-columns:1fr 1fr}.xf{grid-column:1/-1;order:3}}
+.mix-badge{font-size:9px;font-weight:800;letter-spacing:.12em;padding:4px 8px;border-radius:20px;background:rgba(107,143,216,.14);color:#9db8e6;border:1px solid rgba(107,143,216,.4);white-space:nowrap}
+.mix-badge.live{background:rgba(255,90,78,.14);color:#ff8d84;border-color:rgba(255,90,78,.45);animation:bpulse 1s infinite}
+@keyframes bpulse{0%,100%{box-shadow:0 0 0 0 rgba(255,90,78,.3)}50%{box-shadow:0 0 10px 2px rgba(255,90,78,.12)}}
+.mix-count{font-size:14px;font-weight:800;font-variant-numeric:tabular-nums;color:#e4eaf4}
+.mix-count small{font-size:9px;color:#7d8ea3;font-weight:500;letter-spacing:.1em}
+#xfCurve{width:100%;height:96px;display:block;border-radius:7px;background:radial-gradient(ellipse at 50% 120%,rgba(107,143,216,.08),transparent 70%),#0a0e15;border:1px solid #222d3d;flex:1}
+.mix-why{font-size:9.5px;color:#8a9ab0;line-height:1.55;font-variant-numeric:tabular-nums}
+.legend{display:flex;gap:10px;font-size:9px;color:#7d8ea3}
+.legend i{display:inline-block;width:12px;height:3px;border-radius:2px;margin-right:3px;vertical-align:middle}
+/* DDJ 硬件按键排 */
+.pads{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px}
+.pad{height:36px;border-radius:7px;border:1px solid #3a4a60;background:linear-gradient(180deg,#28354a 0%,#1d2839 48%,#161f2e 52%,#1c2637 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;cursor:pointer;position:relative;transition:transform .06s,box-shadow .15s;user-select:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),inset 0 -2px 4px rgba(0,0,0,.35),0 2px 4px rgba(0,0,0,.35)}
+.pad::before{content:"";position:absolute;top:2px;left:12%;right:12%;height:1px;border-radius:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.14),transparent)}
+.pad:active{transform:translateY(2px);box-shadow:inset 0 2px 6px rgba(0,0,0,.5),0 0 0 rgba(0,0,0,0)}
+.pad .ic{font-size:13px;line-height:1}
+.pad .tx{font-size:7.5px;letter-spacing:.08em;color:#8a9ab0;font-weight:700}
+.pad.hot{border-color:rgba(255,90,78,.6);box-shadow:0 0 12px rgba(255,90,78,.25),inset 0 0 8px rgba(255,90,78,.12)}
+.pad.lit-blue{border-color:rgba(107,143,216,.7);box-shadow:0 0 12px rgba(107,143,216,.3),inset 0 0 8px rgba(107,143,216,.15)}
+.pad.lit-amber{border-color:rgba(201,185,138,.7);box-shadow:0 0 12px rgba(201,185,138,.3),inset 0 0 8px rgba(201,185,138,.15)}
+.pad.disabled{opacity:.35;pointer-events:none}
+.pad .glow{position:absolute;inset:0;border-radius:7px;pointer-events:none}
+/* 交叉推子(滑轨) */
+.xfader{display:flex;align-items:center;gap:8px;margin-top:2px}
+.xf-rail{flex:1;height:22px;border-radius:11px;background:linear-gradient(180deg,#0a0e15,#141c29);border:1px solid #2a3648;position:relative;box-shadow:inset 0 2px 5px rgba(0,0,0,.6)}
+.xf-rail .mid{position:absolute;left:50%;top:2px;bottom:2px;width:1px;background:rgba(143,182,222,.25)}
+.xf-knob{position:absolute;top:50%;left:50%;width:34px;height:16px;transform:translate(-50%,-50%);border-radius:4px;background:linear-gradient(180deg,#3c4c63,#25324a);border:1px solid #55688a;box-shadow:0 2px 6px rgba(0,0,0,.5);transition:left .15s cubic-bezier(.2,.8,.3,1)}
+.xf-knob::after{content:"";position:absolute;left:50%;top:2px;bottom:2px;width:2px;transform:translateX(-50%);background:#8fb6de;border-radius:1px;box-shadow:0 0 5px rgba(143,182,222,.7)}
+.xf-tag{font-size:8.5px;color:#7d8ea3;letter-spacing:.08em;font-weight:700}
+#ovCanvas{width:100%;height:52px;display:block;border-radius:7px;background:#0a0e15;border:1px solid #222d3d;cursor:pointer;margin-top:9px}
+@media(max-width:760px){.mixer{grid-template-columns:1fr 1fr}.xf{grid-column:1/-1;order:2}.pads{grid-column:1/-1;order:3}}
 footer{color:var(--muted);font-size:11.5px;text-align:center;margin-top:34px;line-height:1.9}
 @media(max-width:760px){
   main{margin:16px auto;padding:0 14px 170px}
@@ -199,6 +226,11 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;margin-top:34px;lin
       </div>
       <canvas id="xfCurve"></canvas>
       <div class="legend"><span><i style="background:var(--mint)"></i>Deck A 电平</span><span><i style="background:var(--gold)"></i>Deck B 电平</span><span><i style="background:var(--red)"></i>交叉进度</span></div>
+      <div class="xfader">
+        <span class="xf-tag">A</span>
+        <div class="xf-rail"><span class="mid"></span><div class="xf-knob" id="xfKnob"></div></div>
+        <span class="xf-tag">B</span>
+      </div>
       <div class="mix-why" id="mixWhy">— 点击任意曲目开机 · 交叉窗开启后曲线启动 —</div>
     </div>
     <div class="deck b" id="deckB">
@@ -208,6 +240,12 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;margin-top:34px;lin
       <div class="m" id="nSub">— BPM · —</div>
       <div class="vu"><i id="vuB"></i></div>
     </div>
+  </div>
+  <div class="pads" id="padsRow">
+    <div class="pad" id="padFX1"><span class="ic">🌀</span><span class="tx">ECHO OUT</span></div>
+    <div class="pad" id="padFX2"><span class="ic">🎛️</span><span class="tx">FILTER</span></div>
+    <div class="pad" id="padLoop"><span class="ic">🔁</span><span class="tx">LOOP 4BEAT</span></div>
+    <div class="pad" id="padCue"><span class="ic">🎯</span><span class="tx">HOT CUE</span></div>
   </div>
   <canvas id="ovCanvas" title="SET 声音大小总览 · 点击跳播"></canvas>
 </div>
@@ -265,8 +303,9 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;margin-top:34px;lin
 <script>
 const SET = [{"title": "Love Me Harder", "artist": "Ariana Grande & The Weeknd", "bpm": 92.3, "key": "D", "cam": "", "phase": "intro", "tec": "xfade", "cover": "/covers-au/lofi-love_me_harder.jpg", "mood": "深夜慢板", "start": 0.0, "dur": 155.0}, {"title": "Out Of Time", "artist": "The Weeknd", "bpm": 86.1, "key": "F#", "cam": "", "phase": "intro", "tec": "xfade", "cover": "/covers-au/lofi-out_of_time.jpg", "mood": "深夜慢板", "start": 155.0, "dur": 153.1}, {"title": "Blinding Lights", "artist": "The Weeknd", "bpm": 78.3, "key": "E", "cam": "", "phase": "warmup", "tec": "xfade", "cover": "/covers-au/lofi-blinding_lights.jpg", "mood": "深夜慢板", "start": 308.1, "dur": 151.2}, {"title": "Wake Me Up", "artist": "The Weeknd & Justice", "bpm": 103.4, "key": "B", "cam": "", "phase": "warmup", "tec": "xfade", "cover": "/covers-au/lofi-wake_me_up.jpg", "mood": "深夜慢板", "start": 459.3, "dur": 149.4}, {"title": "The Hills", "artist": "The Weeknd", "bpm": 103.4, "key": "B", "cam": "", "phase": "warmup", "tec": "xfade", "cover": "/covers-au/lofi-the_hills.jpg", "mood": "深夜慢板", "start": 608.7, "dur": 147.5}, {"title": "Moth To A Flame", "artist": "Swedish House Mafia & The Weeknd", "bpm": 112.3, "key": "B", "cam": "", "phase": "warmup", "tec": "xfade", "cover": "/covers-au/lofi-moth_to_a_flame.jpg", "mood": "深夜慢板", "start": 756.2, "dur": 145.6}, {"title": "Starry Eyes", "artist": "The Weeknd", "bpm": 112.3, "key": "G#", "cam": "", "phase": "warmup", "tec": "xfade", "cover": "/covers-au/lofi-starry_eyes.jpg", "mood": "深夜慢板", "start": 901.8, "dur": 140.8}, {"title": "Save Your Tears", "artist": "The Weeknd", "bpm": 107.7, "key": "D#", "cam": "", "phase": "warmup", "tec": "xfade", "cover": "/covers-au/lofi-save_your_tears.jpg", "mood": "深夜慢板", "start": 1042.6, "dur": 141.9}, {"title": "Less Than Zero", "artist": "The Weeknd", "bpm": 129.2, "key": "D#", "cam": "", "phase": "warmup", "tec": "xfade", "cover": "/covers-au/lofi-less_than_zero.jpg", "mood": "深夜慢板", "start": 1184.5, "dur": 140.0}, {"title": "Ordinary Life", "artist": "The Weeknd", "bpm": 136.0, "key": "F#", "cam": "", "phase": "build", "tec": "xfade", "cover": "/covers-au/lofi-ordinary_life.jpg", "mood": "深夜慢板", "start": 1324.5, "dur": 138.1}, {"title": "True Colors", "artist": "The Weeknd", "bpm": 143.6, "key": "F", "cam": "", "phase": "build", "tec": "xfade", "cover": "/covers-au/lofi-true_colors.jpg", "mood": "深夜慢板", "start": 1462.6, "dur": 136.2}, {"title": "Dancing In The Flames", "artist": "The Weeknd", "bpm": 143.6, "key": "C", "cam": "", "phase": "build", "tec": "xfade", "cover": "/covers-au/lofi-dancing_in_the_flames.jpg", "mood": "深夜慢板", "start": 1598.8, "dur": 134.4}, {"title": "Earned It", "artist": "The Weeknd", "bpm": 112.3, "key": "G#", "cam": "", "phase": "build", "tec": "xfade", "cover": "/covers-au/lofi-earned_it.jpg", "mood": "深夜慢板", "start": 1733.2, "dur": 132.5}, {"title": "Best Friends", "artist": "The Weeknd", "bpm": 83.4, "key": "D", "cam": "", "phase": "build", "tec": "xfade", "cover": "/covers-au/lofi-best_friends.jpg", "mood": "深夜慢板", "start": 1865.7, "dur": 130.6}, {"title": "A Lonely Night", "artist": "The Weeknd", "bpm": 103.4, "key": "F#", "cam": "", "phase": "build", "tec": "xfade", "cover": "/covers-au/lofi-a_lonely_night.jpg", "mood": "深夜慢板", "start": 1996.3, "dur": 128.8}, {"title": "Creepin", "artist": "Metro Boomin & The Weeknd & 21 Savage", "bpm": 89.1, "key": "D#", "cam": "", "phase": "build", "tec": "xfade", "cover": "/covers-au/lofi-creepin.jpg", "mood": "深夜慢板", "start": 2125.1, "dur": 126.9}, {"title": "After Hours", "artist": "The Weeknd", "bpm": 99.4, "key": "F#", "cam": "", "phase": "build", "tec": "xfade", "cover": "/covers-au/lofi-after_hours.jpg", "mood": "深夜慢板", "start": 2252.0, "dur": 125.0}, {"title": "How Do I Make You Love Me", "artist": "The Weeknd", "bpm": 112.3, "key": "F#", "cam": "", "phase": "peak", "tec": "xfade", "cover": "/covers-au/lofi-how_do_i_make_you_love_me.jpg", "mood": "深夜慢板", "start": 2377.0, "dur": 123.1}, {"title": "The Abyss", "artist": "The Weeknd & Lana Del Rey", "bpm": 129.2, "key": "B", "cam": "", "phase": "peak", "tec": "xfade", "cover": "/covers-au/lofi-the_abyss.jpg", "mood": "深夜慢板", "start": 2500.1, "dur": 121.2}, {"title": "Is There Someone Else", "artist": "The Weeknd", "bpm": 123.0, "key": "C#", "cam": "", "phase": "peak", "tec": "xfade", "cover": "/covers-au/lofi-is_there_someone_else.jpg", "mood": "深夜慢板", "start": 2621.3, "dur": 119.4}, {"title": "Die For You", "artist": "The Weeknd", "bpm": 123.0, "key": "G", "cam": "", "phase": "peak", "tec": "xfade", "cover": "/covers-au/lofi-die_for_you.jpg", "mood": "深夜慢板", "start": 2740.7, "dur": 117.5}, {"title": "Cry For Me", "artist": "The Weeknd", "bpm": 112.3, "key": "F#", "cam": "", "phase": "peak", "tec": "xfade", "cover": "/covers-au/lofi-cry_for_me.jpg", "mood": "深夜慢板", "start": 2858.2, "dur": 115.6}, {"title": "Reminder", "artist": "The Weeknd", "bpm": 143.6, "key": "B", "cam": "", "phase": "outro", "tec": "xfade", "cover": "/covers-au/lofi-reminder.jpg", "mood": "深夜慢板", "start": 2973.8, "dur": 113.8}, {"title": "Niagara Falls", "artist": "The Weeknd", "bpm": 89.1, "key": "F", "cam": "", "phase": "outro", "tec": "xfade", "cover": "/covers-au/lofi-niagara_falls.jpg", "mood": "深夜慢板", "start": 3087.6, "dur": 111.9}, {"title": "Sacrifice", "artist": "The Weeknd", "bpm": 112.3, "key": "A#", "cam": "", "phase": "outro", "tec": "xfade", "cover": "/covers-au/lofi-sacrifice.jpg", "mood": "深夜慢板", "start": 3199.5, "dur": 110.0}];
 
-let starts = SET.map(s => s.start);
-const TOTAL = starts[starts.length-1] + (SET[SET.length-1].dur || 78);
+const XF = 12;
+let starts = SET.map((s,i) => i ? s.start - XF : s.start);   // acrossfade 重叠校正: B 曲提前 12s 进场
+const TOTAL = starts[starts.length-1] + (SET[SET.length-1].dur || 78) + XF;
 
 const au = document.getElementById('au');
 const emap = document.getElementById('emap');
@@ -345,27 +384,38 @@ function syncUI(i){
 }
 au.addEventListener('loadedmetadata', () => { /* duration ready */ });
 
-// ===== DJ 调音台监控 =====
-const XF = 12;
+
+// ===== DJ 调音台监控 v2 =====
 const PH_CN = ({'intro':'OPEN','warmup':'AFTER HOURS','build':'DEEP NIGHT','peak':'3AM','outro':'DAWN FM'});
 let monIdx = -1, xfP = null;
 const xfc = $('xfCurve'), xctx = xfc.getContext('2d');
 const ovc = $('ovCanvas'), octx = ovc.getContext('2d');
 function segEnd(i){ return starts[i] + SET[i].dur; }
+function cueOf(i){ return starts[i] + SET[i].dur - XF; }   // 接棒点: 下段进场
 
-// 整条 SET 的声音大小包络(段 RMS × 三角交叉叠加)
+// --- LED VU 表 ---
+function buildVU(el, n){ el.innerHTML = '<i></i>'.repeat(n); return [...el.children]; }
+const ledA = buildVU($('vuA'), 14), ledB = buildVU($('vuB'), 14);
+function setVU(leds, g){
+  const n = leds.length, lit = Math.round(g * n);
+  leds.forEach((L, i) => {
+    L.className = i < lit ? (i >= n-2 ? 'on4' : i >= n-4 ? 'on3' : i >= n/2 ? 'on2' : 'on1') : '';
+  });
+}
+
+// --- SET 能量包络总览 ---
 let ENV = null;
 function buildEnv(){
-  const N = 720, total = segEnd(SET.length-1) + XF;
+  const N = 720, total = segEnd(SET.length-1);
   ENV = new Float32Array(N);
   for (let i=0;i<SET.length;i++){
-    const a = starts[i], b = a + SET[i].dur + XF, r = SET[i].rms;
+    const a = starts[i], b = segEnd(i), r = SET[i].rms;
     for (let k=0;k<N;k++){
       const t = k/N*total;
       if (t<a || t>=b) continue;
       let g = 1;
-      if (i>0 && t < a+XF) g = (t-a)/XF;
-      if (i<SET.length-1 && t > a+SET[i].dur) g = 1-(t-(a+SET[i].dur))/XF;
+      if (i>0 && t < a+XF) g = (t-a)/XF;              // 进场淡入
+      if (i<SET.length-1 && t > cueOf(i)) g = Math.min(g, 1-(t-cueOf(i))/XF);  // 出场淡出
       ENV[k] += r*g;
     }
   }
@@ -374,65 +424,90 @@ function drawOverview(){
   const dpr = devicePixelRatio||1, W = ovc.width = ovc.clientWidth*dpr, H = ovc.height = 52*dpr;
   octx.clearRect(0,0,W,H);
   if (!ENV) return;
-  const total = segEnd(SET.length-1)+XF, mx = Math.max(...ENV);
-  const grd = octx.createLinearGradient(0,0,0,H);
-  grd.addColorStop(0,'rgba(107,143,216,.85)'); grd.addColorStop(1,'rgba(143,182,222,.25)');
+  const total = segEnd(SET.length-1), mx = Math.max(...ENV);
   octx.beginPath();
   for (let k=0;k<ENV.length;k++){
-    const x = k/ENV.length*W, y = H - (ENV[k]/mx)*(H-6) - 2;
+    const x = k/ENV.length*W, y = H - (ENV[k]/mx)*(H-8) - 3;
     k?octx.lineTo(x,y):octx.moveTo(x,y);
   }
-  octx.strokeStyle = grd; octx.lineWidth = 1.2*dpr; octx.stroke();
+  octx.strokeStyle = 'rgba(107,143,216,.9)'; octx.lineWidth = 1.3*dpr; octx.stroke();
   octx.lineTo(W,H); octx.lineTo(0,H); octx.closePath();
-  octx.fillStyle = 'rgba(107,143,216,.10)'; octx.fill();
-  // 段落刻度
+  const grd = octx.createLinearGradient(0,0,0,H);
+  grd.addColorStop(0,'rgba(107,143,216,.30)'); grd.addColorStop(1,'rgba(107,143,216,.02)');
+  octx.fillStyle = grd; octx.fill();
   for (let i=1;i<SET.length;i++){
-    const x = starts[i]/total*W;
-    octx.fillStyle='rgba(150,164,184,.18)'; octx.fillRect(x,0,dpr,H);
+    octx.fillStyle='rgba(150,164,184,.14)'; octx.fillRect(starts[i]/total*W,0,dpr,H);
   }
-  // 播放头
   if (au.duration){
     const x = au.currentTime/au.duration*W;
-    octx.fillStyle='rgba(248,81,73,.9)'; octx.fillRect(x-1*dpr,0,2*dpr,H);
+    octx.fillStyle='rgba(255,90,78,.95)'; octx.fillRect(x-1*dpr,0,2*dpr,H);
+    octx.fillStyle='rgba(255,90,78,.15)'; octx.fillRect(x-6*dpr,0,12*dpr,H);
   }
 }
 ovc.addEventListener('click', e => {
   if (!au.duration) return;
   const r = ovc.getBoundingClientRect();
-  au.currentTime = (e.clientX-r.left)/r.width * au.duration;
+  seekTo((e.clientX-r.left)/r.width * au.duration);
 });
+function seekTo(t){
+  seekLock = Date.now() + 3000;
+  const src = au.src.split('#')[0];
+  au.src = src + '#t=' + Math.floor(t);
+  au.play().catch(()=>{});
+}
 
-// 交叉曲线图: 12s 窗口, A 三角降 / B 三角升, 竖线=当前
-function drawCurve(p){
-  const dpr = devicePixelRatio||1, W = xfc.width, H = xfc.height;
+// --- 交叉曲线: 平滑指数曲线 + 发光 + 刻度 + 拖尾 ---
+let trail = [];
+function drawXF(p){
+  const dpr = devicePixelRatio||1, W = xfc.width = xfc.clientWidth*dpr, H = xfc.height = xfc.clientHeight*dpr;
   xctx.clearRect(0,0,W,H);
-  const pad = 8*dpr, iw = W-2*pad, ih = H-2*pad, y0 = pad+ih, y1 = pad;
-  // 网格
-  xctx.strokeStyle = 'rgba(42,54,72,.6)'; xctx.lineWidth = 1;
+  const pad = 10*dpr, iw = W-2*pad, ih = H-2*pad, y0 = pad+ih, y1 = pad;
+  // 背景网格
+  xctx.strokeStyle = 'rgba(42,54,72,.5)'; xctx.lineWidth = 1;
   for (let g=0; g<=4; g++){ const y = pad+ih*g/4; xctx.beginPath(); xctx.moveTo(pad,y); xctx.lineTo(W-pad,y); xctx.stroke(); }
-  // A: 1→0  B: 0→1 (三角窗)
-  const line = (c, up, fill) => {
+  for (let g=0; g<=6; g++){ const x = pad+iw*g/6; xctx.beginPath(); xctx.moveTo(x,y0); xctx.lineTo(x,y1); xctx.stroke(); }
+  // 中心参考线
+  xctx.strokeStyle = 'rgba(143,182,222,.18)'; xctx.setLineDash([3*dpr,3*dpr]);
+  xctx.beginPath(); xctx.moveTo(pad+iw/2,y0); xctx.lineTo(pad+iw/2,y1); xctx.stroke(); xctx.setLineDash([]);
+  // 音量曲线: 指数快降慢升(DJ 常用) — A: e^(-2.2x) B: 1-e^(-2.2(1-x))反
+  const fA = x => Math.exp(-2.2*x), fB = x => 1-Math.exp(-2.2*x);
+  const curve = (f, col, glow) => {
     xctx.beginPath();
-    xctx.moveTo(pad, up?y0:y1); xctx.lineTo(pad+iw, up?y1:y0);
-    if (fill){
-      xctx.lineTo(pad, up?y0:y1); xctx.closePath();
-      xctx.fillStyle = fill; xctx.fill();
-      xctx.beginPath(); xctx.moveTo(pad, up?y0:y1); xctx.lineTo(pad+iw, up?y1:y0);
+    for (let k=0;k<=60;k++){
+      const x = k/60, px = pad+iw*x, py = y0 - f(x)*ih;
+      k?xctx.lineTo(px,py):xctx.moveTo(px,py);
     }
-    xctx.strokeStyle = c; xctx.lineWidth = 2*dpr; xctx.stroke();
+    xctx.strokeStyle = col; xctx.lineWidth = 2.2*dpr; xctx.shadowColor = glow; xctx.shadowBlur = 6*dpr; xctx.stroke();
+    xctx.shadowBlur = 0;
   };
-  line('rgba(143,182,222,.9)', false, null);
-  line('rgba(201,185,138,.9)', true, null);
-  // 交叉进度竖线 + 两侧电平点
+  curve(fA, 'rgba(143,182,222,.95)', 'rgba(143,182,222,.5)');
+  curve(fB, 'rgba(230,213,168,.95)', 'rgba(230,213,168,.5)');
+  // 曲线下方微填充
+  const fill = (f, col) => {
+    xctx.beginPath();
+    for (let k=0;k<=60;k++){ const x=k/60, px=pad+iw*x, py=y0-f(x)*ih; k?xctx.lineTo(px,py):xctx.moveTo(px,py); }
+    xctx.lineTo(pad+iw,y0); xctx.lineTo(pad,y0); xctx.closePath(); xctx.fillStyle = col; xctx.fill();
+  };
+  fill(fA, 'rgba(143,182,222,.07)'); fill(fB, 'rgba(230,213,168,.07)');
+  // 播放头 + 电平交点
   if (p != null){
-    const x = pad + iw*p;
-    xctx.strokeStyle = 'rgba(248,81,73,.95)'; xctx.lineWidth = 1.5*dpr;
-    xctx.setLineDash([4*dpr,3*dpr]);
+    const x = pad+iw*p;
+    // 拖尾
+    trail.push(p); if (trail.length > 22) trail.shift();
+    trail.forEach((tp,ti) => {
+      const tx = pad+iw*tp, a = (ti/trail.length)*.22;
+      xctx.fillStyle = `rgba(255,90,78,${a})`; xctx.fillRect(tx-.5*dpr,y1,1*dpr,ih);
+    });
+    xctx.strokeStyle = 'rgba(255,90,78,.95)'; xctx.lineWidth = 1.6*dpr;
     xctx.beginPath(); xctx.moveTo(x,y0); xctx.lineTo(x,y1); xctx.stroke();
-    xctx.setLineDash([]);
-    const dot = (y,c)=>{ xctx.beginPath(); xctx.arc(x,y,3.2*dpr,0,7); xctx.fillStyle=c; xctx.fill(); };
-    dot(y0+(1-(1-p))*ih*0 + (p)*ih, 'rgba(143,182,222,1)');   // A: y0→y1 as p
-    dot(y0 - p*ih, 'rgba(230,213,168,1)');
+    const yA = y0 - fA(p)*ih, yB = y0 - fB(p)*ih;
+    const dot = (y,c,r)=>{ xctx.beginPath(); xctx.arc(x,y,r*dpr,0,7); xctx.fillStyle=c; xctx.fill(); xctx.shadowColor=c; xctx.shadowBlur=8*dpr; xctx.fill(); xctx.shadowBlur=0; };
+    dot(yA,'#8fb6de',3.4); dot(yB,'#e6d5a8',3.4);
+    // 当前 dB 标注
+    xctx.font = `${9*dpr}px ui-monospace,monospace`; xctx.fillStyle='rgba(143,182,222,.8)';
+    xctx.fillText((20*Math.log10(Math.max(fA(p),.001))).toFixed(1)+'dB', Math.min(W-40*dpr, x+6*dpr), Math.max(y1+9*dpr, yA-6*dpr));
+    xctx.fillStyle='rgba(230,213,168,.8)';
+    xctx.fillText((20*Math.log10(Math.max(fB(p),.001))).toFixed(1)+'dB', Math.min(W-40*dpr, x+6*dpr), Math.min(y0-4*dpr, yB+12*dpr));
   }
 }
 function keyRel(k1,k2){
@@ -444,48 +519,69 @@ function keyRel(k1,k2){
 function updMonitor(){
   if (curIdx < 0) return;
   const seg = SET[curIdx], nxt = SET[curIdx+1];
-  $('dArt').src = seg.cover;
-  $('dTitle').textContent = seg.title;
+  $('dArt').src = seg.cover; $('dTitle').textContent = seg.title;
   $('dSub').textContent = `${seg.bpm.toFixed(1)} BPM · ${seg.key} · ${PH_CN[seg.phase]||seg.phase}`;
   if (nxt){
     $('nArt').src = nxt.cover; $('nTitle').textContent = nxt.title;
     $('nSub').textContent = `${nxt.bpm.toFixed(1)} BPM · ${nxt.key}`;
-    const t1 = segEnd(curIdx);
-    const dB = ((nxt.bpm-seg.bpm)/seg.bpm*100);
-    $('mixWhy').textContent = `接歌理由: ${keyRel(seg.key,nxt.key)} ${seg.key}→${nxt.key} · ΔBPM ${dB>=0?'+':''}${dB.toFixed(1)}% · 慢板长板接法(不切拍)`;
-    $('mixCount').innerHTML = fmt(Math.max(0,t1-au.currentTime)) + ' <small>距切歌</small>';
+    $('mixWhy').textContent = `接歌: ${keyRel(seg.key,nxt.key)} ${seg.key}→${nxt.key} · ΔBPM ${((nxt.bpm-seg.bpm)/seg.bpm*100).toFixed(1)}% · 慢板长板接法`;
   } else {
     $('nTitle').textContent = '— 天亮了 —'; $('nSub').textContent = 'SET 结束';
-    $('mixCount').innerHTML = '☀ <small>Dawn FM</small>';
     $('mixWhy').textContent = 'SET 终章 · Dawn FM';
   }
-  if (monIdx !== curIdx){
-    monIdx = curIdx;
-    const d = $('deckA'); d.classList.remove('flash'); void d.offsetWidth; d.classList.add('flash');
-  }
+  if (monIdx !== curIdx){ monIdx = curIdx; const d = $('deckA'); d.classList.remove('flash'); void d.offsetWidth; d.classList.add('flash'); }
 }
-// 电平表 + 交叉曲线 rAF 循环
+// --- DDJ pads 交互 ---
+let fxState = { echo:false, filter:false, loop:false, cue:false };
+function fx(name){
+  if (curIdx < 0) return;
+  fxState[name] = !fxState[name];
+  const pad = { echo:'padFX1', filter:'padFX2', loop:'padLoop', cue:'padCue' }[name];
+  const el = $(pad);
+  el.classList.toggle('hot', fxState[name]);
+  const label = { echo:'ECHO OUT', filter:'FILTER', loop:'LOOP 4BEAT', cue:'HOT CUE' }[name];
+  $('mixWhy').textContent = fxState[name]
+    ? `🎧 ${label} 激活 — ${name==='cue' ? '已存 HOT CUE @ ' + fmt(au.currentTime) : name==='loop' ? 'LOOP 演示(本串烧为连续音频, 仅视觉演示)' : '串烧已预渲染, FX 为监看态'}` 
+    : `接歌: ${keyRel(SET[curIdx].key,(SET[curIdx+1]||SET[curIdx]).key)} · 慢板长板接法`;
+  if (name === 'cue' && fxState.cue) hotCueT = au.currentTime;
+}
+let hotCueT = null;
+$('padFX1').onclick = () => fx('echo');
+$('padFX2').onclick = () => fx('filter');
+$('padLoop').onclick = () => fx('loop');
+$('padCue').onclick = () => fx('cue');
+$('padCue').ondblclick = () => { if (hotCueT != null){ seekTo(hotCueT); } };
+
+// --- 主循环: VU + 曲线 + 推子 ---
 function vuLoop(ts){
   if (curIdx >= 0){
-    const t1 = segEnd(curIdx);
     let gA = 1, gB = 0; xfP = null;
-    if (curIdx < SET.length-1 && au.currentTime > t1 - XF){
-      xfP = Math.min(1, (au.currentTime-(t1-XF))/XF);
-      gA = 1-xfP; gB = xfP;
-      $('mixBadge').textContent = 'BLENDING · 三角交叉进行中';
+    const inXf = curIdx > 0 && (au.currentTime - starts[curIdx]) < XF && !au.paused;
+    if (inXf){
+      // 进场交叉: 前一曲(旧A)在出场, 当前曲(curIdx)在进场
+      xfP = Math.min(1, Math.max(0, (au.currentTime - starts[curIdx]) / XF));
+      gA = Math.exp(-2.2*xfP); gB = 1-Math.exp(-2.2*xfP);
+      $('mixBadge').textContent = 'BLENDING · XF 12s';
+      $('mixBadge').classList.add('live');
+      $('mixCount').innerHTML = fmt(Math.max(0, starts[curIdx]+XF-au.currentTime)) + ' <small>距切歌</small>';
     } else {
       $('mixBadge').textContent = 'BLEND · TRI ×FADE 12s';
+      $('mixBadge').classList.remove('live');
+      const nxt = SET[curIdx+1];
+      $('mixCount').innerHTML = nxt ? fmt(Math.max(0, cueOf(curIdx)-au.currentTime)) + ' <small>距切歌</small>' : '☀ <small>Dawn FM</small>';
     }
-    const wob = g => g*(0.66+0.34*Math.abs(Math.sin(ts/130 + g*2.1)));
-    $('vuA').style.width = (Math.min(1,wob(gA))*100)+'%';
-    $('vuB').style.width = (Math.min(1,wob(gB)*0.96)*100)+'%';
-    drawCurve(xfP);
+    const wob = g => g*(0.8+0.2*Math.abs(Math.sin(ts/140 + g*2)));
+    setVU(ledA, Math.min(1,wob(gA)));
+    setVU(ledB, Math.min(1,wob(gB)));
+    $('xfKnob').style.left = (50 + (xfP==null ? -46 : (xfP*92-46))) + '%';
+    drawXF(xfP);
   }
   drawOverview();
   requestAnimationFrame(vuLoop);
 }
 au.addEventListener('timeupdate', updMonitor);
 au.addEventListener('seeked', updMonitor);
+buildEnv(); requestAnimationFrame(vuLoop);
 buildEnv(); requestAnimationFrame(vuLoop);
 
 </script>
