@@ -201,9 +201,13 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;margin-top:34px;lin
 <header>
   <div>
     <div class="eyebrow">THE WEEKND · LOFI EDITION · 25 TRACKS · NIGHT SHIFT SET</div>
-    <h1>Lofi Night Shift<br><span style="font-size:15px;color:var(--muted);font-weight:400">The Weeknd 全辑 lofi 改编 · 55 分钟夜班 · 10s 长交叉 · 能量缓降</span></h1>
+    <h1>Lofi Night Shift<br><span id="setSub" style="font-size:15px;color:var(--muted);font-weight:400"></span></h1>
+    <div style="display:flex;gap:10px;margin:14px 0 4px">
+      <button class="stab on" data-k="night" onclick="switchSet('night')"><b>NIGHT SHIFT</b><span>53:50 · 技巧版</span></button>
+      <button class="stab" data-k="flight" onclick="switchSet('flight')"><b>FLIGHT ✈</b><span>89:15 · 长途版</span></button>
+    </div>
     <div style="margin-top:10px">
-      <span class="badge">25 首 The Weeknd</span><span class="badge">55:14 连续夜班</span><span class="badge">10s 长交叉</span><span class="badge">After Hours → Dawn FM</span><span class="badge">lofi v2 母带</span>
+      <span class="badge">25 首 The Weeknd</span><span class="badge" id="chipLen">55:14 连续夜班</span><span class="badge">10s 长交叉</span><span class="badge">After Hours → Dawn FM</span><span class="badge">lofi v2 母带</span>
     </div>
   </div>
 </header>
@@ -295,46 +299,85 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;margin-top:34px;lin
     <div class="dock-meta">
       <div class="dock-title" id="dockTitle">Lofi Night Shift · The Weeknd Lofi Megamix</div>
       <div class="dock-sub" id="dockSub">25 首 The Weeknd · 55:14 · 10s 长交叉 · After Hours → Dawn FM</div>
-      <audio id="au" controls preload="none" src="/sleep-dj-20edc62ee462.mp3"></audio>
+      <audio id="au" controls preload="none"></audio>
     </div>
   </div>
 </div>
 
 <script>
-const SET = [{"title": "Love Me Harder", "artist": "Ariana Grande & The Weeknd", "bpm": 92.3, "key": "D", "cam": "", "phase": "intro", "tec": "echo_out", "reason": "远调 D→F# → 回声抽离衔接", "cover": "/covers-au/lofi-love_me_harder.jpg", "mood": "深夜慢板", "start": 0.0, "dur": 160.6}, {"title": "Out Of Time", "artist": "The Weeknd", "bpm": 86.1, "key": "F#", "cam": "", "phase": "intro", "tec": "blend", "reason": "邻接顺滑 · 长交叉", "cover": "/covers-au/lofi-out_of_time.jpg", "mood": "深夜慢板", "start": 150.6, "dur": 158.3}, {"title": "Blinding Lights", "artist": "The Weeknd", "bpm": 78.3, "key": "E", "cam": "", "phase": "warmup", "tec": "echo_out", "reason": "远调 E→B → 回声抽离衔接", "cover": "/covers-au/lofi-blinding_lights.jpg", "mood": "深夜慢板", "start": 298.9, "dur": 157.2}, {"title": "Wake Me Up", "artist": "The Weeknd & Justice", "bpm": 103.4, "key": "B", "cam": "", "phase": "warmup", "tec": "filter_build", "reason": "同调 B→B → 高通滑入", "cover": "/covers-au/lofi-wake_me_up.jpg", "mood": "深夜慢板", "start": 446.1, "dur": 155.0}, {"title": "The Hills", "artist": "The Weeknd", "bpm": 103.4, "key": "B", "cam": "", "phase": "warmup", "tec": "filter_build", "reason": "同调 B→B → 高通滑入", "cover": "/covers-au/lofi-the_hills.jpg", "mood": "深夜慢板", "start": 591.1, "dur": 153.3}, {"title": "Moth To A Flame", "artist": "Swedish House Mafia & The Weeknd", "bpm": 112.3, "key": "B", "cam": "", "phase": "warmup", "tec": "echo_out", "reason": "远调 B→G# → 回声抽离衔接", "cover": "/covers-au/lofi-moth_to_a_flame.jpg", "mood": "深夜慢板", "start": 734.4, "dur": 152.2}, {"title": "Starry Eyes", "artist": "The Weeknd", "bpm": 112.3, "key": "G#", "cam": "", "phase": "warmup", "tec": "echo_out", "reason": "远调 G#→D# → 回声抽离衔接", "cover": "/covers-au/lofi-starry_eyes.jpg", "mood": "深夜慢板", "start": 876.6, "dur": 141.3}, {"title": "Save Your Tears", "artist": "The Weeknd", "bpm": 107.7, "key": "D#", "cam": "", "phase": "warmup", "tec": "filter_build", "reason": "同调 D#→D# → 高通滑入", "cover": "/covers-au/lofi-save_your_tears.jpg", "mood": "深夜慢板", "start": 1007.9, "dur": 148.3}, {"title": "Less Than Zero", "artist": "The Weeknd", "bpm": 129.2, "key": "D#", "cam": "", "phase": "warmup", "tec": "echo_out", "reason": "远调 D#→F# → 回声抽离衔接", "cover": "/covers-au/lofi-less_than_zero.jpg", "mood": "深夜慢板", "start": 1146.2, "dur": 147.2}, {"title": "Ordinary Life", "artist": "The Weeknd", "bpm": 136.0, "key": "F#", "cam": "", "phase": "build", "tec": "filter_build", "reason": "同调/近调 F#→F → 高通滑入", "cover": "/covers-au/lofi-ordinary_life.jpg", "mood": "深夜慢板", "start": 1283.4, "dur": 145.0}, {"title": "True Colors", "artist": "The Weeknd", "bpm": 143.6, "key": "F", "cam": "", "phase": "build", "tec": "echo_out", "reason": "远调 F→C → 回声抽离衔接", "cover": "/covers-au/lofi-true_colors.jpg", "mood": "深夜慢板", "start": 1418.4, "dur": 143.9}, {"title": "Dancing In The Flames", "artist": "The Weeknd", "bpm": 143.6, "key": "C", "cam": "", "phase": "build", "tec": "tape_stop", "reason": "能量骤降 -22% → 磁带刹停再落", "cover": "/covers-au/lofi-dancing_in_the_flames.jpg", "mood": "深夜慢板", "start": 1552.3, "dur": 135.4}, {"title": "Earned It", "artist": "The Weeknd", "bpm": 112.3, "key": "G#", "cam": "", "phase": "build", "tec": "tape_stop", "reason": "能量骤降 -26% → 磁带刹停再落", "cover": "/covers-au/lofi-earned_it.jpg", "mood": "深夜慢板", "start": 1677.7, "dur": 133.7}, {"title": "Best Friends", "artist": "The Weeknd", "bpm": 83.4, "key": "D", "cam": "", "phase": "build", "tec": "echo_out", "reason": "远调 D→F# → 回声抽离衔接", "cover": "/covers-au/lofi-best_friends.jpg", "mood": "深夜慢板", "start": 1801.4, "dur": 138.9}, {"title": "A Lonely Night", "artist": "The Weeknd", "bpm": 103.4, "key": "F#", "cam": "", "phase": "build", "tec": "tape_stop", "reason": "能量骤降 -14% → 磁带刹停再落", "cover": "/covers-au/lofi-a_lonely_night.jpg", "mood": "深夜慢板", "start": 1930.3, "dur": 130.3}, {"title": "Creepin", "artist": "Metro Boomin & The Weeknd & 21 Savage", "bpm": 89.1, "key": "D#", "cam": "", "phase": "build", "tec": "echo_out", "reason": "远调 D#→F# → 回声抽离衔接", "cover": "/covers-au/lofi-creepin.jpg", "mood": "深夜慢板", "start": 2050.6, "dur": 135.6}, {"title": "After Hours", "artist": "The Weeknd", "bpm": 99.4, "key": "F#", "cam": "", "phase": "build", "tec": "filter_build", "reason": "同调 F#→F# → 高通滑入", "cover": "/covers-au/lofi-after_hours.jpg", "mood": "深夜慢板", "start": 2176.2, "dur": 133.3}, {"title": "How Do I Make You Love Me", "artist": "The Weeknd", "bpm": 112.3, "key": "F#", "cam": "", "phase": "peak", "tec": "echo_out", "reason": "远调 F#→B → 回声抽离衔接", "cover": "/covers-au/lofi-how_do_i_make_you_love_me.jpg", "mood": "深夜慢板", "start": 2299.5, "dur": 132.2}, {"title": "The Abyss", "artist": "The Weeknd & Lana Del Rey", "bpm": 129.2, "key": "B", "cam": "", "phase": "peak", "tec": "filter_build", "reason": "同调/近调 B→C# → 高通滑入", "cover": "/covers-au/lofi-the_abyss.jpg", "mood": "深夜慢板", "start": 2421.7, "dur": 130.0}, {"title": "Is There Someone Else", "artist": "The Weeknd", "bpm": 123.0, "key": "C#", "cam": "", "phase": "peak", "tec": "blend", "reason": "后半夜 · 纯长交叉不打扰", "cover": "/covers-au/lofi-is_there_someone_else.jpg", "mood": "深夜慢板", "start": 2541.7, "dur": 128.3}, {"title": "Die For You", "artist": "The Weeknd", "bpm": 123.0, "key": "G", "cam": "", "phase": "peak", "tec": "tape_stop", "reason": "深夜偶发磁带刹停 · 增加梦境感", "cover": "/covers-au/lofi-die_for_you.jpg", "mood": "深夜慢板", "start": 2660.0, "dur": 120.4}, {"title": "Cry For Me", "artist": "The Weeknd", "bpm": 112.3, "key": "F#", "cam": "", "phase": "peak", "tec": "blend", "reason": "后半夜 · 纯长交叉不打扰", "cover": "/covers-au/lofi-cry_for_me.jpg", "mood": "深夜慢板", "start": 2770.4, "dur": 125.0}, {"title": "Reminder", "artist": "The Weeknd", "bpm": 143.6, "key": "B", "cam": "", "phase": "outro", "tec": "blend", "reason": "后半夜 · 纯长交叉不打扰", "cover": "/covers-au/lofi-reminder.jpg", "mood": "深夜慢板", "start": 2885.4, "dur": 123.3}, {"title": "Niagara Falls", "artist": "The Weeknd", "bpm": 89.1, "key": "F", "cam": "", "phase": "outro", "tec": "blend", "reason": "后半夜 · 纯长交叉不打扰", "cover": "/covers-au/lofi-niagara_falls.jpg", "mood": "深夜慢板", "start": 2998.7, "dur": 121.7}, {"title": "Sacrifice", "artist": "The Weeknd", "bpm": 112.3, "key": "A#", "cam": "", "phase": "outro", "tec": "blend", "reason": "后半夜 · 纯长交叉不打扰", "cover": "/covers-au/lofi-sacrifice.jpg", "mood": "深夜慢板", "start": 3110.4, "dur": 120.0}];
-
-const XF = 10;
-let starts = SET.map((s,i) => i ? s.start - XF : s.start);   // acrossfade 重叠校正: B 曲提前 12s 进场
-const TOTAL = starts[starts.length-1] + (SET[SET.length-1].dur || 78) + XF;
+const SETS = {
+  night: {
+    label: "NIGHT SHIFT",
+    sub: "53:50 · Agent 技巧版 · 磁带刹停/回声抽离/高通滑入",
+    src: "/sleep-dj-20edc62ee462.mp3",
+    xf: 10,
+    phaseLabel: {'intro':'OPEN','warmup':'AFTER HOURS','build':'DEEP NIGHT','peak':'3AM','outro':'DAWN FM'},
+    data: [{"title": "Love Me Harder", "artist": "Ariana Grande & The Weeknd", "bpm": 92.3, "key": "D", "cam": "", "phase": "intro", "tec": "echo_out", "reason": "远调 D→F# → 回声抽离衔接", "cover": "/covers-au/lofi-love_me_harder.jpg", "mood": "深夜慢板", "start": 0.0, "dur": 160.6}, {"title": "Out Of Time", "artist": "The Weeknd", "bpm": 86.1, "key": "F#", "cam": "", "phase": "intro", "tec": "blend", "reason": "邻接顺滑 · 长交叉", "cover": "/covers-au/lofi-out_of_time.jpg", "mood": "深夜慢板", "start": 150.6, "dur": 158.3}, {"title": "Blinding Lights", "artist": "The Weeknd", "bpm": 78.3, "key": "E", "cam": "", "phase": "warmup", "tec": "echo_out", "reason": "远调 E→B → 回声抽离衔接", "cover": "/covers-au/lofi-blinding_lights.jpg", "mood": "深夜慢板", "start": 298.9, "dur": 157.2}, {"title": "Wake Me Up", "artist": "The Weeknd & Justice", "bpm": 103.4, "key": "B", "cam": "", "phase": "warmup", "tec": "filter_build", "reason": "同调 B→B → 高通滑入", "cover": "/covers-au/lofi-wake_me_up.jpg", "mood": "深夜慢板", "start": 446.1, "dur": 155.0}, {"title": "The Hills", "artist": "The Weeknd", "bpm": 103.4, "key": "B", "cam": "", "phase": "warmup", "tec": "filter_build", "reason": "同调 B→B → 高通滑入", "cover": "/covers-au/lofi-the_hills.jpg", "mood": "深夜慢板", "start": 591.1, "dur": 153.3}, {"title": "Moth To A Flame", "artist": "Swedish House Mafia & The Weeknd", "bpm": 112.3, "key": "B", "cam": "", "phase": "warmup", "tec": "echo_out", "reason": "远调 B→G# → 回声抽离衔接", "cover": "/covers-au/lofi-moth_to_a_flame.jpg", "mood": "深夜慢板", "start": 734.4, "dur": 152.2}, {"title": "Starry Eyes", "artist": "The Weeknd", "bpm": 112.3, "key": "G#", "cam": "", "phase": "warmup", "tec": "echo_out", "reason": "远调 G#→D# → 回声抽离衔接", "cover": "/covers-au/lofi-starry_eyes.jpg", "mood": "深夜慢板", "start": 876.6, "dur": 141.3}, {"title": "Save Your Tears", "artist": "The Weeknd", "bpm": 107.7, "key": "D#", "cam": "", "phase": "warmup", "tec": "filter_build", "reason": "同调 D#→D# → 高通滑入", "cover": "/covers-au/lofi-save_your_tears.jpg", "mood": "深夜慢板", "start": 1007.9, "dur": 148.3}, {"title": "Less Than Zero", "artist": "The Weeknd", "bpm": 129.2, "key": "D#", "cam": "", "phase": "warmup", "tec": "echo_out", "reason": "远调 D#→F# → 回声抽离衔接", "cover": "/covers-au/lofi-less_than_zero.jpg", "mood": "深夜慢板", "start": 1146.2, "dur": 147.2}, {"title": "Ordinary Life", "artist": "The Weeknd", "bpm": 136.0, "key": "F#", "cam": "", "phase": "build", "tec": "filter_build", "reason": "同调/近调 F#→F → 高通滑入", "cover": "/covers-au/lofi-ordinary_life.jpg", "mood": "深夜慢板", "start": 1283.4, "dur": 145.0}, {"title": "True Colors", "artist": "The Weeknd", "bpm": 143.6, "key": "F", "cam": "", "phase": "build", "tec": "echo_out", "reason": "远调 F→C → 回声抽离衔接", "cover": "/covers-au/lofi-true_colors.jpg", "mood": "深夜慢板", "start": 1418.4, "dur": 143.9}, {"title": "Dancing In The Flames", "artist": "The Weeknd", "bpm": 143.6, "key": "C", "cam": "", "phase": "build", "tec": "tape_stop", "reason": "能量骤降 -22% → 磁带刹停再落", "cover": "/covers-au/lofi-dancing_in_the_flames.jpg", "mood": "深夜慢板", "start": 1552.3, "dur": 135.4}, {"title": "Earned It", "artist": "The Weeknd", "bpm": 112.3, "key": "G#", "cam": "", "phase": "build", "tec": "tape_stop", "reason": "能量骤降 -26% → 磁带刹停再落", "cover": "/covers-au/lofi-earned_it.jpg", "mood": "深夜慢板", "start": 1677.7, "dur": 133.7}, {"title": "Best Friends", "artist": "The Weeknd", "bpm": 83.4, "key": "D", "cam": "", "phase": "build", "tec": "echo_out", "reason": "远调 D→F# → 回声抽离衔接", "cover": "/covers-au/lofi-best_friends.jpg", "mood": "深夜慢板", "start": 1801.4, "dur": 138.9}, {"title": "A Lonely Night", "artist": "The Weeknd", "bpm": 103.4, "key": "F#", "cam": "", "phase": "build", "tec": "tape_stop", "reason": "能量骤降 -14% → 磁带刹停再落", "cover": "/covers-au/lofi-a_lonely_night.jpg", "mood": "深夜慢板", "start": 1930.3, "dur": 130.3}, {"title": "Creepin", "artist": "Metro Boomin & The Weeknd & 21 Savage", "bpm": 89.1, "key": "D#", "cam": "", "phase": "build", "tec": "echo_out", "reason": "远调 D#→F# → 回声抽离衔接", "cover": "/covers-au/lofi-creepin.jpg", "mood": "深夜慢板", "start": 2050.6, "dur": 135.6}, {"title": "After Hours", "artist": "The Weeknd", "bpm": 99.4, "key": "F#", "cam": "", "phase": "build", "tec": "filter_build", "reason": "同调 F#→F# → 高通滑入", "cover": "/covers-au/lofi-after_hours.jpg", "mood": "深夜慢板", "start": 2176.2, "dur": 133.3}, {"title": "How Do I Make You Love Me", "artist": "The Weeknd", "bpm": 112.3, "key": "F#", "cam": "", "phase": "peak", "tec": "echo_out", "reason": "远调 F#→B → 回声抽离衔接", "cover": "/covers-au/lofi-how_do_i_make_you_love_me.jpg", "mood": "深夜慢板", "start": 2299.5, "dur": 132.2}, {"title": "The Abyss", "artist": "The Weeknd & Lana Del Rey", "bpm": 129.2, "key": "B", "cam": "", "phase": "peak", "tec": "filter_build", "reason": "同调/近调 B→C# → 高通滑入", "cover": "/covers-au/lofi-the_abyss.jpg", "mood": "深夜慢板", "start": 2421.7, "dur": 130.0}, {"title": "Is There Someone Else", "artist": "The Weeknd", "bpm": 123.0, "key": "C#", "cam": "", "phase": "peak", "tec": "blend", "reason": "后半夜 · 纯长交叉不打扰", "cover": "/covers-au/lofi-is_there_someone_else.jpg", "mood": "深夜慢板", "start": 2541.7, "dur": 128.3}, {"title": "Die For You", "artist": "The Weeknd", "bpm": 123.0, "key": "G", "cam": "", "phase": "peak", "tec": "tape_stop", "reason": "深夜偶发磁带刹停 · 增加梦境感", "cover": "/covers-au/lofi-die_for_you.jpg", "mood": "深夜慢板", "start": 2660.0, "dur": 120.4}, {"title": "Cry For Me", "artist": "The Weeknd", "bpm": 112.3, "key": "F#", "cam": "", "phase": "peak", "tec": "blend", "reason": "后半夜 · 纯长交叉不打扰", "cover": "/covers-au/lofi-cry_for_me.jpg", "mood": "深夜慢板", "start": 2770.4, "dur": 125.0}, {"title": "Reminder", "artist": "The Weeknd", "bpm": 143.6, "key": "B", "cam": "", "phase": "outro", "tec": "blend", "reason": "后半夜 · 纯长交叉不打扰", "cover": "/covers-au/lofi-reminder.jpg", "mood": "深夜慢板", "start": 2885.4, "dur": 123.3}, {"title": "Niagara Falls", "artist": "The Weeknd", "bpm": 89.1, "key": "F", "cam": "", "phase": "outro", "tec": "blend", "reason": "后半夜 · 纯长交叉不打扰", "cover": "/covers-au/lofi-niagara_falls.jpg", "mood": "深夜慢板", "start": 2998.7, "dur": 121.7}, {"title": "Sacrifice", "artist": "The Weeknd", "bpm": 112.3, "key": "A#", "cam": "", "phase": "outro", "tec": "blend", "reason": "后半夜 · 纯长交叉不打扰", "cover": "/covers-au/lofi-sacrifice.jpg", "mood": "深夜慢板", "start": 3110.4, "dur": 120.0}]
+  },
+  flight: {
+    label: "FLIGHT",
+    sub: "89:15 · 长途飞行版 · 三幕编排 起飞→平流层→夜降",
+    src: "/sleep-dj-v4-20edc62ee462.mp3",
+    xf: 12,
+    phaseLabel: {'act1':'TAKEOFF','act2':'CRUISE','act3':'DESCENT'},
+    data: [{"title": "Die For You", "artist": "The Weeknd", "bpm": 123.0, "key": "G", "cam": "", "phase": "act1", "tec": "blend", "reason": "长途版 · 12s 长交叉慢板", "cover": "/covers-au/lofi-die_for_you.jpg", "mood": "飞行慢板", "start": 0, "dur": 225.0}, {"title": "Earned It", "artist": "The Weeknd", "bpm": 112.3, "key": "G#", "cam": "", "phase": "act1", "tec": "blend", "reason": "长途版 · 12s 长交叉慢板", "cover": "/covers-au/lofi-earned_it.jpg", "mood": "飞行慢板", "start": 213.0, "dur": 215.0}, {"title": "Best Friends", "artist": "The Weeknd", "bpm": 83.4, "key": "D", "cam": "", "phase": "act1", "tec": "blend", "reason": "长途版 · 12s 长交叉慢板", "cover": "/covers-au/lofi-best_friends.jpg", "mood": "飞行慢板", "start": 416.0, "dur": 215.0}, {"title": "A Lonely Night", "artist": "The Weeknd", "bpm": 103.4, "key": "F#", "cam": "", "phase": "act1", "tec": "blend", "reason": "长途版 · 12s 长交叉慢板", "cover": "/covers-au/lofi-a_lonely_night.jpg", "mood": "飞行慢板", "start": 619.0, "dur": 215.0}, {"title": "Creepin", "artist": "Metro Boomin & The Weeknd & 21 Savage", "bpm": 89.1, "key": "D#", "cam": "", "phase": "act1", "tec": "blend", "reason": "长途版 · 12s 长交叉慢板", "cover": "/covers-au/lofi-creepin.jpg", "mood": "飞行慢板", "start": 822.0, "dur": 215.0}, {"title": "Cry For Me", "artist": "The Weeknd", "bpm": 112.3, "key": "F#", "cam": "", "phase": "act1", "tec": "blend", "reason": "长途版 · 12s 长交叉慢板", "cover": "/covers-au/lofi-cry_for_me.jpg", "mood": "飞行慢板", "start": 1025.0, "dur": 225.0}, {"title": "Reminder", "artist": "The Weeknd", "bpm": 143.6, "key": "B", "cam": "", "phase": "act1", "tec": "blend", "reason": "长途版 · 12s 长交叉慢板", "cover": "/covers-au/lofi-reminder.jpg", "mood": "飞行慢板", "start": 1238.0, "dur": 225.0}, {"title": "Niagara Falls", "artist": "The Weeknd", "bpm": 89.1, "key": "F", "cam": "", "phase": "act1", "tec": "blend", "reason": "长途版 · 12s 长交叉慢板", "cover": "/covers-au/lofi-niagara_falls.jpg", "mood": "飞行慢板", "start": 1451.0, "dur": 225.0}, {"title": "Sacrifice", "artist": "The Weeknd", "bpm": 112.3, "key": "A#", "cam": "", "phase": "act2", "tec": "blend", "reason": "长途版 · 12s 长交叉慢板", "cover": "/covers-au/lofi-sacrifice.jpg", "mood": "飞行慢板", "start": 1664.0, "dur": 225.0}, {"title": "Ordinary Life", "artist": "The Weeknd", "bpm": 136.0, "key": "F#", "cam": "", "phase": "act2", "tec": "blend", "reason": "长途版 · 12s 长交叉慢板", "cover": "/covers-au/lofi-ordinary_life.jpg", "mood": "飞行慢板", "start": 1877.0, "dur": 225.0}, {"title": "Save Your Tears", "artist": "The Weeknd", "bpm": 107.7, "key": "D#", "cam": "", "phase": "act2", "tec": "blend", "reason": "长途版 · 12s 长交叉慢板", "cover": "/covers-au/lofi-save_your_tears.jpg", "mood": "飞行慢板", "start": 2090.0, "dur": 225.0}, {"title": "Moth To A Flame", "artist": "Swedish House Mafia & The Weeknd", "bpm": 112.3, "key": "B", "cam": "", "phase": "act2", "tec": "blend", "reason": "长途版 · 12s 长交叉慢板", "cover": "/covers-au/lofi-moth_to_a_flame.jpg", "mood": "飞行慢板", "start": 2303.0, "dur": 225.0}, {"title": "Dancing In The Flames", "artist": "The Weeknd", "bpm": 143.6, "key": "C", "cam": "", "phase": "act2", "tec": "blend", "reason": "长途版 · 12s 长交叉慢板", "cover": "/covers-au/lofi-dancing_in_the_flames.jpg", "mood": "飞行慢板", "start": 2516.0, "dur": 225.0}, {"title": "Blinding Lights", "artist": "The Weeknd", "bpm": 78.3, "key": "E", "cam": "", "phase": "act2", "tec": "blend", "reason": "长途版 · 12s 长交叉慢板", "cover": "/covers-au/lofi-blinding_lights.jpg", "mood": "飞行慢板", "start": 2729.0, "dur": 225.0}, {"title": "Out Of Time", "artist": "The Weeknd", "bpm": 86.1, "key": "F#", "cam": "", "phase": "act2", "tec": "blend", "reason": "长途版 · 12s 长交叉慢板", "cover": "/covers-au/lofi-out_of_time.jpg", "mood": "飞行慢板", "start": 2942.0, "dur": 235.0}, {"title": "True Colors", "artist": "The Weeknd", "bpm": 143.6, "key": "F", "cam": "", "phase": "act2", "tec": "blend", "reason": "长途版 · 12s 长交叉慢板", "cover": "/covers-au/lofi-true_colors.jpg", "mood": "飞行慢板", "start": 3165.0, "dur": 235.0}, {"title": "Starry Eyes", "artist": "The Weeknd", "bpm": 112.3, "key": "G#", "cam": "", "phase": "act3", "tec": "blend", "reason": "长途版 · 12s 长交叉慢板", "cover": "/covers-au/lofi-starry_eyes.jpg", "mood": "飞行慢板", "start": 3388.0, "dur": 235.0}, {"title": "The Hills", "artist": "The Weeknd", "bpm": 103.4, "key": "B", "cam": "", "phase": "act3", "tec": "blend", "reason": "长途版 · 12s 长交叉慢板", "cover": "/covers-au/lofi-the_hills.jpg", "mood": "飞行慢板", "start": 3611.0, "dur": 235.0}, {"title": "Less Than Zero", "artist": "The Weeknd", "bpm": 129.2, "key": "D#", "cam": "", "phase": "act3", "tec": "blend", "reason": "长途版 · 12s 长交叉慢板", "cover": "/covers-au/lofi-less_than_zero.jpg", "mood": "飞行慢板", "start": 3834.0, "dur": 235.0}, {"title": "Wake Me Up", "artist": "The Weeknd & Justice", "bpm": 103.4, "key": "B", "cam": "", "phase": "act3", "tec": "blend", "reason": "长途版 · 12s 长交叉慢板", "cover": "/covers-au/lofi-wake_me_up.jpg", "mood": "飞行慢板", "start": 4057.0, "dur": 235.0}, {"title": "Love Me Harder", "artist": "Ariana Grande & The Weeknd", "bpm": 92.3, "key": "D", "cam": "", "phase": "act3", "tec": "blend", "reason": "长途版 · 12s 长交叉慢板", "cover": "/covers-au/lofi-love_me_harder.jpg", "mood": "飞行慢板", "start": 4280.0, "dur": 235.0}, {"title": "Is There Someone Else", "artist": "The Weeknd", "bpm": 123.0, "key": "C#", "cam": "", "phase": "act3", "tec": "blend", "reason": "长途版 · 12s 长交叉慢板", "cover": "/covers-au/lofi-is_there_someone_else.jpg", "mood": "飞行慢板", "start": 4503.0, "dur": 225.0}, {"title": "After Hours", "artist": "The Weeknd", "bpm": 99.4, "key": "F#", "cam": "", "phase": "act3", "tec": "blend", "reason": "长途版 · 12s 长交叉慢板", "cover": "/covers-au/lofi-after_hours.jpg", "mood": "飞行慢板", "start": 4716.0, "dur": 225.0}, {"title": "How Do I Make You Love Me", "artist": "The Weeknd", "bpm": 112.3, "key": "F#", "cam": "", "phase": "act3", "tec": "blend", "reason": "长途版 · 12s 长交叉慢板", "cover": "/covers-au/lofi-how_do_i_make_you_love_me.jpg", "mood": "飞行慢板", "start": 4929.0, "dur": 225.0}, {"title": "The Abyss", "artist": "The Weeknd & Lana Del Rey", "bpm": 129.2, "key": "B", "cam": "", "phase": "act3", "tec": "blend", "reason": "长途版 · 12s 长交叉慢板", "cover": "/covers-au/lofi-the_abyss.jpg", "mood": "飞行慢板", "start": 5142.0, "dur": 225.0}]
+  }
+};
 
 const au = document.getElementById('au');
 const emap = document.getElementById('emap');
 const tbl = document.getElementById('tbl');
 const $ = id => document.getElementById(id);
+let SET, XF, starts, TOTAL, curSet = 'night', curIdx = -1, monIdx = -1;
+function applySet(key){
+  curSet = key;
+  const S = SETS[key];
+  SET = S.data; XF = S.xf;
+  starts = SET.map((s,i) => i ? s.start - XF : s.start);
+  TOTAL = starts[starts.length-1] + (SET[SET.length-1].dur || 78) + XF;
+  au.src = S.src; au.load();
+  $('setSub').textContent = S.sub;
+  const ds = $('dockSub'); if (ds) ds.textContent = key === 'flight' ? '25 首 The Weeknd · 89:15 · 长途飞行三幕 · The Abyss 收尾' : '25 首 The Weeknd · 53:50 · Agent DJ 六技巧 · After Hours → Dawn FM';
+  $('chipLen') && ($('chipLen').textContent = key === 'flight' ? '89:15 长途飞行' : '55:14 连续夜班');
+  $('chipTec') && ($('chipTec').textContent = key === 'flight' ? '12s 长交叉 · 三幕' : '磁带刹停/回声抽离/高通滑入');
+  document.querySelectorAll('.stab').forEach(b => b.classList.toggle('on', b.dataset.k === key));
+  buildStatic();
+}
+function buildStatic(){
+  emap.innerHTML = ''; tbl.querySelector('tbody').innerHTML = '';
+  const PH = SETS[curSet].phaseLabel;
+  const bpms = SET.map(s => s.bpm), mn = Math.min(...bpms), mx = Math.max(...bpms);
+  SET.forEach((s, i) => {
+    const d = document.createElement('div');
+    d.className = 'bar';
+    d.style.height = (10 + 90 * (s.bpm - mn) / (mx - mn)) + '%';
+    d.title = `${fmt(starts[i])} · ${s.title} · ${s.bpm} BPM · ${s.mood}`;
+    d.onclick = () => seek(i);
+    emap.appendChild(d);
+  });
+  SET.forEach((s, i) => {
+    const tr = document.createElement('tr');
+    tr.className = 'play-row';
+    const tec = s.tec || '—';
+    tr.innerHTML = `<td class="num">${i+1}</td><td class="num">${fmt(starts[i])}</td>` +
+      `<td><span class="ph ${s.phase}">${PH[s.phase]||s.phase}</span></td>` +
+      `<td class="num">${s.bpm.toFixed(1)}</td>` +
+      `<td class="num">${s.key}</td>` +
+      `<td class="tec${tec==='cut'?' cut':''}">${({tape_stop:'磁带刹停',tape_start:'磁带慢起',loop_roll:'循环蓄势',echo_out:'回声抽离',filter_build:'高通滑入',blend:'长板交叉',spinback:'SPINBACK',xfade:'BLEND',bass_swap:'BASS SWAP',filter_sweep:'FILTER SWAP',cut:'CUT'})[tec]||tec||'—'}</td>` +
+      `<td><div class="tr-title"><img class="tr-cover" loading="lazy" src="${s.cover}" alt=""><span>${esc(s.title.replace(/^\d+\s*/,''))} <span class="muted" style="font-weight:400">· ${esc(s.artist||'')}</span><br><span class="mood-tag">${s.mood}</span></span></div></td>`;
+    tr.onclick = () => seek(i);
+    tbl.querySelector('tbody').appendChild(tr);
+  });
+  curIdx = -1; monIdx = -1;
+}
+applySet('night');
+function switchSet(k){
+  if (k === curSet) return;
+  au.pause();
+  applySet(k);
+  window.scrollTo({top:0, behavior:'smooth'});
+}
 
-const bpms = SET.map(s => s.bpm), mn = Math.min(...bpms), mx = Math.max(...bpms);
-SET.forEach((s, i) => {
-  const d = document.createElement('div');
-  d.className = 'bar';
-  d.style.height = (10 + 90 * (s.bpm - mn) / (mx - mn)) + '%';
-  d.title = `${fmt(starts[i])} · ${s.title} · ${s.bpm} BPM · ${s.mood}`;
-  d.onclick = () => seek(i);
-  emap.appendChild(d);
-});
-
-SET.forEach((s, i) => {
-  const tr = document.createElement('tr');
-  tr.className = 'play-row';
-  const tec = s.tec || '—';
-  tr.innerHTML = `<td class="num">${i+1}</td><td class="num">${fmt(starts[i])}</td>` +
-    `<td><span class="ph ${s.phase}">${({'intro': 'OPEN', 'warmup': 'AFTER HOURS', 'build': 'DEEP NIGHT', 'peak': '3AM', 'outro': 'DAWN FM'})[s.phase]||s.phase}</span></td>` +
-    `<td class="num">${s.bpm.toFixed(1)}</td>` +
-    `<td class="num">${s.key}</td>` +
-    `<td class="tec${tec==='cut'?' cut':''}">${({tape_stop:'磁带刹停',tape_start:'磁带慢起',loop_roll:'循环蓄势',echo_out:'回声抽离',filter_build:'高通滑入',blend:'长板交叉',spinback:'SPINBACK',xfade:'BLEND',bass_swap:'BASS SWAP',filter_sweep:'FILTER SWAP',cut:'CUT'})[tec]||tec||'—'}</td>` +
-    `<td><div class="tr-title"><img class="tr-cover" loading="lazy" src="${s.cover}" alt=""><span>${esc(s.title.replace(/^\d+\s*/,''))} <span class="muted" style="font-weight:400">· ${esc(s.artist||'')}</span><br><span class="mood-tag">${s.mood}</span></span></div></td>`;
-  tr.onclick = () => seek(i);
-  tbl.querySelector('tbody').appendChild(tr);
-});
 
 let seekLock = 0;
 function seek(i){
@@ -361,7 +404,6 @@ function seek(i){
 function fmt(sec){ return String(Math.floor(sec/60)).padStart(2,'0') + ':' + String(Math.floor(sec%60)).padStart(2,'0'); }
 function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
 
-let curIdx = -1;
 au.addEventListener('timeupdate', () => {
   if (Date.now() < seekLock) return;
   let idx = 0;
@@ -387,7 +429,7 @@ au.addEventListener('loadedmetadata', () => { /* duration ready */ });
 
 // ===== DJ 调音台监控 v2 =====
 const PH_CN = ({'intro':'OPEN','warmup':'AFTER HOURS','build':'DEEP NIGHT','peak':'3AM','outro':'DAWN FM'});
-let monIdx = -1, xfP = null;
+monIdx = -1; xfP = null;
 const xfc = $('xfCurve'), xctx = xfc.getContext('2d');
 const ovc = $('ovCanvas'), octx = ovc.getContext('2d');
 function segEnd(i){ return starts[i] + SET[i].dur; }
