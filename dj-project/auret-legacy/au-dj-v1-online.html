@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>The Weeknd · Auret DJ Studio</title>
+<style>
+:root{
+  --bg:#101419; --panel:#1b232e; --line:#33424e; --text:#e5edf4; --muted:#a3b2bf;
+  --mint:#75d4c2; --violet:#b6a5e3; --gold:#dfb77a; --blue:#5b8def; --red:#f85149;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font:15px/1.65 "Segoe UI","Microsoft YaHei",-apple-system,sans-serif;padding-bottom:120px}
+main{max-width:1240px;margin:28px auto;padding:0 22px}
+a{color:var(--mint)}
+.eyebrow{color:var(--mint);letter-spacing:.17em;font-size:12px}
+header{display:flex;justify-content:space-between;gap:24px;align-items:center;margin-bottom:22px;flex-wrap:wrap}.badge{white-space:nowrap}
+h1{font-size:32px;line-height:1.22;letter-spacing:-.03em;margin:8px 0}
+h2{font-size:19px;margin:26px 0 10px}
+.badge{display:inline-block;padding:5px 12px;border:1px solid var(--line);border-radius:18px;color:var(--mint);font-size:12px}
+.panel{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:20px;margin-bottom:18px}
+.muted{color:var(--muted)} .small{font-size:12px}
+
+/* 吸底播放器 */
+.player-dock{position:fixed;left:0;right:0;bottom:0;z-index:50;background:rgba(16,20,25,.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));transform:translateZ(0)}
+.dock-inner{max-width:1240px;margin:0 auto;display:flex;gap:14px;align-items:center}
+.dock-cover{width:52px;height:52px;border-radius:10px;object-fit:cover;flex-shrink:0;background:#1b232e}
+.dock-meta{flex:1;min-width:0}
+.dock-title{font-weight:700;font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dock-sub{color:var(--muted);font-size:11.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.player-dock audio{width:100%;height:40px;margin-top:6px;display:block}
+
+/* Hero 曲目卡 */
+.hero{display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap}
+.hero-art{width:180px;height:180px;border-radius:14px;object-fit:cover;flex-shrink:0;box-shadow:0 8px 32px rgba(0,0,0,.45)}
+.hero-info{flex:1;min-width:0;overflow:hidden}
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-top:14px}
+.stat{border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.stat .k{color:var(--muted);font-size:11px;letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stat .v{font-size:19px;font-weight:700;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* 能量地形 */
+.energy-map{height:90px;display:flex;align-items:flex-end;gap:2px;margin:14px 0 2px}
+.energy-map .bar{flex:1;border-radius:2px 2px 0 0;min-height:4px;background:linear-gradient(180deg,var(--violet),var(--blue));opacity:.65;cursor:pointer;transition:opacity .15s}
+.energy-map .bar.cur{opacity:1;background:linear-gradient(180deg,var(--mint),var(--gold))}
+.energy-map .bar:hover{opacity:.95}
+.emap-labels{display:flex;color:var(--muted);font-size:11px;margin-bottom:6px}
+.emap-labels span{flex:1;text-align:left}
+.emap-labels span:last-child{text-align:right}
+
+/* Setlist 表 */
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--line)}
+th{color:var(--muted);font-weight:600;font-size:11.5px;letter-spacing:.06em}
+tr.play-row{cursor:pointer}
+tr.play-row:hover td{background:rgba(117,212,194,.06)}
+tr.cur td{background:transparent}tr.cur{border-color:var(--mint)!important;background:rgba(117,212,194,.07)!important}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+.ph{font-size:10.5px;padding:2px 9px;border-radius:10px;font-weight:600;white-space:nowrap}
+.ph.intro{background:rgba(182,165,227,.18);color:var(--violet)}.ph.warmup{background:rgba(117,212,194,.13);color:var(--mint)}
+.ph.build{background:rgba(91,141,239,.16);color:var(--blue)}
+.ph.peak{background:rgba(223,183,122,.16);color:var(--gold)}
+.ph.outro{background:rgba(163,178,191,.15);color:var(--muted)}
+.tec{font-size:11px;color:var(--violet);white-space:nowrap}
+.tec.cut{color:var(--red)}
+.tr-title{display:flex;align-items:center;gap:9px;min-width:0}.tr-title>span{min-width:0;overflow-wrap:anywhere}
+.tr-cover{width:26px;height:26px;border-radius:5px;object-fit:cover;flex-shrink:0}
+.mood-tag{font-size:10.5px;color:var(--gold)}
+
+/* 转场带 */
+.transitions{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
+.tcard{border:1px solid var(--line);border-radius:11px;padding:12px 14px;font-size:12.5px;background:rgba(27,35,46,.5)}
+.tcard b{display:block;font-size:13px;margin-bottom:3px}
+.tcard .pair{color:var(--muted);font-size:11.5px;margin-bottom:6px}
+.tcard audio{width:100%;height:32px}
+
+/* 管线说明 */
+.pipeline{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+.pipe-card{border:1px solid var(--line);border-radius:12px;padding:15px;font-size:13px;color:var(--muted)}
+.pipe-card b{color:var(--text);display:block;margin-bottom:5px;font-size:13.5px}
+.pipe-card .n{display:inline-block;width:22px;height:22px;border-radius:50%;background:rgba(117,212,194,.14);color:var(--mint);text-align:center;line-height:22px;font-weight:700;margin-bottom:8px}
+
+footer{color:var(--muted);font-size:11.5px;text-align:center;margin-top:34px;line-height:1.9}
+@media(max-width:760px){
+  main{margin:16px auto;padding:0 14px 170px}
+  h1{font-size:22px}
+  .badge{font-size:11px;padding:4px 10px;margin:2px 3px 2px 0}
+  header{margin-bottom:14px}
+
+  /* hero 卡: 竖向紧凑 */
+  .panel{padding:14px;border-radius:12px}
+  .hero{gap:12px}
+  .hero-art{width:96px;height:96px;border-radius:10px}
+  .hero-info{min-width:0}
+  .hero-info>div[style*="21px"]{font-size:16px!important}
+  .stat-row{grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}
+  .stat{padding:7px 9px;border-radius:8px}
+  .stat .k{font-size:10px}
+  .stat .v{font-size:15px}
+  .stat{padding:8px 10px}
+  .stat .v{font-size:15px}
+
+  /* 能量柱触摸目标 */
+  .energy-map{height:70px;gap:1.5px}
+  .energy-map .bar{min-width:5px}
+
+  /* setlist: 表格→卡片列表 */
+  table,thead,tbody,tr,td,th{display:block}
+  table{border:0}
+  thead{display:none}
+  tr{border:1px solid var(--line);border-radius:11px;margin-bottom:8px;padding:10px 12px;background:rgba(27,35,46,.45);position:relative}
+  tr[style*="background"]{}
+  td{border:0;padding:2px 0;font-size:13px}
+  /* 序号+时间+阶段 一行 */
+  td:nth-child(1),td:nth-child(2),td:nth-child(3){display:inline-block}
+  td:nth-child(1){color:var(--muted);font-size:11px;min-width:26px}
+  td:nth-child(2){color:var(--muted);font-size:11px}
+  /* BPM+调性 一行 */
+  td:nth-child(4),td:nth-child(5){display:inline-block;color:var(--muted);font-size:12px}
+  td:nth-child(4)::after{content:" ·";color:var(--line)}
+  /* 切歌技术 */
+  td:nth-child(6){margin-top:2px}
+  /* 曲目行 */
+  td:nth-child(7){margin-top:6px}
+  .tr-title>span{font-size:13.5px;font-weight:600}
+
+  /* 管线卡竖排 */
+  .pipeline{grid-template-columns:1fr}
+
+  /* 吸底播放器 */
+  .player-dock{padding:8px 12px calc(8px + env(safe-area-inset-bottom))}
+  .dock-inner{gap:10px}
+  .dock-cover{width:44px;height:44px}
+  .dock-title{font-size:13px}
+  .dock-sub{font-size:10.5px}
+  .player-dock audio{height:36px}
+}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <div>
+    <div class="eyebrow">REFERENCE-MODEL ENGINE × 17-TRACK CATALOG</div>
+    <h1>Auto-DJ Studio<br><span style="font-size:15px;color:var(--muted);font-weight:400">训练模型编排 v2 · 节拍对齐切歌 · 响度归一 -14 LUFS</span></h1>
+    <div style="margin-top:10px">
+      <span class="badge">17 首曲库（流行混合）</span><span class="badge">17 段 · 不重复</span><span class="badge">LOOP/SPINBACK/ECHO 技巧</span><span class="badge">Camelot 和声链</span><span class="badge">能量弧 warmup→peak→outro</span>
+    </div>
+  </div>
+</header>
+
+<div class="panel hero">
+  <img class="hero-art" id="heroArt" src="/covers-au/12 Stargazing_EG.jpg" alt="cover">
+  <div class="hero-info">
+    <div class="eyebrow" id="heroPhase">WARMUP</div>
+    <div style="font-size:21px;font-weight:700;margin:4px 0;overflow-wrap:anywhere" id="heroTitle">— 点击下方任意曲目开始 —</div>
+    <div class="muted small" style="overflow-wrap:anywhere" id="heroSub">决策引擎: Auret 特征打分 + Camelot 和声距离 + 能量弧相位</div>
+    <div class="stat-row">
+      <div class="stat"><div class="k">当前 BPM</div><div class="v" id="stBpm">—</div></div>
+      <div class="stat"><div class="k">调性</div><div class="v" id="stKey">—</div></div>
+      <div class="stat"><div class="k">曲目</div><div class="v" id="stPos">—</div></div>
+      <div class="stat"><div class="k">SET 进度</div><div class="v" id="stSet">—</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="panel">
+  <h2 style="margin-top:0">能量地形 · 点击柱跳播</h2>
+  <div class="energy-map" id="emap"></div>
+  <div class="emap-labels"><span>warmup</span><span>build</span><span>peak</span><span>outro</span></div>
+</div>
+
+<div class="panel">
+  <h2 style="margin-top:0">Setlist</h2>
+  <table id="tbl"><thead><tr><th>#</th><th>时间</th><th>阶段</th><th>BPM</th><th>调性→Camelot</th><th>切歌技术</th><th>曲目</th></tr></thead><tbody></tbody></table>
+</div>
+
+<div class="panel">
+  <h2 style="margin-top:0">决策管线</h2>
+  <div class="pipeline">
+    <div class="pipe-card"><span class="n">1</span><b>特征提取 · librosa</b>每首 90s 采样: BPM(折叠)、chroma 调性→Camelot、RMS 能量。</div>
+    <div class="pipe-card"><span class="n">2</span><b>选曲 · acoustic-model</b>笔记本训练的 6 参数线性模型: folded_tempo_gap/harmonic_distance/energy_distance 等加权贪心。</div>
+    <div class="pipe-card"><span class="n">3</span><b>出歌点 · cue-model</b>ridge 回归预测上一首退出比例(30%~88%), 由此决定下一段切入全曲位置。</div>
+    <div class="pipe-card"><span class="n">4</span><b>DJ 技巧层</b>LOOP ROLL 循环蓄势 / SPINBACK 倒带 / ECHO OUT 回声抽离 / FILTER BUILD 上扬 — 按 BPM 差+和声距离自动选型。</div>
+  </div>
+</div>
+
+<footer>Reference-Model(acoustic+cue) 编排 · ffmpeg loop/reverse/echo/highpass 特效渲染 · 22:44 / 17 段<br>生成于 2026-09-27 · 仅个人试听</footer>
+</main>
+
+<div class="player-dock">
+  <div class="dock-inner">
+    <img class="dock-cover" id="dockCover" src="/covers-au/12 Stargazing_EG.jpg" alt="">
+    <div class="dock-meta">
+      <div class="dock-title" id="dockTitle">Auret Decision Megamix · V1</div>
+      <div class="dock-sub" id="dockSub">模型编排 v2 · 23:29 · 节拍网格切歌 + 响度归一</div>
+      <audio id="au" controls preload="none" src="/au-dj-20edc62ee462.mp3"></audio>
+    </div>
+  </div>
+</div>
+
+<script>
+const SET = [{"title": "Self Love", "artist": "Metro Boomin & Coi Leray", "bpm": 123.0, "key": "F#m", "cam": "11A", "phase": "intro", "tec": "filter_build", "cover": "/covers-au/10 Self Love (Spider-Man_ Across the Spider-Verse).jpg", "mood": "律动", "start": 0.0, "dur": 90}, {"title": "Calling", "artist": "Metro Boomin, Swae Lee & NAV", "bpm": 136.0, "key": "C", "cam": "8B", "phase": "warmup", "tec": "loop_roll", "cover": "/covers-au/11 Calling (Spider-Man_ Across the Spider-Verse).jpg", "mood": "高能", "start": 89.9, "dur": 84}, {"title": "Less Than Zero", "artist": "The Weeknd", "bpm": 143.6, "key": "C", "cam": "8B", "phase": "warmup", "tec": "spinback", "cover": "/covers-au/14 Less Than Zero_EG.jpg", "mood": "高能", "start": 161.0, "dur": 84}, {"title": "Home", "artist": "Charlie Puth & 宇多田光", "bpm": 184.6, "key": "Cm", "cam": "5A", "phase": "warmup", "tec": "echo_out", "cover": "/covers-au/16 Home (feat_ Hikaru Utada).jpg", "mood": "高能", "start": 244.0, "dur": 84}, {"title": "To the Wilder (Piano Version)", "artist": "Woodkid", "bpm": 99.4, "key": "C", "cam": "8B", "phase": "warmup", "tec": "filter_build", "cover": "/covers-au/17 To the Wilder (Piano Version)_EG.jpg", "mood": "slow jam", "start": 329.0, "dur": 84}, {"title": "insecure", "artist": "Lauv", "bpm": 123.0, "key": "Fm", "cam": "4A", "phase": "build", "tec": "filter_build", "cover": "/covers-au/04 insecure.jpg", "mood": "律动", "start": 412.6, "dur": 84}, {"title": "her", "artist": "JVKE", "bpm": 143.6, "key": "G#m", "cam": "1A", "phase": "build", "tec": "echo_out", "cover": "/covers-au/08 her.jpg", "mood": "高能", "start": 496.2, "dur": 84}, {"title": "See You Again", "artist": "Tyler, The Creator", "bpm": 152.0, "key": "D#m", "cam": "2A", "phase": "build", "tec": "filter_build", "cover": "/covers-au/15 See You Again (Explicit).jpg", "mood": "高能", "start": 580.2, "dur": 84}, {"title": "ghosts", "artist": "Lauv", "bpm": 143.6, "key": "D", "cam": "10B", "phase": "build", "tec": "echo_out", "cover": "/covers-au/03 ghosts.jpg", "mood": "高能", "start": 663.9, "dur": 84}, {"title": "Scared 2 Be Lonely", "artist": "Lil Tjay", "bpm": 129.2, "key": "C#m", "cam": "12A", "phase": "build", "tec": "echo_out", "cover": "/covers-au/09 Scared 2 Be Lonely (Explicit).jpg", "mood": "律动", "start": 748.0, "dur": 84}, {"title": "Roller", "artist": "Apache207", "bpm": 129.2, "key": "D#m", "cam": "2A", "phase": "build", "tec": "loop_roll", "cover": "/covers-au/01 Roller (Explicit)_EM.jpg", "mood": "律动", "start": 832.1, "dur": 84}, {"title": "sometimes", "artist": "Lauv", "bpm": 129.2, "key": "D#m", "cam": "2A", "phase": "peak", "tec": "filter_build", "cover": "/covers-au/05 sometimes.jpg", "mood": "律动", "start": 905.1, "dur": 84}, {"title": "Stargazing", "artist": "Myles Smith", "bpm": 123.0, "key": "C#m", "cam": "12A", "phase": "peak", "tec": "echo_out", "cover": "/covers-au/12 Stargazing_EG.jpg", "mood": "律动", "start": 988.7, "dur": 84}, {"title": "she want", "artist": "Powfu", "bpm": 78.3, "key": "C", "cam": "8B", "phase": "peak", "tec": "filter_build", "cover": "/covers-au/13 she want.jpg", "mood": "深夜慢板", "start": 1073.0, "dur": 84}, {"title": "We Don't Get Along", "artist": "Juice WRLD & Marshmello", "bpm": 89.1, "key": "Gm", "cam": "6A", "phase": "peak", "tec": "echo_out", "cover": "/covers-au/06 We Don_t Get Along.jpg", "mood": "深夜慢板", "start": 1157.7, "dur": 84}, {"title": "fake it", "artist": "Lauv", "bpm": 99.4, "key": "Dm", "cam": "7A", "phase": "outro", "tec": "loop_roll", "cover": "/covers-au/02 fake it.jpg", "mood": "slow jam", "start": 1241.7, "dur": 84}, {"title": "Soft Lips", "artist": "BlankCh3ck & Nathaniel Davis", "bpm": 103.4, "key": "Gm", "cam": "6A", "phase": "outro", "tec": "xfade", "cover": "/covers-au/07 Soft Lips (Explicit)_EM.jpg", "mood": "slow jam", "start": 1313.8, "dur": 84}];
+
+let starts = SET.map(s => s.start);
+const TOTAL = starts[starts.length-1] + (SET[SET.length-1].dur || 78);
+
+const au = document.getElementById('au');
+const emap = document.getElementById('emap');
+const tbl = document.getElementById('tbl');
+const $ = id => document.getElementById(id);
+
+const bpms = SET.map(s => s.bpm), mn = Math.min(...bpms), mx = Math.max(...bpms);
+SET.forEach((s, i) => {
+  const d = document.createElement('div');
+  d.className = 'bar';
+  d.style.height = (10 + 90 * (s.bpm - mn) / (mx - mn)) + '%';
+  d.title = `${fmt(starts[i])} · ${s.title} · ${s.bpm} BPM · ${s.mood}`;
+  d.onclick = () => seek(i);
+  emap.appendChild(d);
+});
+
+SET.forEach((s, i) => {
+  const tr = document.createElement('tr');
+  tr.className = 'play-row';
+  const tec = s.tec || '—';
+  tr.innerHTML = `<td class="num">${i+1}</td><td class="num">${fmt(starts[i])}</td>` +
+    `<td><span class="ph ${s.phase}">${s.phase}</span></td>` +
+    `<td class="num">${s.bpm.toFixed(1)}</td>` +
+    `<td class="num">${s.key}→${s.cam||'?'}</td>` +
+    `<td class="tec${tec==='cut'?' cut':''}">${({loop_roll:'LOOP ROLL',spinback:'SPINBACK',echo_out:'ECHO OUT',filter_build:'FILTER BUILD',xfade:'BLEND',blend:'BLEND',bass_swap:'BASS SWAP',filter_sweep:'FILTER SWAP',cut:'CUT'})[tec]||tec||'—'}</td>` +
+    `<td><div class="tr-title"><img class="tr-cover" loading="lazy" src="${s.cover}" alt=""><span>${esc(s.title.replace(/^\d+\s*/,''))} <span class="muted" style="font-weight:400">· ${esc(s.artist||'')}</span><br><span class="mood-tag">${s.mood}</span></span></div></td>`;
+  tr.onclick = () => seek(i);
+  tbl.querySelector('tbody').appendChild(tr);
+});
+
+let seekLock = 0;
+function seek(i){
+  seekLock = Date.now() + 3000;
+  const target = starts[i] + 0.6;
+  syncUI(i); curIdx = i;
+  // 强制重置 audio 状态机: 清 src → load() → 回填 src(带 fragment) → 等 canplay → seek
+  const src = au.src.split('#')[0];
+  try { au.pause(); } catch(e){}
+  au.removeAttribute('src');
+  try { au.load(); } catch(e){}   // 重置到 NETWORK_EMPTY, 取消飞行中的请求
+  au.src = src + '#t=' + Math.floor(target);  // media fragment: 浏览器直接发对应 Range
+  const onReady = () => {
+    try { if (Math.abs(au.currentTime - target) > 1.5) au.currentTime = target; } catch(e){}
+    au.play().catch(()=>{});
+  };
+  if (au.readyState >= 3) onReady();
+  else {
+    au.addEventListener('canplay', onReady, { once: true });
+    // 兜底: 网络慢时 4s 后也尝试播(哪怕还在缓冲)
+    setTimeout(() => { if (au.paused && curIdx === i) { try { au.currentTime = target; } catch(e){} au.play().catch(()=>{}); } }, 4000);
+  }
+}
+function fmt(sec){ return String(Math.floor(sec/60)).padStart(2,'0') + ':' + String(Math.floor(sec%60)).padStart(2,'0'); }
+function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
+
+let curIdx = -1;
+au.addEventListener('timeupdate', () => {
+  if (Date.now() < seekLock) return;
+  let idx = 0;
+  for (let i = 0; i < starts.length; i++) if (au.currentTime >= starts[i]) idx = i;
+  if (idx !== curIdx) { curIdx = idx; syncUI(idx); }
+});
+function syncUI(i){
+  const s = SET[i];
+  $('heroArt').src = s.cover; $('dockCover').src = s.cover;
+  $('heroPhase').textContent = s.phase.toUpperCase() + ' 阶段';
+  $('heroTitle').textContent = s.title.replace(/^\d+\s*/,'') + ' — ' + (s.artist||'');
+  $('stBpm').textContent = s.bpm.toFixed(1);
+  $('stKey').textContent = `${s.key} → ${s.cam||'?'}`;
+  $('stPos').textContent = `${i+1} / ${SET.length}`;
+  $('stSet').textContent = fmt(starts[i]);
+  $('dockTitle').textContent = s.title.replace(/^\d+\s*/,'') + ' · ' + (s.artist||'');
+  $('dockSub').textContent = `${s.bpm.toFixed(1)} BPM · ${s.key}→${s.cam||'?'} · ${s.mood}`;
+  document.querySelectorAll('.bar').forEach((b, j) => b.classList.toggle('cur', j === i));
+  tbl.querySelectorAll('tbody tr').forEach((r, j) => r.classList.toggle('cur', j === i));
+}
+au.addEventListener('loadedmetadata', () => { /* duration ready */ });
+</script>
+</body>
+</html>

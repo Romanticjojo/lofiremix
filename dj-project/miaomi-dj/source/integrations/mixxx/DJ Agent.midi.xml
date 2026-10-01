@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MixxxControllerPreset schemaVersion="1" mixxxVersion="2.5">
+  <info>
+    <name>DJ Agent bridge</name>
+    <author>DJ Agent</author>
+    <description>Private SysEx bridge for a dedicated MIDI endpoint</description>
+  </info>
+  <controller id="DJ Agent bridge">
+    <scriptfiles>
+      <file filename="dj-agent-bridge.js" functionprefix="DJAgentBridge"/>
+    </scriptfiles>
+    <controls>
+      <control>
+        <group>[Master]</group>
+        <key>DJAgentBridge.incomingData</key>
+        <status>0xF0</status>
+        <options><Script-Binding/></options>
+      </control>
+    </controls>
+    <outputs/>
+  </controller>
+</MixxxControllerPreset>

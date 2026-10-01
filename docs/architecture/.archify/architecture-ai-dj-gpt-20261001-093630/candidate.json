@@ -1,0 +1,420 @@
+{
+ "schema_version": 1,
+ "diagram_type": "architecture",
+ "meta": {
+  "title": "AI DJ Agent 参考架构 (GPT 方案)",
+  "subtitle": "感知-决策-执行三层 · 目标运行时 Mixxx + DDJ-200",
+  "output": "ai-dj-gpt-reference.html",
+  "locale": "zh-CN",
+  "quality_profile": "showcase"
+ },
+ "components": [
+  {
+   "id": "djagent",
+   "type": "security",
+   "label": "DJ Agent",
+   "sublabel": "personality · memory · planning · decision",
+   "pos": [
+    330,
+    40
+   ],
+   "size": [
+    220,
+    64
+   ],
+   "tag": "LLM 大脑"
+  },
+  {
+   "id": "state",
+   "type": "database",
+   "label": "DJ State",
+   "sublabel": "曲目/情绪/能量/时间轴",
+   "pos": [
+    430,
+    150
+   ],
+   "size": [
+    120,
+    56
+   ]
+  },
+  {
+   "id": "track",
+   "type": "backend",
+   "label": "Track Selector",
+   "sublabel": "选曲",
+   "pos": [
+    150,
+    260
+   ],
+   "size": [
+    140,
+    56
+   ]
+  },
+  {
+   "id": "trans",
+   "type": "backend",
+   "label": "Transition AI",
+   "sublabel": "接歌决策",
+   "pos": [
+    400,
+    260
+   ],
+   "size": [
+    140,
+    56
+   ]
+  },
+  {
+   "id": "fx",
+   "type": "backend",
+   "label": "FX Planner",
+   "sublabel": "效果规划",
+   "pos": [
+    650,
+    260
+   ],
+   "size": [
+    140,
+    56
+   ]
+  },
+  {
+   "id": "exec",
+   "type": "backend",
+   "label": "DJ Execution Engine",
+   "sublabel": "执行引擎 · 指令编排",
+   "pos": [
+    300,
+    370
+   ],
+   "size": [
+    220,
+    64
+   ],
+   "tag": "控制总线"
+  },
+  {
+   "id": "mixxx",
+   "type": "cloud",
+   "label": "Mixxx",
+   "sublabel": "开源 DJ 软件 · C++ 引擎",
+   "pos": [
+    330,
+    480
+   ],
+   "size": [
+    180,
+    60
+   ]
+  },
+  {
+   "id": "ddj",
+   "type": "external",
+   "label": "DDJ-200",
+   "sublabel": "MIDI 控制器 · 蓝牙",
+   "pos": [
+    600,
+    480
+   ],
+   "size": [
+    180,
+    60
+   ]
+  },
+  {
+   "id": "audio",
+   "type": "external",
+   "label": "Audio 输出",
+   "sublabel": "扬声器 / 声卡",
+   "pos": [
+    330,
+    590
+   ],
+   "size": [
+    180,
+    56
+   ]
+  },
+  {
+   "id": "bpm",
+   "type": "database",
+   "label": "BPM 检测",
+   "pos": [
+    560,
+    730
+   ],
+   "size": [
+    110,
+    50
+   ]
+  },
+  {
+   "id": "key",
+   "type": "database",
+   "label": "Key 检测",
+   "pos": [
+    690,
+    730
+   ],
+   "size": [
+    110,
+    50
+   ]
+  },
+  {
+   "id": "energy",
+   "type": "database",
+   "label": "Energy 分析",
+   "pos": [
+    820,
+    730
+   ],
+   "size": [
+    110,
+    50
+   ]
+  },
+  {
+   "id": "onnx",
+   "type": "cloud",
+   "label": "ONNX 推理",
+   "sublabel": "模型运行时",
+   "pos": [
+    660,
+    840
+   ],
+   "size": [
+    160,
+    56
+   ]
+  },
+  {
+   "id": "dsp",
+   "type": "cloud",
+   "label": "DSP 分析",
+   "sublabel": "librosa / essentia",
+   "pos": [
+    850,
+    840
+   ],
+   "size": [
+    160,
+    56
+   ]
+  },
+  {
+   "id": "phrase",
+   "type": "database",
+   "label": "phrase",
+   "sublabel": "乐句边界",
+   "pos": [
+    620,
+    950
+   ],
+   "size": [
+    100,
+    46
+   ]
+  },
+  {
+   "id": "mood",
+   "type": "database",
+   "label": "mood",
+   "sublabel": "情绪标签",
+   "pos": [
+    740,
+    950
+   ],
+   "size": [
+    100,
+    46
+   ]
+  },
+  {
+   "id": "stems",
+   "type": "database",
+   "label": "stems/embeddings",
+   "sublabel": "分轨/嵌入",
+   "pos": [
+    860,
+    950
+   ],
+   "size": [
+    130,
+    46
+   ]
+  },
+  {
+   "id": "featstore",
+   "type": "database",
+   "label": "Feature Store",
+   "sublabel": "特征库 · 汇聚",
+   "pos": [
+    760,
+    150
+   ],
+   "size": [
+    150,
+    56
+   ]
+  }
+ ],
+ "boundaries": [
+  {
+   "kind": "region",
+   "label": "感知层 · 音频分析 (ONNX / DSP)",
+   "wraps": [
+    "onnx",
+    "dsp",
+    "bpm",
+    "key",
+    "energy",
+    "phrase",
+    "mood",
+    "stems"
+   ]
+  }
+ ],
+ "connections": [
+  {
+   "id": "c1",
+   "from": "djagent",
+   "to": "state",
+   "label": "读写",
+   "variant": "emphasis"
+  },
+  {
+   "id": "c20",
+   "from": "state",
+   "to": "track",
+   "label": "驱动"
+  },
+  {
+   "id": "c21",
+   "from": "state",
+   "to": "trans",
+   "label": "驱动"
+  },
+  {
+   "id": "c22",
+   "from": "state",
+   "to": "fx",
+   "label": "驱动"
+  },
+  {
+   "id": "c30",
+   "from": "track",
+   "to": "exec",
+   "label": "选曲结果"
+  },
+  {
+   "id": "c31",
+   "from": "trans",
+   "to": "exec",
+   "label": "切点+手法"
+  },
+  {
+   "id": "c32",
+   "from": "fx",
+   "to": "exec",
+   "label": "FX 参数"
+  },
+  {
+   "id": "c8",
+   "from": "exec",
+   "to": "mixxx",
+   "label": "Deck/Crossfader/FX 控制",
+   "variant": "emphasis"
+  },
+  {
+   "id": "c9",
+   "from": "mixxx",
+   "to": "ddj",
+   "label": "MIDI 双向",
+   "variant": "dashed"
+  },
+  {
+   "id": "c10",
+   "from": "mixxx",
+   "to": "audio",
+   "label": "混音输出"
+  },
+  {
+   "id": "cfs1",
+   "from": "featstore",
+   "to": "state",
+   "label": "特征供给",
+   "variant": "dashed"
+  },
+  {
+   "id": "cfs0",
+   "from": "bpm",
+   "to": "featstore",
+   "variant": "dashed"
+  },
+  {
+   "id": "cfs1r",
+   "from": "key",
+   "to": "featstore",
+   "variant": "dashed"
+  },
+  {
+   "id": "cfs2",
+   "from": "energy",
+   "to": "featstore",
+   "variant": "dashed"
+  },
+  {
+   "id": "ce0",
+   "from": "onnx",
+   "to": "bpm"
+  },
+  {
+   "id": "ce1",
+   "from": "onnx",
+   "to": "key"
+  },
+  {
+   "id": "ce2",
+   "from": "onnx",
+   "to": "energy"
+  },
+  {
+   "id": "cm1",
+   "from": "onnx",
+   "to": "mood",
+   "variant": "dashed"
+  },
+  {
+   "id": "cs1",
+   "from": "onnx",
+   "to": "stems",
+   "variant": "dashed"
+  },
+  {
+   "id": "cp1",
+   "from": "dsp",
+   "to": "phrase"
+  },
+  {
+   "id": "cp2",
+   "from": "dsp",
+   "to": "energy"
+  },
+  {
+   "id": "cm2",
+   "from": "onnx",
+   "to": "key",
+   "variant": "dashed"
+  },
+  {
+   "id": "caud",
+   "from": "audio",
+   "to": "dsp",
+   "label": "音频流采样(可选)",
+   "variant": "dashed"
+  }
+ ]
+}

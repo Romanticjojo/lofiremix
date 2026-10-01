@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>喵秘 DJ · 试听与反馈</title>
+<!-- Extend the existing dark listening page. Real saves use the local feedback server;
+     no default ratings, fake waveforms, remote assets, or automatic preference labels. -->
+<style>
+:root{color-scheme:dark;--bg:#101419;--panel:#1b232e;--line:#344150;--muted:#a8b6c7;--ink:#e5edf4;--mint:#75d4c2}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 system-ui,"Microsoft YaHei",sans-serif}
+main{max-width:1160px;margin:auto;padding:26px 28px 112px}button,input,textarea{font:inherit}button{cursor:pointer}
+button:focus-visible,input:focus-visible+span,textarea:focus-visible,a:focus-visible{outline:3px solid var(--mint);outline-offset:4px}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}.logo{background:var(--mint);color:var(--bg);padding:5px 8px;font-weight:900;border-radius:7px;font-size:18px}.brand strong{letter-spacing:.03em}.brand small{margin-left:auto;color:var(--muted)}
+h1{font-size:clamp(22px,3vw,30px);line-height:1.4;margin:12px 0 8px}h2{font-size:20px;margin:0}p{margin:8px 0}.subtle{color:var(--muted)}
+nav{display:flex;gap:8px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:22px}
+nav button{background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:8px;padding:10px 16px;min-height:44px}
+nav button[aria-selected="true"]{background:#234039;color:var(--mint);border-color:var(--mint)}
+.eyebrow{color:var(--mint);font-size:12px;letter-spacing:.08em}.history{border-left:2px solid var(--line);padding:5px 14px;margin:16px 0;color:var(--muted);font-size:13px}.history strong{color:var(--ink)}
+.fit{display:flex;align-items:center;gap:24px;flex-wrap:wrap;padding:18px 0 22px;border-bottom:1px solid var(--line);margin-bottom:24px}
+.fit fieldset{flex:1;min-width:270px}.fit p{font-size:13px}.decks{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.deck{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px}.deck-head{display:flex;align-items:center;gap:12px;margin-bottom:18px}.badge{width:34px;height:34px;display:grid;place-items:center;background:#293645;color:var(--mint);border-radius:8px;font-weight:800}
+audio{width:100%;height:42px;margin:0 0 18px}.deck fieldset+fieldset{margin-top:18px}
+fieldset{border:0;padding:0;margin:0;min-width:0}legend{padding:0;font-weight:600;margin-bottom:8px;font-size:14px}
+.choices{display:flex;gap:6px;flex-wrap:wrap}.choice{position:relative;cursor:pointer}.choice input{position:absolute;opacity:0;width:1px;height:1px}
+.choice span{display:block;padding:8px 12px;min-height:40px;border:1px solid var(--line);border-radius:7px;color:#ccd7e4;font-size:13px;transition:background .12s}
+.choice:hover span{background:#293645}.choice input:checked+span{background:#234039;border-color:var(--mint);color:#b8f7e9}.choice input:disabled+span{opacity:.6;cursor:wait}
+.choice.skip span{color:var(--muted);border-style:dashed}.overall{margin:24px 0 20px}.overall legend{font-size:18px;margin-bottom:12px}.overall .choice span{font-size:15px;padding:10px 20px}
+.note-label{display:block;color:var(--muted);font-size:13px;margin-bottom:8px}textarea{display:block;width:100%;min-height:72px;resize:vertical;border:1px solid var(--line);border-radius:8px;background:#151c25;color:var(--ink);padding:12px}
+.savebar{position:fixed;bottom:0;left:0;right:0;background:#151c25;border-top:1px solid var(--line);z-index:5}.save-inner{max-width:1160px;margin:auto;padding:16px 28px;display:flex;align-items:center;gap:20px}.status{flex:1;font-size:14px}.status small{display:block;color:var(--muted);font-size:12px}.saved{color:var(--mint)}
+.primary{background:var(--mint);color:#10251f;border:0;font-weight:700;border-radius:8px;padding:12px 28px;min-height:46px}.primary:disabled{background:#34454a;color:#a3b3b6;cursor:default}
+.error{color:#ffc4b7;white-space:pre-wrap;font-size:14px;margin:12px 0}.loading{padding:40px 0}.retry{background:none;border:1px solid var(--mint);border-radius:7px;color:var(--mint);padding:10px 20px}
+@media(max-width:700px){main{padding:18px 16px 125px}.brand small{font-size:11px}.decks{grid-template-columns:1fr}.deck{padding:18px}.fit{gap:12px}.save-inner{padding:12px 16px;gap:10px}.primary{padding:12px 18px}.status small{max-width:200px}nav button{flex:1;padding:8px}nav{gap:6px}.overall .choice span{padding:10px 13px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<main data-screen-label="试听与结构化反馈">
+  <header class="brand"><div class="logo" aria-hidden="true">DJ</div><strong>喵秘 DJ · 试听台</strong><small id="source">本地试听 · 本地保存</small></header>
+  <nav id="tabs" aria-label="选择转场" role="tablist"></nav>
+  <div id="content" class="loading">正在读取试听和已保存反馈…</div>
+  <p id="error" class="error" role="alert"></p>
+</main>
+<footer class="savebar"><div class="save-inner"><div id="status" class="status" role="status" aria-live="polite">正在读取…</div><button id="save" class="primary" type="button" disabled>保存反馈</button></div></footer>
+<script>
+'use strict';
+let state, selected=0, busy=false;
+const drafts=new Map(), requests=new Map();
+const $=id=>document.getElementById(id);
+const escapeHTML=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const copy=value=>JSON.parse(JSON.stringify(value));
+const signature=f=>JSON.stringify([f.preference,f.song_fit,f.ratings.A,f.ratings.B,f.note]);
+const isDirty=item=>signature(drafts.get(item.id))!==signature(item.feedback);
+const current=()=>state.items[selected];
+const options={song_fit:[['good','搭配好'],['mixed','一般'],['bad','不搭']],cue:[['good','切点好'],['mixed','一般'],['bad','不合适']],blend:[['good','顺滑'],['mixed','一般'],['bad','生硬']],vocals:[['good','交接自然'],['mixed','有点重叠'],['bad','明显抢唱']]};
+function group(name,title,choices,value,skip=true){
+  const all=skip?[...choices,['','暂不评价']]:choices;
+  return `<fieldset><legend>${escapeHTML(title)}</legend><div class="choices">${all.map(([v,label])=>`<label class="choice ${v===''?'skip':''}"><input type="radio" name="${name}" value="${v}" ${(value??'')===v?'checked':''}><span>${escapeHTML(label)}</span></label>`).join('')}</div></fieldset>`;
+}
+function renderTabs(){
+  $('tabs').innerHTML=state.items.map((item,i)=>`<button type="button" role="tab" aria-selected="${i===selected}" data-index="${i}">${escapeHTML(item.kind==='vocal_revision'?item.pair_id.replace('transition-','')+' 人声修订':item.heading.replace('transition-','转场 '))}${isDirty(item)?' ·':''}</button>`).join('');
+}
+function render(){
+  const item=current(), draft=drafts.get(item.id), revision=item.kind==='vocal_revision';
+  renderTabs();
+  $('content').className='';
+  $('content').innerHTML=`<div class="eyebrow">${escapeHTML(item.heading)}</div><h1>${escapeHTML(item.songs)}</h1>
+    <p class="subtle">${revision?'原版与人声淡出新版，重点听接唱是否自然。':'先听 A 和 B，再选择更喜欢的版本。'}只评价您有把握的项目，其他项可留空。</p>
+    ${item.previous_note?`<aside class="history"><strong>您之前的反馈</strong><br>${escapeHTML(item.previous_note)}</aside>`:''}
+    <div class="fit"><div><strong>这两首歌搭吗？</strong><p class="subtle">选曲搭配单独评价</p></div>${group('song_fit','选曲搭配',options.song_fit,draft.song_fit)}</div>
+    <div class="decks">${['A','B'].map(label=>`<section class="deck" aria-label="${escapeHTML(item.candidates[label].label)}评价">
+      <div class="deck-head"><div class="badge">${label}</div><h2>${escapeHTML(item.candidates[label].label)}</h2></div>
+      <audio controls preload="metadata" aria-label="${escapeHTML(item.candidates[label].label)}试听" src="${escapeHTML(item.candidates[label].url)}"></audio>
+      ${[['cue','切入点'],['blend','混音衔接'],['vocals','人声交接']].map(([key,title])=>group(`${label}.${key}`,title,options[key],draft.ratings[label][key])).join('')}
+    </section>`).join('')}</div>
+    <div class="overall">${group('preference','整体更喜欢哪个？', [['A',revision?'原版更好':'A 更好'],['B',revision?'新版更好':'B 更好'],['tie','差不多'],['neither','都不满意']],draft.preference,false)}</div>
+    <label class="note-label" for="note">补充一句（可选，最多 2000 字）</label><textarea id="note" maxlength="2000" placeholder="例如：选曲不错，但第二首开唱时，第一首人声还没退出。">${escapeHTML(draft.note)}</textarea>
+    <p class="subtle" style="font-size:12px">播放一个版本会暂停本页其他音频。选择后点“保存反馈”，评分会保存在这台电脑上。</p>`;
+  $('error').textContent='';
+  refreshStatus();
+}
+function refreshStatus(){
+  const item=current(), draft=drafts.get(item.id), dirty=isDirty(item);
+  $('save').disabled=busy||!dirty||!draft.preference;
+  $('save').textContent=busy?'正在保存…':'保存反馈';
+  $('status').classList.toggle('saved',!dirty&&Boolean(item.saved_via));
+  $('status').innerHTML=busy?'正在写入本地文件…':dirty?'有修改尚未保存<small>点击保存后生效；其他转场的草稿会保留。</small>':item.saved_via==='buttons'?'已保存到本地<small>您可以继续修改，历史记录会保留。</small>':item.saved_via==='conversation'?'已载入您之前的选择<small>未评价的细项保持空白，可继续补充。</small>':'尚未评价<small>先选择更喜欢的版本；其他项目可选。</small>';
+}
+async function load(){
+  try{
+    const response=await fetch('/api/state',{cache:'no-store'});
+    const data=await response.json();
+    if(!response.ok)throw new Error(data.error||'读取失败');
+    state=data;
+    for(const item of state.items)drafts.set(item.id,copy(item.feedback));
+    selected=Math.max(0,state.items.findIndex(i=>i.page===location.pathname));
+    if(state.source_kind!=='user-local-audio')$('source').textContent='测试音频 · 仅用于验证界面';
+    render();
+  }catch(error){
+    $('content').textContent='暂时无法读取试听数据，请确认本地试听服务仍在运行。';
+    const button=document.createElement('button');button.className='retry';button.textContent='重新连接';button.onclick=load;$('content').appendChild(button);
+    $('error').textContent=error.message;$('status').textContent='尚未连接';
+  }
+}
+$('tabs').addEventListener('click',event=>{
+  const button=event.target.closest('button[data-index]');
+  if(!button||busy)return;
+  for(const audio of document.querySelectorAll('audio'))audio.pause();
+  selected=Number(button.dataset.index);render();
+});
+$('content').addEventListener('input',event=>{
+  const target=event.target,draft=drafts.get(current().id);
+  if(target.id==='note')draft.note=target.value;
+  else if(target.type==='radio'){
+    if(target.name.includes('.')){const [label,key]=target.name.split('.');draft.ratings[label][key]=target.value||null;}
+    else draft[target.name]=target.value||null;
+  }else return;
+  requests.delete(current().id);$('error').textContent='';renderTabs();refreshStatus();
+});
+$('save').addEventListener('click',async()=>{
+  const item=current();if(busy||!isDirty(item)||!drafts.get(item.id).preference)return;
+  if(!requests.has(item.id))requests.set(item.id,{item_id:item.id,binding:item.binding,base_version:item.version,request_id:crypto.randomUUID(),...copy(drafts.get(item.id))});
+  busy=true;refreshStatus();
+  for(const el of document.querySelectorAll('nav button,input,textarea'))el.disabled=true;
+  try{
+    const response=await fetch('/api/feedback',{method:'POST',headers:{'Content-Type':'application/json','X-DJ-Token':state.token},body:JSON.stringify(requests.get(item.id))});
+    const result=await response.json();if(!response.ok)throw new Error(result.error||'保存失败');
+    item.feedback=copy(result.feedback);item.version=result.version;item.saved_via='buttons';requests.delete(item.id);
+  }catch(error){$('error').textContent=`未保存：${error.message}。您的选择仍在页面上。`;}
+  finally{busy=false;for(const el of document.querySelectorAll('nav button,input,textarea'))el.disabled=false;renderTabs();refreshStatus();}
+});
+document.addEventListener('play',event=>{
+  if(event.target.tagName!=='AUDIO')return;
+  for(const audio of document.querySelectorAll('audio'))if(audio!==event.target)audio.pause();
+},true);
+window.addEventListener('beforeunload',event=>{
+  if(state&&state.items.some(isDirty)){event.preventDefault();event.returnValue='';}
+});
+load();
+</script>
+</body>
+</html>

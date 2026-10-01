@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "50c1e9bc-0c5e-4780-8fd4-7707926dc519",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "/Users/roman/LLM_work/lofiremix/docs/architecture/.archify/architecture-ai-dj-gpt-20261001-093630/candidate.json",
+  "output": "/Users/roman/LLM_work/lofiremix/docs/architecture/.archify/architecture-ai-dj-gpt-20261001-093630/ai-dj-gpt-reference.html",
+  "specification": {
+    "sha256": "f4547580e668cf1fe8f65bef7167f6afada5e66d82d114e034a1ce22e5f66d2e",
+    "bytes": 5802
+  },
+  "artifact": {
+    "sha256": "bdce4fe9dd084647ba10164fef11685e867cfef6cd0109f981280041c962e2c6",
+    "bytes": 782833
+  }
+}

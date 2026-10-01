@@ -1,0 +1,400 @@
+{
+  "schema_version": 1,
+  "created_at": "2026-09-25",
+  "label_origin": "assistant editorial synthesis with source links; no fabricated listener labels",
+  "limitations": [
+    "Party energy scores and stage roles are explicit heuristics, not critic scores or learned crowd response.",
+    "Album-context labels have not been individually verified in a song review.",
+    "BPM/key/features remain audio-derived; labels do not replace them."
+  ],
+  "sources": {
+    "dawn": {
+      "url": "https://pitchfork.com/reviews/albums/the-weeknd-dawn-fm/",
+      "publisher": "Pitchfork",
+      "summary": "专辑以复古舞曲、disco 与 R&B 为主；具体标签是编辑归纳。"
+    },
+    "dawn-takeaways": {
+      "url": "https://pitchfork.com/thepitch/5-takeaways-from-the-weeknd-new-album-dawn-fm/",
+      "publisher": "Pitchfork",
+      "summary": "讨论舞池取向、Sacrifice 的 funk 采样，以及 Less Than Zero 的昂扬副歌。"
+    },
+    "hurry": {
+      "url": "https://pitchfork.com/reviews/albums/the-weeknd-hurry-up-tomorrow/",
+      "publisher": "Pitchfork",
+      "summary": "指出 Niagara Falls 的温暖色彩和 Wake Me Up 的电子冲击。"
+    },
+    "after": {
+      "url": "https://pitchfork.com/reviews/albums/the-weeknd-after-hours/",
+      "publisher": "Pitchfork",
+      "summary": "Save Your Tears 与 Blinding Lights 的复古合成器流行取向。"
+    },
+    "starboy": {
+      "url": "https://pitchfork.com/reviews/albums/22668-starboy/",
+      "publisher": "Pitchfork",
+      "summary": "Die For You 是抒情表达；专辑整体风格多元，其他标签仅作背景推断。"
+    },
+    "flames": {
+      "url": "https://www.theguardian.com/music/2024/sep/13/the-weeknd-dancing-in-the-flames-review-another-apocalyptic-romance-and-another-surefire-hit",
+      "publisher": "The Guardian",
+      "summary": "明亮合成器、复古流行。"
+    },
+    "love": {
+      "url": "https://time.com/3153352/everything-to-everyone/",
+      "publisher": "TIME",
+      "summary": "评论 Love Me Harder 的暧昧表达与双人合作。"
+    },
+    "earned": {
+      "url": "https://time.com/4011859/the-weeknd-interview-beauty-behind-themadness/",
+      "publisher": "TIME / artist interview",
+      "summary": "歌手将 Earned It 描述为缓慢、性感、顺滑。"
+    },
+    "hills": {
+      "url": "https://pitchfork.com/reviews/albums/20999-beauty-behind-the-madness/",
+      "publisher": "Pitchfork",
+      "summary": "The Hills 带有疏离感与惊悚音色。"
+    },
+    "moth": {
+      "url": "https://au.rollingstone.com/music/music-lists/-38999/tears-in-the-rain-2013-39003/",
+      "publisher": "Rolling Stone Australia",
+      "summary": "讨论 Moth to a Flame 的合成器与苦涩情绪。"
+    },
+    "heroes": {
+      "url": "https://pitchfork.com/reviews/albums/metro-boomin-heroes-and-villains/",
+      "publisher": "Pitchfork",
+      "summary": "评论提及 The Weeknd 与 21 Savage 对 I Don’t Wanna Know 的改编；情绪标签是编辑推断。"
+    }
+  },
+  "tracks": {
+    "Love Me Harder": {
+      "tags": [
+        "暧昧",
+        "双人对唱",
+        "R&B"
+      ],
+      "party_energy": 0.5,
+      "source_ids": [
+        "love"
+      ],
+      "evidence_level": "song_review",
+      "score_origin": "editorial_heuristic_not_human_training_label",
+      "excluded_from_sample": false
+    },
+    "Moth To A Flame": {
+      "tags": [
+        "电子",
+        "苦涩",
+        "夜色"
+      ],
+      "party_energy": 0.8,
+      "source_ids": [
+        "moth"
+      ],
+      "evidence_level": "song_review",
+      "score_origin": "editorial_heuristic_not_human_training_label",
+      "excluded_from_sample": false
+    },
+    "A Lonely Night": {
+      "tags": [
+        "复古",
+        "律动"
+      ],
+      "party_energy": 0.65,
+      "source_ids": [
+        "starboy"
+      ],
+      "evidence_level": "album_context_inference",
+      "score_origin": "editorial_heuristic_not_human_training_label",
+      "excluded_from_sample": true
+    },
+    "After Hours": {
+      "tags": [
+        "暗色",
+        "情绪推进"
+      ],
+      "party_energy": 0.68,
+      "source_ids": [
+        "after"
+      ],
+      "evidence_level": "album_context_inference",
+      "score_origin": "editorial_heuristic_not_human_training_label",
+      "excluded_from_sample": false
+    },
+    "Best Friends": {
+      "tags": [
+        "R&B",
+        "中速"
+      ],
+      "party_energy": 0.48,
+      "source_ids": [
+        "dawn"
+      ],
+      "evidence_level": "album_context_inference",
+      "score_origin": "editorial_heuristic_not_human_training_label",
+      "excluded_from_sample": false
+    },
+    "Blinding Lights": {
+      "tags": [
+        "复古",
+        "合成器流行",
+        "明亮"
+      ],
+      "party_energy": 0.95,
+      "source_ids": [
+        "after"
+      ],
+      "evidence_level": "song_review",
+      "score_origin": "editorial_heuristic_not_human_training_label",
+      "excluded_from_sample": false
+    },
+    "Dancing In The Flames": {
+      "tags": [
+        "明亮",
+        "复古流行"
+      ],
+      "party_energy": 0.8,
+      "source_ids": [
+        "flames"
+      ],
+      "evidence_level": "song_review",
+      "score_origin": "editorial_heuristic_not_human_training_label",
+      "excluded_from_sample": false
+    },
+    "Die For You": {
+      "tags": [
+        "抒情",
+        "浪漫"
+      ],
+      "party_energy": 0.4,
+      "source_ids": [
+        "starboy"
+      ],
+      "evidence_level": "song_review",
+      "score_origin": "editorial_heuristic_not_human_training_label",
+      "excluded_from_sample": false
+    },
+    "Earned It": {
+      "tags": [
+        "抒情",
+        "性感",
+        "舒缓"
+      ],
+      "party_energy": 0.28,
+      "source_ids": [
+        "earned"
+      ],
+      "evidence_level": "song_review",
+      "score_origin": "editorial_heuristic_not_human_training_label",
+      "excluded_from_sample": true
+    },
+    "How Do I Make You Love Me?": {
+      "tags": [
+        "合成器",
+        "舞曲"
+      ],
+      "party_energy": 0.85,
+      "source_ids": [
+        "dawn"
+      ],
+      "evidence_level": "song_review",
+      "score_origin": "editorial_heuristic_not_human_training_label",
+      "excluded_from_sample": false
+    },
+    "Is There Someone Else?": {
+      "tags": [
+        "R&B",
+        "夜色"
+      ],
+      "party_energy": 0.5,
+      "source_ids": [
+        "dawn"
+      ],
+      "evidence_level": "album_context_inference",
+      "score_origin": "editorial_heuristic_not_human_training_label",
+      "excluded_from_sample": false
+    },
+    "Less Than Zero": {
+      "tags": [
+        "昂扬",
+        "复古流行"
+      ],
+      "party_energy": 0.88,
+      "source_ids": [
+        "dawn-takeaways"
+      ],
+      "evidence_level": "song_review",
+      "score_origin": "editorial_heuristic_not_human_training_label",
+      "excluded_from_sample": false
+    },
+    "Niagara Falls": {
+      "tags": [
+        "温暖",
+        "律动"
+      ],
+      "party_energy": 0.42,
+      "source_ids": [
+        "hurry"
+      ],
+      "evidence_level": "song_review",
+      "score_origin": "editorial_heuristic_not_human_training_label",
+      "excluded_from_sample": false
+    },
+    "Ordinary Life": {
+      "tags": [
+        "R&B",
+        "暗色"
+      ],
+      "party_energy": 0.52,
+      "source_ids": [
+        "starboy"
+      ],
+      "evidence_level": "album_context_inference",
+      "score_origin": "editorial_heuristic_not_human_training_label",
+      "excluded_from_sample": false
+    },
+    "Out of Time": {
+      "tags": [
+        "复古",
+        "柔和"
+      ],
+      "party_energy": 0.35,
+      "source_ids": [
+        "dawn"
+      ],
+      "evidence_level": "album_context_inference",
+      "score_origin": "editorial_heuristic_not_human_training_label",
+      "excluded_from_sample": false
+    },
+    "Reminder": {
+      "tags": [
+        "R&B",
+        "松弛"
+      ],
+      "party_energy": 0.55,
+      "source_ids": [
+        "starboy"
+      ],
+      "evidence_level": "album_context_inference",
+      "score_origin": "editorial_heuristic_not_human_training_label",
+      "excluded_from_sample": false
+    },
+    "Sacrifice": {
+      "tags": [
+        "funk",
+        "舞曲"
+      ],
+      "party_energy": 0.9,
+      "source_ids": [
+        "dawn-takeaways"
+      ],
+      "evidence_level": "song_review",
+      "score_origin": "editorial_heuristic_not_human_training_label",
+      "excluded_from_sample": false
+    },
+    "Save Your Tears": {
+      "tags": [
+        "复古",
+        "合成器流行"
+      ],
+      "party_energy": 0.73,
+      "source_ids": [
+        "after"
+      ],
+      "evidence_level": "song_review",
+      "score_origin": "editorial_heuristic_not_human_training_label",
+      "excluded_from_sample": false
+    },
+    "Starry Eyes": {
+      "tags": [
+        "氛围",
+        "内省"
+      ],
+      "party_energy": 0.3,
+      "source_ids": [
+        "dawn"
+      ],
+      "evidence_level": "album_context_inference",
+      "score_origin": "editorial_heuristic_not_human_training_label",
+      "excluded_from_sample": false
+    },
+    "The Hills": {
+      "tags": [
+        "暗色",
+        "紧张"
+      ],
+      "party_energy": 0.8,
+      "source_ids": [
+        "hills"
+      ],
+      "evidence_level": "song_review",
+      "score_origin": "editorial_heuristic_not_human_training_label",
+      "excluded_from_sample": false
+    },
+    "True Colors": {
+      "tags": [
+        "R&B",
+        "柔和"
+      ],
+      "party_energy": 0.32,
+      "source_ids": [
+        "starboy"
+      ],
+      "evidence_level": "album_context_inference",
+      "score_origin": "editorial_heuristic_not_human_training_label",
+      "excluded_from_sample": false
+    },
+    "Wake Me Up": {
+      "tags": [
+        "电子",
+        "舞池"
+      ],
+      "party_energy": 0.93,
+      "source_ids": [
+        "hurry"
+      ],
+      "evidence_level": "song_review",
+      "score_origin": "editorial_heuristic_not_human_training_label",
+      "excluded_from_sample": false
+    },
+    "The Abyss": {
+      "tags": [
+        "氛围",
+        "内省"
+      ],
+      "party_energy": 0.33,
+      "source_ids": [
+        "hurry"
+      ],
+      "evidence_level": "album_context_inference",
+      "score_origin": "editorial_heuristic_not_human_training_label",
+      "excluded_from_sample": false
+    },
+    "Creepin'": {
+      "tags": [
+        "R&B",
+        "夜色",
+        "忧郁"
+      ],
+      "party_energy": 0.47,
+      "source_ids": [
+        "heroes"
+      ],
+      "evidence_level": "album_context_inference",
+      "score_origin": "editorial_heuristic_not_human_training_label",
+      "excluded_from_sample": false
+    },
+    "Cry For Me": {
+      "tags": [
+        "暗色",
+        "内省",
+        "合成器"
+      ],
+      "party_energy": 0.72,
+      "source_ids": [
+        "hurry"
+      ],
+      "evidence_level": "album_context_inference",
+      "score_origin": "editorial_heuristic_not_human_training_label",
+      "excluded_from_sample": false
+    }
+  }
+}
