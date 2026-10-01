@@ -15,7 +15,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, 'out')
 COVERS = os.path.join(ROOT, 'work', 'covers')
 HTML = os.path.join(ROOT, 'deploy', 'lofi-room.html')
-REMOTE = 'root@47.95.167.143'
+REMOTE = '$DJ_SERVER (见本地 ~/.ssh/config)'
 WEB = '/var/www/syrinx'
 
 DRY = '--dry' in sys.argv

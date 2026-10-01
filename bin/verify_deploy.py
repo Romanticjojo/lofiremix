@@ -4,7 +4,7 @@ import subprocess
 import sys
 
 TOKEN = sys.argv[1] if len(sys.argv) > 1 else None
-REMOTE = 'root@47.95.167.143'
+REMOTE = '$DJ_SERVER (见本地 ~/.ssh/config)'
 WEB = '/var/www/syrinx'
 
 if not TOKEN:

@@ -10,7 +10,7 @@ import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, 'out')
-REMOTE = 'root@47.95.167.143'
+REMOTE = '$DJ_SERVER (见本地 ~/.ssh/config)'
 WEB = '/var/www/syrinx'
 TOKEN = 'cde18313c9f2'  # 现有页面 token
 

@@ -1,6 +1,6 @@
 # LofiRemix 部署说明
 
-成品音频 + 播放页部署在 romanticjojo.com（阿里云 47.95.167.143）。
+成品音频 + 播放页部署在 romanticjojo.com（阿里云 $DJ_SERVER_IP）。
 
 ## 布局
 
@@ -44,13 +44,13 @@ ffmpeg -i out/<song>_lofi.wav -c:a libmp3lame -q:a 3 out/<song>_lofi.mp3
 
 # 2. token + 上传
 T=$(openssl rand -hex 6)
-scp out/<song>_lofi.mp3 root@47.95.167.143:/var/www/syrinx/lofi-<song>-$T.mp3
-scp cover.jpg root@47.95.167.143:/var/www/syrinx/covers-au/lofi-<song>.jpg
+scp out/<song>_lofi.mp3 $DJ_SERVER (见本地 ~/.ssh/config):/var/www/syrinx/lofi-<song>-$T.mp3
+scp cover.jpg $DJ_SERVER (见本地 ~/.ssh/config):/var/www/syrinx/covers-au/lofi-<song>.jpg
 
 # 3. 播放页加曲目
 # deploy/lofi-room.html 的 TRACKS 数组加一项 (src 带新 token)
 sed '' s/__TOKEN__/$T/g deploy/lofi-room.html > /tmp/room.html
-scp /tmp/room.html root@47.95.167.143:/var/www/syrinx/lofi-room-$T.html
+scp /tmp/room.html $DJ_SERVER (见本地 ~/.ssh/config):/var/www/syrinx/lofi-room-$T.html
 
 # 4. nginx 加两个 location → nginx -t && systemctl reload nginx
 # 5. 验证: curl 页面 200 + mp3 Range 206
