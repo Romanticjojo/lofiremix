@@ -1,0 +1,281 @@
+{
+ "xf": 12.0,
+ "total": 5355.0,
+ "setlist": [
+  {
+   "f": "lofi-die_for_you-v2-cde18313c9f2.mp3",
+   "title": "Die For You",
+   "bpm": 123.0,
+   "key": "G",
+   "rms": 0.0774,
+   "dur": 225.0,
+   "start": 0,
+   "act": "ACT I · 起飞巡航",
+   "real_start": 0.0
+  },
+  {
+   "f": "lofi-earned_it-v2-cde18313c9f2.mp3",
+   "title": "Earned It",
+   "bpm": 112.3,
+   "key": "G#",
+   "rms": 0.0658,
+   "dur": 215.0,
+   "start": 213.0,
+   "act": "ACT I · 起飞巡航",
+   "real_start": 201.0
+  },
+  {
+   "f": "lofi-best_friends-v2-cde18313c9f2.mp3",
+   "title": "Best Friends",
+   "bpm": 83.4,
+   "key": "D",
+   "rms": 0.0716,
+   "dur": 215.0,
+   "start": 416.0,
+   "act": "ACT I · 起飞巡航",
+   "real_start": 404.0
+  },
+  {
+   "f": "lofi-a_lonely_night-v2-cde18313c9f2.mp3",
+   "title": "A Lonely Night",
+   "bpm": 103.4,
+   "key": "F#",
+   "rms": 0.0729,
+   "dur": 215.0,
+   "start": 619.0,
+   "act": "ACT I · 起飞巡航",
+   "real_start": 607.0
+  },
+  {
+   "f": "lofi-creepin-v2-cde18313c9f2.mp3",
+   "title": "Creepin",
+   "bpm": 89.1,
+   "key": "D#",
+   "rms": 0.0742,
+   "dur": 215.0,
+   "start": 822.0,
+   "act": "ACT I · 起飞巡航",
+   "real_start": 810.0
+  },
+  {
+   "f": "lofi-cry_for_me-v2-cde18313c9f2.mp3",
+   "title": "Cry For Me",
+   "bpm": 112.3,
+   "key": "F#",
+   "rms": 0.0788,
+   "dur": 225.0,
+   "start": 1025.0,
+   "act": "ACT I · 起飞巡航",
+   "real_start": 1013.0
+  },
+  {
+   "f": "lofi-reminder-v2-cde18313c9f2.mp3",
+   "title": "Reminder",
+   "bpm": 143.6,
+   "key": "B",
+   "rms": 0.08,
+   "dur": 225.0,
+   "start": 1238.0,
+   "act": "ACT I · 起飞巡航",
+   "real_start": 1226.0
+  },
+  {
+   "f": "lofi-niagara_falls-v2-cde18313c9f2.mp3",
+   "title": "Niagara Falls",
+   "bpm": 89.1,
+   "key": "F",
+   "rms": 0.0802,
+   "dur": 225.0,
+   "start": 1451.0,
+   "act": "ACT I · 起飞巡航",
+   "real_start": 1439.0
+  },
+  {
+   "f": "lofi-sacrifice-v2-cde18313c9f2.mp3",
+   "title": "Sacrifice",
+   "bpm": 112.3,
+   "key": "A#",
+   "rms": 0.0803,
+   "dur": 225.0,
+   "start": 1664.0,
+   "act": "ACT II · 平流层",
+   "real_start": 1652.0
+  },
+  {
+   "f": "lofi-ordinary_life-v2-cde18313c9f2.mp3",
+   "title": "Ordinary Life",
+   "bpm": 136.0,
+   "key": "F#",
+   "rms": 0.0804,
+   "dur": 225.0,
+   "start": 1877.0,
+   "act": "ACT II · 平流层",
+   "real_start": 1865.0
+  },
+  {
+   "f": "lofi-save_your_tears-v2-cde18313c9f2.mp3",
+   "title": "Save Your Tears",
+   "bpm": 107.7,
+   "key": "D#",
+   "rms": 0.0805,
+   "dur": 225.0,
+   "start": 2090.0,
+   "act": "ACT II · 平流层",
+   "real_start": 2078.0
+  },
+  {
+   "f": "lofi-moth_to_a_flame-v2-cde18313c9f2.mp3",
+   "title": "Moth To A Flame",
+   "bpm": 112.3,
+   "key": "B",
+   "rms": 0.0806,
+   "dur": 225.0,
+   "start": 2303.0,
+   "act": "ACT II · 平流层",
+   "real_start": 2291.0
+  },
+  {
+   "f": "lofi-dancing_in_the_flames-v2-cde18313c9f2.mp3",
+   "title": "Dancing In The Flames",
+   "bpm": 143.6,
+   "key": "C",
+   "rms": 0.0812,
+   "dur": 225.0,
+   "start": 2516.0,
+   "act": "ACT II · 平流层",
+   "real_start": 2504.0
+  },
+  {
+   "f": "lofi-blinding_lights-v2-cde18313c9f2.mp3",
+   "title": "Blinding Lights",
+   "bpm": 78.3,
+   "key": "E",
+   "rms": 0.0814,
+   "dur": 225.0,
+   "start": 2729.0,
+   "act": "ACT II · 平流层",
+   "real_start": 2717.0
+  },
+  {
+   "f": "lofi-out_of_time-v2-cde18313c9f2.mp3",
+   "title": "Out Of Time",
+   "bpm": 86.1,
+   "key": "F#",
+   "rms": 0.0821,
+   "dur": 235.0,
+   "start": 2942.0,
+   "act": "ACT II · 平流层",
+   "real_start": 2930.0
+  },
+  {
+   "f": "lofi-true_colors-v2-cde18313c9f2.mp3",
+   "title": "True Colors",
+   "bpm": 143.6,
+   "key": "F",
+   "rms": 0.0821,
+   "dur": 235.0,
+   "start": 3165.0,
+   "act": "ACT II · 平流层",
+   "real_start": 3153.0
+  },
+  {
+   "f": "lofi-starry_eyes-v2-cde18313c9f2.mp3",
+   "title": "Starry Eyes",
+   "bpm": 112.3,
+   "key": "G#",
+   "rms": 0.0833,
+   "dur": 235.0,
+   "start": 3388.0,
+   "act": "ACT III · 夜降",
+   "real_start": 3376.0
+  },
+  {
+   "f": "lofi-the_hills-v2-cde18313c9f2.mp3",
+   "title": "The Hills",
+   "bpm": 103.4,
+   "key": "B",
+   "rms": 0.0833,
+   "dur": 235.0,
+   "start": 3611.0,
+   "act": "ACT III · 夜降",
+   "real_start": 3599.0
+  },
+  {
+   "f": "lofi-less_than_zero-v2-cde18313c9f2.mp3",
+   "title": "Less Than Zero",
+   "bpm": 129.2,
+   "key": "D#",
+   "rms": 0.0838,
+   "dur": 235.0,
+   "start": 3834.0,
+   "act": "ACT III · 夜降",
+   "real_start": 3822.0
+  },
+  {
+   "f": "lofi-wake_me_up-v2-cde18313c9f2.mp3",
+   "title": "Wake Me Up",
+   "bpm": 103.4,
+   "key": "B",
+   "rms": 0.0871,
+   "dur": 235.0,
+   "start": 4057.0,
+   "act": "ACT III · 夜降",
+   "real_start": 4045.0
+  },
+  {
+   "f": "lofi-love_me_harder-v2-cde18313c9f2.mp3",
+   "title": "Love Me Harder",
+   "bpm": 92.3,
+   "key": "D",
+   "rms": 0.0945,
+   "dur": 235.0,
+   "start": 4280.0,
+   "act": "ACT III · 夜降",
+   "real_start": 4268.0
+  },
+  {
+   "f": "lofi-is_there_someone_else-v2-cde18313c9f2.mp3",
+   "title": "Is There Someone Else",
+   "bpm": 123.0,
+   "key": "C#",
+   "rms": 0.0765,
+   "dur": 225.0,
+   "start": 4503.0,
+   "act": "ACT III · 夜降",
+   "real_start": 4491.0
+  },
+  {
+   "f": "lofi-after_hours-v2-cde18313c9f2.mp3",
+   "title": "After Hours",
+   "bpm": 99.4,
+   "key": "F#",
+   "rms": 0.0756,
+   "dur": 225.0,
+   "start": 4716.0,
+   "act": "ACT III · 夜降",
+   "real_start": 4704.0
+  },
+  {
+   "f": "lofi-how_do_i_make_you_love_me-v2-cde18313c9f2.mp3",
+   "title": "How Do I Make You Love Me",
+   "bpm": 112.3,
+   "key": "F#",
+   "rms": 0.0762,
+   "dur": 225.0,
+   "start": 4929.0,
+   "act": "ACT III · 夜降",
+   "real_start": 4917.0
+  },
+  {
+   "f": "lofi-the_abyss-v2-cde18313c9f2.mp3",
+   "title": "The Abyss",
+   "bpm": 129.2,
+   "key": "B",
+   "rms": 0.0764,
+   "dur": 225.0,
+   "start": 5142.0,
+   "act": "ACT III · 夜降",
+   "real_start": 5130.0
+  }
+ ]
+}

@@ -1,0 +1,126 @@
+{
+ "xf": 8.0,
+ "total": 912.3,
+ "setlist": [
+  {
+   "f": "lofi-true_colors-v2-cde18313c9f2.mp3",
+   "title": "True Colors",
+   "bpm": 143.6,
+   "key": "F",
+   "rms": 0.0821,
+   "dur": 88.1,
+   "start": 0,
+   "real_start": 0.0
+  },
+  {
+   "f": "lofi-love_me_harder-v2-cde18313c9f2.mp3",
+   "title": "Love Me Harder",
+   "bpm": 92.3,
+   "key": "D",
+   "rms": 0.0945,
+   "dur": 90.1,
+   "start": 80.1,
+   "real_start": 72.1
+  },
+  {
+   "f": "lofi-wake_me_up-v2-cde18313c9f2.mp3",
+   "title": "Wake Me Up",
+   "bpm": 103.4,
+   "key": "B",
+   "rms": 0.0871,
+   "dur": 88.9,
+   "start": 162.3,
+   "real_start": 154.3
+  },
+  {
+   "f": "lofi-less_than_zero-v2-cde18313c9f2.mp3",
+   "title": "Less Than Zero",
+   "bpm": 129.2,
+   "key": "D#",
+   "rms": 0.0838,
+   "dur": 88.4,
+   "start": 243.2,
+   "real_start": 235.2
+  },
+  {
+   "f": "lofi-a_lonely_night-v2-cde18313c9f2.mp3",
+   "title": "A Lonely Night",
+   "bpm": 103.4,
+   "key": "F#",
+   "rms": 0.0729,
+   "dur": 62.0,
+   "start": 323.6,
+   "real_start": 315.6
+  },
+  {
+   "f": "lofi-starry_eyes-v2-cde18313c9f2.mp3",
+   "title": "Starry Eyes",
+   "bpm": 112.3,
+   "key": "G#",
+   "rms": 0.0833,
+   "dur": 88.3,
+   "start": 377.6,
+   "real_start": 369.6
+  },
+  {
+   "f": "lofi-the_hills-v2-cde18313c9f2.mp3",
+   "title": "The Hills",
+   "bpm": 103.4,
+   "key": "B",
+   "rms": 0.0833,
+   "dur": 88.3,
+   "start": 457.9,
+   "real_start": 449.9
+  },
+  {
+   "f": "lofi-out_of_time-v2-cde18313c9f2.mp3",
+   "title": "Out Of Time",
+   "bpm": 86.1,
+   "key": "F#",
+   "rms": 0.0821,
+   "dur": 88.1,
+   "start": 538.3,
+   "real_start": 530.3
+  },
+  {
+   "f": "lofi-blinding_lights-v2-cde18313c9f2.mp3",
+   "title": "Blinding Lights",
+   "bpm": 78.3,
+   "key": "E",
+   "rms": 0.0814,
+   "dur": 88.0,
+   "start": 618.4,
+   "real_start": 610.4
+  },
+  {
+   "f": "lofi-dancing_in_the_flames-v2-cde18313c9f2.mp3",
+   "title": "Dancing In The Flames",
+   "bpm": 143.6,
+   "key": "C",
+   "rms": 0.0812,
+   "dur": 88.0,
+   "start": 698.4,
+   "real_start": 690.4
+  },
+  {
+   "f": "lofi-moth_to_a_flame-v2-cde18313c9f2.mp3",
+   "title": "Moth To A Flame",
+   "bpm": 112.3,
+   "key": "B",
+   "rms": 0.0806,
+   "dur": 87.9,
+   "start": 778.4,
+   "real_start": 770.4
+  },
+  {
+   "f": "lofi-best_friends-v2-cde18313c9f2.mp3",
+   "title": "Best Friends",
+   "bpm": 83.4,
+   "key": "D",
+   "rms": 0.0716,
+   "dur": 62.0,
+   "start": 858.3,
+   "real_start": 850.3
+  }
+ ]
+}
