@@ -22,7 +22,10 @@ dj-project/
 │   │                       #   磁带刹停/回声抽离/高通滑入/长板交叉
 │   ├── build_set.py        # v1 编排：能量缓降 + 12s 三角交叉
 │   ├── feats.json          # 25 曲特征（librosa 提取）
-│   └── timeline*.json      # 两版串烧时间轴（含切点/技巧/理由）
+│   ├── timeline*.json      # 四版串烧时间轴（v1 缓降/v2 技巧/v3 精华/v4 飞行）
+│   ├── build_v3.py         # v3 精华 15min 节奏型编排
+│   ├── build_v4.py         # v4 长途飞行 89min 三幕编排
+│   └── render_v*.sh        # 渲染脚本（wav 中间层 + acrossfade 链）
 ├── auret-legacy/           # Auret 第一代渲染脚本 + 历史页面
 │   ├── make_set.py         # set17 基础版
 │   ├── model_set.py/v2     # 模型选择版（acoustic/choice/cue）
@@ -53,7 +56,7 @@ presets/                    # DSP 参数（lofi-v2-sleep.txt）
 
 ## 播放页（线上）
 
-- Lofi Night Shift：调音台监控（DECK A/B LED VU + 交叉推子 + 接歌理由 + SET 包络）
+- Lofi Night Shift 双 tab：NIGHT SHIFT（技巧版 53:50）+ FLIGHT（长途飞行版 89:15），调音台监控（DECK A/B LED VU + 交叉推子 + 接歌理由 + SET 包络）
 - Lofi House：黑胶房/助眠房双房间
 - Weeknd DJ 串烧：v1/v4 双版本
 
@@ -62,3 +65,12 @@ presets/                    # DSP 参数（lofi-v2-sleep.txt）
 - Python 3.11+，librosa/numpy/scipy/soundfile
 - 可选：demucs（分轨）、beat-this（节拍）、mido/python-rtmidi（DDJ-200 MIDI）
 - ffmpeg（渲染）
+
+## 版本谱系
+
+| 版本 | 时长 | 编排哲学 |
+|---|---|---|
+| v1 | 55min | 能量缓降（睡眠向） |
+| v2 | 54min | Agent 技巧决策（磁带刹停×4/回声抽离×9/高通滑入×6/长交叉×6） |
+| v3 | 15min | 精华节奏型（蓄势-峰值-呼吸-二峰-落地） |
+| v4 | 89min | 长途飞行三幕（起飞巡航→平流层→夜降，The Abyss 收尾） |
