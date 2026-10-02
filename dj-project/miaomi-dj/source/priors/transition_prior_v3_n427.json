@@ -1,0 +1,26 @@
+{
+  "schema_version": 2,
+  "model_type": "statistical_prior_quantiles",
+  "n_pairs": 427,
+  "n_tracks": 2027,
+  "bpm_log2_gap": {
+    "p25": 0.0,
+    "p50": 0.0,
+    "p75": 0.0704,
+    "p90": 0.0704,
+    "pct_within_semitone": 0.976
+  },
+  "harmonic_cost": {
+    "p25": 0.1667,
+    "p50": 0.5,
+    "p75": 0.8333,
+    "p90": 0.8333,
+    "pct_compatible": 0.26
+  },
+  "energy_jump": {
+    "p25": 0.0316,
+    "p50": 0.0603,
+    "p75": 0.1081,
+    "p90": 0.1588
+  }
+}
