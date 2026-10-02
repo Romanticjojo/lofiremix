@@ -79,7 +79,7 @@ def beat_drift_across_overlap(beats_a: np.ndarray, beats_b: np.ndarray,
         raise ValueError("need at least two beats per side")
     period = float(np.median(np.diff(grid)))
     worst = 0.0
-    for i, t in enumerate(incoming[:window]):
+    for t in incoming[:window]:
         idx = np.searchsorted(grid, t)
         candidates = grid[max(0, idx - 1): idx + 1]
         if candidates.size == 0:
@@ -101,16 +101,15 @@ def _phrase_score(transition_start: float | None, downbeats_a, beats_a=None) -> 
     """Bonus when the transition lands near a 4-bar phrase boundary (§9)."""
     if transition_start is None:
         return .5  # unknown — neutral
-    import numpy as _np
     if downbeats_a is not None:
-        db = _np.asarray(downbeats_a, dtype=float)
+        db = np.asarray(downbeats_a, dtype=float)
     elif beats_a is not None and len(beats_a) >= 8:
-        db = _np.asarray(beats_a, dtype=float)[::4]
+        db = np.asarray(beats_a, dtype=float)[::4]
     else:
         return .5
     if db.size < 2:
         return .5
-    bar = float(_np.median(_np.diff(db))) * 4  # four bars = one phrase
+    bar = float(np.median(np.diff(db))) * 4  # four bars = one phrase
     if bar <= 0:
         return .5
     distance = abs((transition_start - float(db[0])) % bar)

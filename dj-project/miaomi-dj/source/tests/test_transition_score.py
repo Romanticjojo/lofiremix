@@ -4,8 +4,8 @@ import pytest
 from dj_agent.transition_score import (
     beat_alignment_error,
     beat_drift_across_overlap,
-    score_transition,
     quality_gates,
+    score_transition,
 )
 
 

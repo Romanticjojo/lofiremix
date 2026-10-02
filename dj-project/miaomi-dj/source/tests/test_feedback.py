@@ -76,3 +76,34 @@ def test_split_all_interconnected_pairs_cannot_make_independent_test_set():
     rows = [{"track_ids": ["a", "b"]}, {"track_ids": ["b", "c"]}]
     with pytest.raises(ValueError, match="independent"):
         split_by_song_identity(rows)
+
+
+def test_collect_auto_preferences_reads_only_auto_file(tmp_path):
+    from dj_agent.training import collect_auto_preferences
+    (tmp_path / "auto-feedback.jsonl").write_text(
+        '{"pair_id":"p1","preference":"A","source":"auto",'
+        '"scorer_version":1,"score_a":0.9,"score_b":0.4}\n'
+        '{"pair_id":"p2","preference":"tie","source":"auto",'
+        '"scorer_version":1,"score_a":0.5,"score_b":0.5}\n')
+    rows, audit = collect_auto_preferences(tmp_path)
+    assert len(rows) == 1 and rows[0]["target"] == 1.0
+    assert audit["source"] == "auto" and audit["ties_skipped"] == 1
+
+
+def test_collect_auto_rejects_human_rows(tmp_path):
+    from dj_agent.training import collect_auto_preferences
+    (tmp_path / "auto-feedback.jsonl").write_text(
+        '{"pair_id":"p1","preference":"A","source":"human"}\n')
+    import pytest
+    with pytest.raises(ValueError):
+        collect_auto_preferences(tmp_path)
+
+
+def test_agreement_report_concordance():
+    from dj_agent.training import agreement_report
+    human = [{"pair_id": "p1", "target": 1.0}, {"pair_id": "p2", "target": 0.0}]
+    auto = [{"pair_id": "p1", "target": 1.0}, {"pair_id": "p2", "target": 1.0}]
+    rep = agreement_report(human, auto)
+    assert rep["common_pairs"] == 2
+    assert rep["concordant"] == 1 and rep["discordant"] == 1
+    assert -1.0 <= rep["tau"] <= 1.0

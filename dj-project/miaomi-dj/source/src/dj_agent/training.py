@@ -288,3 +288,55 @@ def run_training(sessions: Path, identity_map: Path | None, output: Path, check_
                                           encoding="utf-8")
         staging.rename(output)
     return report
+
+
+# ---------------------------------------------------------------------------
+# Auto-label path (framework §13): objective-scorer labels, kept strictly
+# separate from the audited human chain above.  Sources are never merged.
+# ---------------------------------------------------------------------------
+
+def collect_auto_preferences(session_dir: Path) -> tuple[list[dict], dict]:
+    """Read auto-feedback.jsonl rows; ties skipped, never mixed with human."""
+    session = Path(session_dir)
+    path = session / "auto-feedback.jsonl"
+    if path.is_symlink():
+        raise ValueError("unsafe_auto_feedback")
+    if not path.exists():
+        raise ValueError("no auto feedback file")
+    rows, ties = [], 0
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if not line.strip():
+            continue
+        record = json.loads(line)
+        if record.get("source") != "auto":
+            raise ValueError("non_auto_source_in_auto_file")
+        if record.get("scorer_version") != 1:
+            raise ValueError("stale_scorer_version")
+        pref = record.get("preference")
+        if pref not in ("A", "B", "tie"):
+            raise ValueError("invalid_auto_preference")
+        if pref == "tie":
+            ties += 1
+            continue
+        rows.append({"pair_id": record["pair_id"], "target": 1.0 if pref == "A" else 0.0,
+                     "score_a": record.get("score_a"), "score_b": record.get("score_b"),
+                     "features": record.get("components_a", {})})
+    audit = {"source": "auto", "accepted_pairs": len(rows), "ties_skipped": ties}
+    return rows, audit
+
+
+def agreement_report(human_rows: list[dict], auto_rows: list[dict]) -> dict:
+    """Concordance between human and auto labels on shared pairs (reporting only)."""
+    human = {r["pair_id"]: r["target"] for r in human_rows}
+    auto = {r["pair_id"]: r["target"] for r in auto_rows}
+    common = sorted(set(human) & set(auto))
+    concordant = discordant = 0
+    for pair in common:
+        if human[pair] == auto[pair]:
+            concordant += 1
+        else:
+            discordant += 1
+    n = len(common)
+    tau = 0.0 if n < 2 else (concordant - discordant) / (n * (n - 1) / 2)
+    return {"common_pairs": n, "concordant": concordant,
+            "discordant": discordant, "tau": tau}
