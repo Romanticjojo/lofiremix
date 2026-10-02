@@ -74,3 +74,19 @@ presets/                    # DSP 参数（lofi-v2-sleep.txt）
 | v2 | 54min | Agent 技巧决策（磁带刹停×4/回声抽离×9/高通滑入×6/长交叉×6） |
 | v3 | 15min | 精华节奏型（蓄势-峰值-呼吸-二峰-落地） |
 | v4 | 89min | 长途飞行三幕（起飞巡航→平流层→夜降，The Abyss 收尾） |
+
+
+## 自反馈闭环 (auto-feedback, 2026-10)
+
+按"What Makes a Good DJ Transition"框架 (docs/references/) 落地, 人标链原样保留:
+
+- `transition_score.py` — 9 分量客观评分 (节拍对齐+漂移/和声/BPM折叠/能量弧/低频碰撞/人声冲突/段落边界/技巧匹配/QC) + §14 硬质量门
+- `auto_feedback.py` — 客观分自动出 A/B 标签 (source=auto, 溯源完整, 分差小记 tie)
+- `training.collect_auto_preferences` — 自动标签训练路径, 与人标永不混流, 另出 agreement_report
+- `lookahead.py` — beam search (宽3深4) 整场曲序规划, 替代贪心选曲
+
+CLI: `dj-agent auto-label <session> [--max-pairs N] [--dry-run]` / `dj-agent plan-lookahead <folder> --minutes N`
+
+实测 (lofi 25 曲库取 8 首): lookahead 总奖励 3.18 vs 贪心 3.00 (**+6.0%**), 曲序更顺 (能量弧贴合)。
+
+数据先验: djmix-dataset 5,040 真实 mix → 9,671 条带时间戳转场 (transitions.jsonl), 曲目级 BPM/key 分析后喂 reference_choice。

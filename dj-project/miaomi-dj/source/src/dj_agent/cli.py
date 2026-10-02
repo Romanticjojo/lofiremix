@@ -128,6 +128,16 @@ def build_parser():
     sample.add_argument("directory", type=Path)
     sample.add_argument("--port", type=int, default=0)
     sample.add_argument("--open", action="store_true")
+    auto = commands.add_parser("auto-label", help="客观评分器自动标注 session 转场对（source=auto，绝不混入人标）")
+    auto.add_argument("session", type=Path)
+    auto.add_argument("--max-pairs", type=int, default=50)
+    auto.add_argument("--dry-run", action="store_true", help="只统计将标注的对数，不写文件")
+    lh = commands.add_parser("plan-lookahead", help="lookahead beam 规划整场曲序（对比贪心 planner 用）")
+    lh.add_argument("folder", type=Path)
+    lh.add_argument("--minutes", type=float, default=25)
+    lh.add_argument("--max-tracks", type=int, default=10)
+    lh.add_argument("--backend", choices=["auto", "librosa", "beat-this"], default="auto")
+    lh.add_argument("--output", type=Path)
     return parser
 
 
@@ -137,6 +147,30 @@ def main(argv=None):
         if args.command == "listen":
             from .listening_server import serve
             serve(args.session, args.port, args.open)
+            return 0
+        if args.command == "auto-label":
+            from .auto_feedback import label_session_pairs
+            if args.dry_run:
+                import json as _json
+                manifest = _json.loads((args.session / "comparison.json").read_text(encoding="utf-8"))
+                n = len(manifest.get("pairs", [])[:args.max_pairs])
+                print(_json.dumps({"would_label": n, "dry_run": True}, ensure_ascii=False))
+                return 0
+            written = label_session_pairs(args.session, args.max_pairs)
+            print(json.dumps({"labeled": written, "file": str(args.session / "auto-feedback.jsonl")},
+                             ensure_ascii=False, indent=2))
+            return 0
+        if args.command == "plan-lookahead":
+            from .lookahead import plan_set_lookahead
+            paths = discover(args.folder)
+            if len(paths) < 2:
+                raise ValueError("至少需要两首不同歌曲才能规划；请把实际音乐文件放入曲库。")
+            tracks = _analyze_paths(paths, args.backend)
+            plan = plan_set_lookahead(tracks, args.max_tracks, args.minutes)
+            destination = args.output or PROJECT / "outputs" / datetime.now(UTC).strftime("lookahead-%Y%m%d-%H%M%S-%f")
+            _write_json(destination / "plan.json", plan)
+            print(f"lookahead 计划 {len(plan['tracks'])} 首，总奖励分 {plan['total_score']}。")
+            print(f"计划文件：{destination / 'plan.json'}")
             return 0
         if args.command == "sample-view":
             from .sample_server import serve
