@@ -112,10 +112,13 @@ def plan_set(tracks: list[Track], max_tracks: int = 10, target_minutes: float = 
         desired_energy = .2 + .7 * index/max(count-1, 1)
         mood_target, mood_stage = party_target(index, count)
         def cost(candidate, target=target, desired_energy=desired_energy):
+            # weights calibrated 2026-10 from transition_prior.json (n_pairs=207,
+            # real-DJ p50 bpm gap=0 / energy jump .05 / harmonic 30% strict):
+            # mismatch 5->8, harmonic .5->.3, energy .8->1.6
             r, f = _rate(target, candidate.bpm)
             mismatch = abs(math.log(target/(candidate.bpm*r*f)))
-            return (mismatch*5 + abs(math.log(r))*2 + .5*_harmonic_cost(ordered[-1].key, candidate.key)
-                    + abs(ranked_energy[candidate.id]-desired_energy)*.8, candidate.id)
+            return (mismatch*8 + abs(math.log(r))*2 + .3*_harmonic_cost(ordered[-1].key, candidate.key)
+                    + abs(ranked_energy[candidate.id]-desired_energy)*1.6, candidate.id)
         penalties, probabilities = {}, {}
         context = []
         for previous in reversed(ordered[-3:]):
