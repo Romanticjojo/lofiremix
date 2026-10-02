@@ -7,20 +7,20 @@
 <title>Lofi Night Shift · The Weeknd</title>
 <style>
 :root{
-  --bg:#0c1017; --panel:#151c27; --line:#2a3648; --text:#e4eaf4; --muted:#96a4b8;
-  --mint:#8fb6de; --violet:#9d8fd4; --gold:#c9b98a; --blue:#6b8fd8; --red:#f85149;
+  --bg:#121212; --panel:#181818; --panel2:#1f1f1f; --line:#2e2e2e; --text:#ffffff; --muted:#b3b3b3; --dim:#9a9a9a;
+  --accent:#1ed760; --accent-dim:#169c46; --violet:#af7bd4; --gold:#e8c06a; --blue:#539df5; --red:#f3727f;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--text);font:15px/1.65 "Segoe UI","Microsoft YaHei",-apple-system,sans-serif;padding-bottom:120px}
+body{margin:0;background:linear-gradient(180deg,#1c1c1c 0%,#121212 340px);color:var(--text);font:15px/1.6 -apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI","Microsoft YaHei",sans-serif;padding-bottom:130px;-webkit-font-smoothing:antialiased}
 main{max-width:1240px;margin:28px auto;padding:0 22px}
 a{color:var(--mint)}
-.eyebrow{color:var(--mint);letter-spacing:.05em;font-size:12px}
+.eyebrow{color:var(--accent);letter-spacing:.05em;font-size:12px;font-weight:700}
 header{display:flex;justify-content:space-between;gap:24px;align-items:center;margin-bottom:22px;flex-wrap:wrap}.badge{white-space:nowrap}
 h1{font-size:32px;line-height:1.22;letter-spacing:-.01em;margin:8px 0}
-h2{font-size:19px;margin:26px 0 10px}
-.badge{display:inline-block;padding:5px 12px;border:1px solid var(--line);border-radius:18px;color:var(--mint);font-size:12px}
-.panel{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:20px;margin-bottom:18px}
+h2{font-size:17px;margin:26px 0 12px;font-weight:700;letter-spacing:-.01em}
+.badge{display:inline-block;padding:5px 13px;border:none;border-radius:18px;background:var(--panel2);color:var(--muted);font-size:12px;font-weight:500}
+.panel{border:none;background:var(--panel);border-radius:10px;padding:20px;margin-bottom:14px;box-shadow:0 4px 18px rgba(0,0,0,.3)}
 .muted{color:var(--muted)} .small{font-size:12px}
 
 /* 吸底播放器 */
@@ -43,8 +43,8 @@ h2{font-size:19px;margin:26px 0 10px}
 
 /* 能量地形 */
 .energy-map{height:90px;display:flex;align-items:flex-end;gap:2px;margin:14px 0 2px}
-.energy-map .bar{flex:1;border-radius:2px 2px 0 0;min-height:4px;background:linear-gradient(180deg,var(--violet),var(--blue));opacity:.65;cursor:pointer;transition:opacity .15s}
-.energy-map .bar.cur{opacity:1;background:linear-gradient(180deg,var(--mint),var(--gold))}
+.energy-map .bar{flex:1;border-radius:2px 2px 0 0;min-height:4px;background:linear-gradient(180deg,#1ed760,#169c46);opacity:.55;cursor:pointer;transition:opacity .15s}
+.energy-map .bar.cur{opacity:1;background:linear-gradient(180deg,#1ed760,#57d98a)}
 .energy-map .bar:hover{opacity:.95}
 .emap-labels{display:flex;color:var(--muted);font-size:11px;margin-bottom:6px}
 .emap-labels span{flex:1;text-align:left}
@@ -52,10 +52,10 @@ h2{font-size:19px;margin:26px 0 10px}
 
 /* Setlist 表 */
 table{width:100%;border-collapse:collapse;font-size:13px}
-th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--line)}
+th,td{padding:10px 10px;text-align:left;border-bottom:1px solid #242424}
 th{color:var(--muted);font-weight:600;font-size:11.5px;letter-spacing:.06em}
 tr.play-row{cursor:pointer}
-tr.play-row:hover td{background:rgba(117,212,194,.06)}
+tr.play-row:hover td{background:rgba(255,255,255,.07)}
 tr.cur td{background:transparent}tr.cur{border-color:var(--mint)!important;background:rgba(117,212,194,.07)!important}
 td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
 .ph{font-size:11px;padding:2px 9px;border-radius:10px;font-weight:600;white-space:nowrap}
@@ -83,62 +83,61 @@ td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
 .pipe-card .n{display:inline-block;width:22px;height:22px;border-radius:50%;background:rgba(117,212,194,.14);color:var(--mint);text-align:center;line-height:22px;font-weight:700;margin-bottom:8px}
 
 
-/* ===== DDJ-200 调音台 ===== */
-.mixer{display:grid;grid-template-columns:1fr 1.5fr 1fr;gap:9px;align-items:stretch}
-.deck{border:1px solid #36455a;border-radius:10px;padding:10px;background:linear-gradient(160deg,#1a2332,#131a26 60%,#101623);display:flex;flex-direction:column;gap:7px;min-width:0;position:relative;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 3px 10px rgba(0,0,0,.4)}
-.deck::before{content:"";position:absolute;top:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(143,182,222,.35),transparent)}
+/* ===== 混音台 · Spotify 沉浸式 (上下双 Deck) ===== */
+.mixer{display:flex;flex-direction:column;gap:10px}
+.deck{border-radius:10px;padding:12px 14px;background:var(--panel2);display:flex;flex-direction:column;gap:8px;min-width:0;position:relative;transition:background .3s}
+.deck.active{background:#262626}
 .deck.flash{animation:dflash .7s ease}
-@keyframes dflash{0%{border-color:var(--mint);box-shadow:0 1px 6px rgba(0,0,0,.4)}100%{}}
-.deck .lab{font-size:11px;letter-spacing:.16em;color:#7d8ea3;display:flex;align-items:center;gap:5px;font-weight:600}
-.deck .lab b{color:var(--mint);font-weight:800;none}
-.deck.b .lab b{color:var(--gold);none}
-.dot{width:6px;height:6px;border-radius:50%;background:#ff5a4e}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
-.deck .art{width:100%;aspect-ratio:1;border-radius:7px;object-fit:cover;box-shadow:0 3px 12px rgba(0,0,0,.5)}
-.deck.b .art{filter:saturate(.5) brightness(.7)}
-.deck .t{font-weight:700;font-size:12.5px;line-height:1.25;overflow-wrap:anywhere}
-.deck .m{color:#8a9ab0;font-size:11px;font-variant-numeric:tabular-nums}
-/* VU 电平表: 分段 LED */
-.vu{display:flex;gap:2px;height:20px;align-items:flex-end;flex-shrink:0;padding:2px 3px;background:#0a0e15;border-radius:4px;border:1px solid #1e2836}
-.vu i{flex:1;border-radius:1.5px;background:#232e3e;transition:background .1s linear,box-shadow .1s linear;min-width:2px}
-.vu i.on1{background:#4fd68c;none}
-.vu i.on2{background:#a8e06c;none}
-.vu i.on3{background:#ffd24f;none}
-.vu i.on4{background:#ff5a4e;box-shadow:0 0 5px rgba(255,90,78,.6)}
-/* 中心区 */
-.xf{border:1px solid #36455a;border-radius:10px;padding:10px 10px 8px;background:linear-gradient(165deg,#1a2332,#121925 55%,#0e1420);display:flex;flex-direction:column;gap:7px;min-width:0;box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 3px 10px rgba(0,0,0,.4);position:relative;overflow:hidden}
-.xf::before{content:"";position:absolute;top:0;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,rgba(143,182,222,.3),transparent)}
-.xf-head{display:flex;justify-content:space-between;align-items:center;gap:6px}
-.mix-badge{font-size:11px;font-weight:800;letter-spacing:.05em;padding:4px 8px;border-radius:20px;background:rgba(107,143,216,.14);color:#9db8e6;border:1px solid rgba(107,143,216,.4);white-space:nowrap}
-.mix-badge.live{background:rgba(255,90,78,.14);color:#ff8d84;border-color:rgba(255,90,78,.45);animation:bpulse 1s infinite}
-@keyframes bpulse{0%,100%{box-shadow:0 0 0 0 rgba(255,90,78,.3)}50%{box-shadow:0 0 10px 2px rgba(255,90,78,.12)}}
-.mix-count{font-size:14px;font-weight:800;font-variant-numeric:tabular-nums;color:#e4eaf4}
-.mix-count small{font-size:11px;color:#7d8ea3;font-weight:500;letter-spacing:.1em}
-#xfCurve{width:100%;height:96px;display:block;border-radius:7px;background:#0a0e15;border:1px solid #222d3d;flex:1}
-.mix-why{font-size:12px;color:#8a9ab0;line-height:1.55;font-variant-numeric:tabular-nums}
-.legend{display:flex;gap:10px;font-size:11px;color:#7d8ea3}
-.legend i{display:inline-block;width:12px;height:3px;border-radius:2px;margin-right:3px;vertical-align:middle}
-/* DDJ 硬件按键排 */
-.pads{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px}
-.pad{height:36px;border-radius:7px;border:1px solid #3a4a60;background:linear-gradient(180deg,#28354a 0%,#1d2839 48%,#161f2e 52%,#1c2637 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;cursor:pointer;position:relative;transition:transform .06s,box-shadow .15s;user-select:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),inset 0 -2px 4px rgba(0,0,0,.35),0 2px 4px rgba(0,0,0,.35)}
-.pad::before{content:"";position:absolute;top:2px;left:12%;right:12%;height:1px;border-radius:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.14),transparent)}
-.pad:active{transform:translateY(2px);box-shadow:inset 0 2px 6px rgba(0,0,0,.5),0 0 0 rgba(0,0,0,0)}
-.pad .ic{font-size:13px;line-height:1}
-.pad .tx{font-size:11px;letter-spacing:.08em;color:#8a9ab0;font-weight:700}
-.pad.hot{border-color:rgba(255,90,78,.6);box-shadow:0 0 12px rgba(255,90,78,.25),inset 0 0 8px rgba(255,90,78,.12)}
-.pad.lit-blue{border-color:rgba(107,143,216,.7);box-shadow:inset 0 0 0 1px rgba(107,143,216,.45)}
-.pad.lit-amber{border-color:rgba(201,185,138,.7);box-shadow:0 0 12px rgba(201,185,138,.3),inset 0 0 8px rgba(201,185,138,.15)}
+@keyframes dflash{0%{background:#2e4a3a}100%{}}
+.dk-head{display:flex;align-items:center;gap:12px}
+.dk-art{width:52px;height:52px;border-radius:6px;object-fit:cover;flex-shrink:0;box-shadow:0 4px 14px rgba(0,0,0,.5)}
+.deck.b .dk-art{filter:saturate(.6) brightness(.75);opacity:.85}
+.dk-meta{flex:1;min-width:0}
+.dk-lab{font-size:11px;letter-spacing:.14em;color:var(--dim);font-weight:700;display:flex;gap:6px;align-items:center}
+.dk-lab b{color:#fff;font-weight:800}
+.deck.a .dk-lab b{color:var(--accent)}
+.deck.b .dk-lab b{color:var(--gold)}
+.dk-lab i{font-style:normal;font-weight:400;letter-spacing:0;color:var(--dim)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--accent)}
+.deck .t{font-weight:700;font-size:14.5px;line-height:1.25;overflow-wrap:anywhere;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.deck .m{color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
+.deck .wave{width:100%;height:56px;border-radius:6px;background:#0a0a0a;cursor:pointer;display:block}
+.dk-foot{display:flex;justify-content:space-between;font-size:11px;color:var(--dim);font-variant-numeric:tabular-nums;padding:0 2px}
+.dk-pct{font-weight:700}
+
+/* 中间过渡带 */
+.blend{display:grid;grid-template-columns:auto 1fr 150px;gap:12px;align-items:center;border-radius:10px;padding:10px 14px;background:#1c1c1c;border-left:3px solid var(--accent)}
+.bl-l{display:flex;flex-direction:column;gap:5px;min-width:110px}
+.mix-badge{font-size:11px;font-weight:800;letter-spacing:.05em;padding:4px 9px;border-radius:20px;background:rgba(255,255,255,.08);color:var(--muted);white-space:nowrap;align-self:flex-start}
+.mix-badge.live{background:rgba(243,114,127,.15);color:#ff8d84}
+.mix-count{font-size:15px;font-weight:800;font-variant-numeric:tabular-nums;color:#fff}
+.mix-count small{font-size:11px;color:#b3b3b3;font-weight:500;letter-spacing:.08em}
+#xfCurve{width:150px;height:44px;display:block;border-radius:6px;background:#0a0a0a}
+.xfader{display:flex;align-items:center;gap:10px}
+.xf-rail{flex:1;height:8px;border-radius:4px;background:#0a0a0a;position:relative;box-shadow:inset 0 1px 3px rgba(0,0,0,.8)}
+.xf-rail .mid{position:absolute;left:50%;top:1px;bottom:1px;width:1px;background:#3a3a3a}
+.xf-knob{position:absolute;top:50%;left:50%;width:30px;height:14px;transform:translate(-50%,-50%);border-radius:7px;background:#fff;transition:left .15s cubic-bezier(.2,.8,.3,1);box-shadow:0 2px 8px rgba(0,0,0,.6)}
+.xf-knob::after{content:"";position:absolute;left:50%;top:2px;bottom:2px;width:2px;transform:translateX(-50%);background:#000;border-radius:1px}
+.xf-tag{font-size:10px;color:var(--dim);letter-spacing:.1em;font-weight:700}
+
+/* VU LED */
+.vu{display:flex;gap:2px;height:26px;align-items:flex-end;flex-shrink:0;padding:3px 4px;background:#0a0a0a;border-radius:4px}
+.vu i{flex:1;border-radius:1px;background:#242424;transition:background .1s linear;min-width:2px}
+.vu i.on1{background:#1ed760}.vu i.on2{background:#a8e06c}.vu i.on3{background:#ffd24f}.vu i.on4{background:#f3727f}
+
+/* FX pads */
+.pads{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:2px}
+.pad{height:40px;border-radius:8px;border:none;background:var(--panel2);display:flex;align-items:center;justify-content:center;gap:7px;cursor:pointer;user-select:none;font-weight:700;font-size:11.5px;color:var(--muted);transition:background .15s,transform .06s}
+.pad:active{transform:scale(.97)}
+.pad .ic{font-size:14px;line-height:1}
+.pad.hot{background:rgba(243,114,127,.18);color:#ff8d84}
+.pad.lit-blue{background:rgba(83,157,245,.18);color:#8fc0ff}
+.pad.lit-amber{background:rgba(232,192,106,.16);color:#e8c06a}
 .pad.disabled{opacity:.35;pointer-events:none}
-.pad .glow{position:absolute;inset:0;border-radius:7px;pointer-events:none}
-/* 交叉推子(滑轨) */
-.xfader{display:flex;align-items:center;gap:8px;margin-top:2px}
-.xf-rail{flex:1;height:22px;border-radius:11px;background:linear-gradient(180deg,#0a0e15,#141c29);border:1px solid #2a3648;position:relative;box-shadow:inset 0 2px 5px rgba(0,0,0,.6)}
-.xf-rail .mid{position:absolute;left:50%;top:2px;bottom:2px;width:1px;background:rgba(143,182,222,.25)}
-.xf-knob{position:absolute;top:50%;left:50%;width:34px;height:16px;transform:translate(-50%,-50%);border-radius:4px;background:linear-gradient(180deg,#3c4c63,#25324a);border:1px solid #55688a;box-shadow:0 2px 6px rgba(0,0,0,.5);transition:left .15s cubic-bezier(.2,.8,.3,1)}
-.xf-knob::after{content:"";position:absolute;left:50%;top:2px;bottom:2px;width:2px;transform:translateX(-50%);background:#8fb6de;border-radius:1px;box-shadow:0 0 5px rgba(143,182,222,.7)}
-.xf-tag{font-size:8.5px;color:#7d8ea3;letter-spacing:.08em;font-weight:700}
+
 #ovCanvas{width:100%;height:52px;display:block;border-radius:7px;background:#0a0e15;border:1px solid #222d3d;cursor:pointer;margin-top:9px}
-@media(max-width:760px){.mixer{grid-template-columns:1fr 1fr}.xf{grid-column:1/-1;order:2}.pads{grid-column:1/-1;order:3}}
+
+@media(max-width:760px){.blend{grid-template-columns:1fr;gap:8px}#xfCurve{width:100%;height:40px}.bl-l{flex-direction:row;align-items:center;justify-content:space-between;min-width:0}}
 footer{color:var(--muted);font-size:11.5px;text-align:center;margin-top:34px;line-height:1.9}
 @media(max-width:760px){
   main{margin:16px auto;padding:0 14px 170px}
@@ -216,40 +215,37 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;margin-top:34px;lin
 <div class="panel" id="monPanel">
   <h2 style="margin-top:0">调音台监控 · LIVE</h2>
   <div class="mixer">
-    <div class="deck a" id="deckA">
-      <div class="lab"><span class="dot"></span><b>DECK A</b> · 在放</div>
-      <img class="art" id="dArt" src="/covers-au/lofi-love_me_harder.jpg" alt="">
-      <div class="t" id="dTitle">待机</div>
-      <div class="m" id="dSub">BPM · --</div>
-      <canvas class="wave" id="waveA"></canvas>
-      <div class="wave-pos" id="posA">00:00</div>
-      <div class="vu"><i id="vuA"></i></div>
-    </div>
-    <div class="xf">
-      <div class="xf-head">
-        <span class="mix-badge" id="mixBadge">BLEND · TRI ×FADE 10s</span>
-        <span class="mix-count" id="mixCount">--:-- <small>距切歌</small></span>
-      </div>
-      <canvas id="xfCurve"></canvas>
-      <div class="legend"><span><i style="background:var(--mint)"></i>Deck A 电平</span><span><i style="background:var(--gold)"></i>Deck B 电平</span><span><i style="background:var(--red)"></i>交叉进度</span></div>
-      <div class="xfader">
-        <span class="xf-tag">A</span>
-        <div class="xf-rail"><span class="mid"></span><div class="xf-knob" id="xfKnob"></div></div>
-        <span class="xf-tag">B</span>
-      </div>
-      <div class="mix-why" id="mixWhy">点击任意曲目开机 · 交叉窗开启后曲线启动</div>
-    </div>
-    <div class="deck b" id="deckB">
-      <div class="lab"><b>DECK B</b> · 预载</div>
-      <img class="art" id="nArt" src="/covers-au/lofi-sacrifice.jpg" alt="">
-      <div class="t" id="nTitle">—</div>
-      <div class="m" id="nSub">BPM · --</div>
-      <canvas class="wave" id="waveB"></canvas>
-      <div class="wave-pos" id="posB">00:00</div>
-      <div class="vu"><i id="vuB"></i></div>
-    </div>
+  <div class="deck a" id="deckA">
+    <div class="dk-head"><img class="dk-art" id="dArt" src="/covers-au/lofi-love_me_harder.jpg" alt="">
+      <div class="dk-meta"><div class="dk-lab"><span class="dot"></span><b>DECK A</b><i>· 主轨</i></div>
+      <div class="t" id="dTitle">待机</div><div class="m" id="dSub">BPM · --</div></div>
+      <div class="vu" id="vuA"></div></div>
+    <canvas class="wave" id="waveA"></canvas>
+    <div class="dk-foot"><span class="wave-pos" id="posA">00:00</span><span class="dk-pct" id="pctA">0%</span></div>
   </div>
-  <div class="pads" id="padsRow">
+
+  <div class="blend" id="blendBar">
+    <div class="bl-l">
+      <span class="mix-badge" id="mixBadge">BLEND · TRI ×FADE 10s</span>
+      <span class="mix-count" id="mixCount">--:-- <small>距切歌</small></span>
+    </div>
+    <div class="xfader"><span class="xf-tag">A</span>
+      <div class="xf-rail"><span class="mid"></span><div class="xf-knob" id="xfKnob"></div></div>
+      <span class="xf-tag">B</span></div>
+    <div class="bl-r"><canvas id="xfCurve"></canvas></div>
+    <div class="mix-why" id="mixWhy" style="grid-column:1/-1;font-size:12.5px;color:var(--dim);line-height:1.5">点击任意曲目开机 · 交叉窗开启后曲线启动</div>
+  </div>
+
+  <div class="deck b" id="deckB">
+    <div class="dk-head"><img class="dk-art" id="nArt" src="/covers-au/lofi-sacrifice.jpg" alt="">
+      <div class="dk-meta"><div class="dk-lab"><b>DECK B</b><i>· 预载</i></div>
+      <div class="t" id="nTitle">--</div><div class="m" id="nSub">BPM · --</div></div>
+      <div class="vu" id="vuB"></div></div>
+    <canvas class="wave" id="waveB"></canvas>
+    <div class="dk-foot"><span class="wave-pos" id="posB">00:00</span><span class="dk-pct" id="pctB">0%</span></div>
+  </div>
+</div>
+<div class="pads" id="padsRow">
     <div class="pad" id="padFX1"><span class="ic">🌀</span><span class="tx">ECHO OUT</span></div>
     <div class="pad" id="padFX2"><span class="ic">🎛️</span><span class="tx">FILTER</span></div>
     <div class="pad" id="padLoop"><span class="ic">🔁</span><span class="tx">LOOP 4BEAT</span></div>
@@ -457,6 +453,7 @@ function drawDeckWave(c, env, frac, color, cue){
 }
 function drawWaves(){
   if (!WF || curIdx < 0) return;
+  $('deckA').classList.toggle('active', true);
   const wset = WF[curSet]; if (!wset) return;
   const a = wset.tracks[curIdx], b = wset.tracks[Math.min(curIdx+1, wset.tracks.length-1)];
   const t = (au.currentTime - starts[curIdx]) / SET[curIdx].dur;
@@ -469,6 +466,11 @@ function drawWaves(){
     $('posB').textContent = fmt(Math.max(0, au.currentTime - starts[curIdx+1]));
   }
   $('posA').textContent = fmt(Math.max(0, au.currentTime - starts[curIdx]));
+  $('pctA').textContent = Math.round(Math.min(Math.max((au.currentTime - starts[curIdx]) / SET[curIdx].dur, 0), 1) * 100) + '%';
+  if (curIdx + 1 < wset.tracks.length){
+    const tb2 = Math.min(Math.max((au.currentTime - starts[curIdx+1]) / SET[curIdx+1].dur, 0), 1);
+    $('pctB').textContent = Math.round(tb2 * 100) + '%';
+  }
 }
 wA.onclick = e => { const r = wA.getBoundingClientRect(), f = (e.clientX-r.left)/r.width;
   if (curIdx >= 0) seekTo(starts[curIdx] + f*SET[curIdx].dur); };
