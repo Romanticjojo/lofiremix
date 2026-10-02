@@ -15,9 +15,9 @@ html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--text);font:15px/1.65 "Segoe UI","Microsoft YaHei",-apple-system,sans-serif;padding-bottom:120px}
 main{max-width:1240px;margin:28px auto;padding:0 22px}
 a{color:var(--mint)}
-.eyebrow{color:var(--mint);letter-spacing:.17em;font-size:12px}
+.eyebrow{color:var(--mint);letter-spacing:.05em;font-size:12px}
 header{display:flex;justify-content:space-between;gap:24px;align-items:center;margin-bottom:22px;flex-wrap:wrap}.badge{white-space:nowrap}
-h1{font-size:32px;line-height:1.22;letter-spacing:-.03em;margin:8px 0}
+h1{font-size:32px;line-height:1.22;letter-spacing:-.01em;margin:8px 0}
 h2{font-size:19px;margin:26px 0 10px}
 .badge{display:inline-block;padding:5px 12px;border:1px solid var(--line);border-radius:18px;color:var(--mint);font-size:12px}
 .panel{border:1px solid var(--line);background:var(--panel);border-radius:14px;padding:20px;margin-bottom:18px}
@@ -58,7 +58,7 @@ tr.play-row{cursor:pointer}
 tr.play-row:hover td{background:rgba(117,212,194,.06)}
 tr.cur td{background:transparent}tr.cur{border-color:var(--mint)!important;background:rgba(117,212,194,.07)!important}
 td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
-.ph{font-size:10.5px;padding:2px 9px;border-radius:10px;font-weight:600;white-space:nowrap}
+.ph{font-size:11px;padding:2px 9px;border-radius:10px;font-weight:600;white-space:nowrap}
 .ph.intro{background:rgba(182,165,227,.18);color:var(--violet)}.ph.warmup{background:rgba(143,182,222,.13);color:var(--mint)}
 .ph.build{background:rgba(91,141,239,.16);color:var(--blue)}
 .ph.peak{background:rgba(223,183,122,.16);color:var(--gold)}
@@ -67,7 +67,7 @@ td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
 .tec.cut{color:var(--red)}
 .tr-title{display:flex;align-items:center;gap:9px;min-width:0}.tr-title>span{min-width:0;overflow-wrap:anywhere}
 .tr-cover{width:26px;height:26px;border-radius:5px;object-fit:cover;flex-shrink:0}
-.mood-tag{font-size:10.5px;color:var(--gold)}
+.mood-tag{font-size:11px;color:var(--gold)}
 
 /* 转场带 */
 .transitions{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px}
@@ -88,35 +88,35 @@ td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
 .deck{border:1px solid #36455a;border-radius:10px;padding:10px;background:linear-gradient(160deg,#1a2332,#131a26 60%,#101623);display:flex;flex-direction:column;gap:7px;min-width:0;position:relative;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 3px 10px rgba(0,0,0,.4)}
 .deck::before{content:"";position:absolute;top:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,rgba(143,182,222,.35),transparent)}
 .deck.flash{animation:dflash .7s ease}
-@keyframes dflash{0%{border-color:var(--mint);box-shadow:0 0 18px rgba(143,182,222,.35)}100%{}}
-.deck .lab{font-size:9px;letter-spacing:.16em;color:#7d8ea3;display:flex;align-items:center;gap:5px;font-weight:600}
-.deck .lab b{color:var(--mint);font-weight:800;text-shadow:0 0 8px rgba(143,182,222,.4)}
-.deck.b .lab b{color:var(--gold);text-shadow:0 0 8px rgba(201,185,138,.4)}
-.dot{width:6px;height:6px;border-radius:50%;background:#ff5a4e;box-shadow:0 0 8px rgba(255,90,78,.8);animation:pulse 1.4s infinite}
+@keyframes dflash{0%{border-color:var(--mint);box-shadow:0 1px 6px rgba(0,0,0,.4)}100%{}}
+.deck .lab{font-size:11px;letter-spacing:.16em;color:#7d8ea3;display:flex;align-items:center;gap:5px;font-weight:600}
+.deck .lab b{color:var(--mint);font-weight:800;none}
+.deck.b .lab b{color:var(--gold);none}
+.dot{width:6px;height:6px;border-radius:50%;background:#ff5a4e}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.45}}
 .deck .art{width:100%;aspect-ratio:1;border-radius:7px;object-fit:cover;box-shadow:0 3px 12px rgba(0,0,0,.5)}
 .deck.b .art{filter:saturate(.5) brightness(.7)}
 .deck .t{font-weight:700;font-size:12.5px;line-height:1.25;overflow-wrap:anywhere}
-.deck .m{color:#8a9ab0;font-size:10px;font-variant-numeric:tabular-nums}
+.deck .m{color:#8a9ab0;font-size:11px;font-variant-numeric:tabular-nums}
 /* VU 电平表: 分段 LED */
 .vu{display:flex;gap:2px;height:20px;align-items:flex-end;flex-shrink:0;padding:2px 3px;background:#0a0e15;border-radius:4px;border:1px solid #1e2836}
 .vu i{flex:1;border-radius:1.5px;background:#232e3e;transition:background .1s linear,box-shadow .1s linear;min-width:2px}
-.vu i.on1{background:#4fd68c;box-shadow:0 0 4px rgba(79,214,140,.5)}
-.vu i.on2{background:#a8e06c;box-shadow:0 0 4px rgba(168,224,108,.4)}
-.vu i.on3{background:#ffd24f;box-shadow:0 0 4px rgba(255,210,79,.45)}
+.vu i.on1{background:#4fd68c;none}
+.vu i.on2{background:#a8e06c;none}
+.vu i.on3{background:#ffd24f;none}
 .vu i.on4{background:#ff5a4e;box-shadow:0 0 5px rgba(255,90,78,.6)}
 /* 中心区 */
 .xf{border:1px solid #36455a;border-radius:10px;padding:10px 10px 8px;background:linear-gradient(165deg,#1a2332,#121925 55%,#0e1420);display:flex;flex-direction:column;gap:7px;min-width:0;box-shadow:inset 0 1px 0 rgba(255,255,255,.05),0 3px 10px rgba(0,0,0,.4);position:relative;overflow:hidden}
 .xf::before{content:"";position:absolute;top:0;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,rgba(143,182,222,.3),transparent)}
 .xf-head{display:flex;justify-content:space-between;align-items:center;gap:6px}
-.mix-badge{font-size:9px;font-weight:800;letter-spacing:.12em;padding:4px 8px;border-radius:20px;background:rgba(107,143,216,.14);color:#9db8e6;border:1px solid rgba(107,143,216,.4);white-space:nowrap}
+.mix-badge{font-size:11px;font-weight:800;letter-spacing:.05em;padding:4px 8px;border-radius:20px;background:rgba(107,143,216,.14);color:#9db8e6;border:1px solid rgba(107,143,216,.4);white-space:nowrap}
 .mix-badge.live{background:rgba(255,90,78,.14);color:#ff8d84;border-color:rgba(255,90,78,.45);animation:bpulse 1s infinite}
 @keyframes bpulse{0%,100%{box-shadow:0 0 0 0 rgba(255,90,78,.3)}50%{box-shadow:0 0 10px 2px rgba(255,90,78,.12)}}
 .mix-count{font-size:14px;font-weight:800;font-variant-numeric:tabular-nums;color:#e4eaf4}
-.mix-count small{font-size:9px;color:#7d8ea3;font-weight:500;letter-spacing:.1em}
-#xfCurve{width:100%;height:96px;display:block;border-radius:7px;background:radial-gradient(ellipse at 50% 120%,rgba(107,143,216,.08),transparent 70%),#0a0e15;border:1px solid #222d3d;flex:1}
-.mix-why{font-size:9.5px;color:#8a9ab0;line-height:1.55;font-variant-numeric:tabular-nums}
-.legend{display:flex;gap:10px;font-size:9px;color:#7d8ea3}
+.mix-count small{font-size:11px;color:#7d8ea3;font-weight:500;letter-spacing:.1em}
+#xfCurve{width:100%;height:96px;display:block;border-radius:7px;background:#0a0e15;border:1px solid #222d3d;flex:1}
+.mix-why{font-size:12px;color:#8a9ab0;line-height:1.55;font-variant-numeric:tabular-nums}
+.legend{display:flex;gap:10px;font-size:11px;color:#7d8ea3}
 .legend i{display:inline-block;width:12px;height:3px;border-radius:2px;margin-right:3px;vertical-align:middle}
 /* DDJ 硬件按键排 */
 .pads{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-top:8px}
@@ -124,9 +124,9 @@ td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
 .pad::before{content:"";position:absolute;top:2px;left:12%;right:12%;height:1px;border-radius:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.14),transparent)}
 .pad:active{transform:translateY(2px);box-shadow:inset 0 2px 6px rgba(0,0,0,.5),0 0 0 rgba(0,0,0,0)}
 .pad .ic{font-size:13px;line-height:1}
-.pad .tx{font-size:7.5px;letter-spacing:.08em;color:#8a9ab0;font-weight:700}
+.pad .tx{font-size:11px;letter-spacing:.08em;color:#8a9ab0;font-weight:700}
 .pad.hot{border-color:rgba(255,90,78,.6);box-shadow:0 0 12px rgba(255,90,78,.25),inset 0 0 8px rgba(255,90,78,.12)}
-.pad.lit-blue{border-color:rgba(107,143,216,.7);box-shadow:0 0 12px rgba(107,143,216,.3),inset 0 0 8px rgba(107,143,216,.15)}
+.pad.lit-blue{border-color:rgba(107,143,216,.7);box-shadow:inset 0 0 0 1px rgba(107,143,216,.45)}
 .pad.lit-amber{border-color:rgba(201,185,138,.7);box-shadow:0 0 12px rgba(201,185,138,.3),inset 0 0 8px rgba(201,185,138,.15)}
 .pad.disabled{opacity:.35;pointer-events:none}
 .pad .glow{position:absolute;inset:0;border-radius:7px;pointer-events:none}
@@ -154,7 +154,7 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;margin-top:34px;lin
   .hero-info>div[style*="21px"]{font-size:16px!important}
   .stat-row{grid-template-columns:1fr 1fr;gap:6px;margin-top:10px}
   .stat{padding:7px 9px;border-radius:8px}
-  .stat .k{font-size:10px}
+  .stat .k{font-size:11px}
   .stat .v{font-size:15px}
   .stat{padding:8px 10px}
   .stat .v{font-size:15px}
@@ -191,7 +191,7 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;margin-top:34px;lin
   .dock-inner{gap:10px}
   .dock-cover{width:44px;height:44px}
   .dock-title{font-size:13px}
-  .dock-sub{font-size:10.5px}
+  .dock-sub{font-size:11px}
   .player-dock audio{height:36px}
 }
 </style>
@@ -201,7 +201,7 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;margin-top:34px;lin
 <header>
   <div>
     <div class="eyebrow">THE WEEKND · LOFI EDITION · 25 TRACKS · NIGHT SHIFT SET</div>
-    <h1>Lofi Night Shift<br><span id="setSub" style="font-size:15px;color:var(--muted);font-weight:400"></span></h1>
+    <h1>Lofi Night Shift<br><span id="setSub" style="font-size:15px;color:var(--muted);font-weight:400;letter-spacing:0"></span></h1>
     <div style="display:flex;gap:10px;margin:14px 0 4px">
       <button class="stab on" data-k="night" onclick="switchSet('night')"><b>NIGHT SHIFT</b><span>53:50 · 技巧版</span></button>
       <button class="stab" data-k="flight" onclick="switchSet('flight')"><b>FLIGHT ✈</b><span>89:15 · 长途版</span></button>
@@ -220,7 +220,9 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;margin-top:34px;lin
       <div class="lab"><span class="dot"></span><b>DECK A</b> · 在放</div>
       <img class="art" id="dArt" src="/covers-au/lofi-love_me_harder.jpg" alt="">
       <div class="t" id="dTitle">待机</div>
-      <div class="m" id="dSub">— BPM · —</div>
+      <div class="m" id="dSub">BPM · --</div>
+      <canvas class="wave" id="waveA"></canvas>
+      <div class="wave-pos" id="posA">00:00</div>
       <div class="vu"><i id="vuA"></i></div>
     </div>
     <div class="xf">
@@ -235,13 +237,15 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;margin-top:34px;lin
         <div class="xf-rail"><span class="mid"></span><div class="xf-knob" id="xfKnob"></div></div>
         <span class="xf-tag">B</span>
       </div>
-      <div class="mix-why" id="mixWhy">— 点击任意曲目开机 · 交叉窗开启后曲线启动 —</div>
+      <div class="mix-why" id="mixWhy">点击任意曲目开机 · 交叉窗开启后曲线启动</div>
     </div>
     <div class="deck b" id="deckB">
       <div class="lab"><b>DECK B</b> · 预载</div>
       <img class="art" id="nArt" src="/covers-au/lofi-sacrifice.jpg" alt="">
       <div class="t" id="nTitle">—</div>
-      <div class="m" id="nSub">— BPM · —</div>
+      <div class="m" id="nSub">BPM · --</div>
+      <canvas class="wave" id="waveB"></canvas>
+      <div class="wave-pos" id="posB">00:00</div>
       <div class="vu"><i id="vuB"></i></div>
     </div>
   </div>
@@ -258,7 +262,7 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;margin-top:34px;lin
   <img class="hero-art" id="heroArt" src="/covers-au/lofi-love_me_harder.jpg" alt="cover">
   <div class="hero-info">
     <div class="eyebrow" id="heroPhase">WARMUP</div>
-    <div style="font-size:21px;font-weight:700;margin:4px 0;overflow-wrap:anywhere" id="heroTitle">— 点击任意曲目开始 · XO —</div>
+    <div style="font-size:21px;font-weight:700;margin:4px 0;overflow-wrap:anywhere" id="heroTitle">点击任意曲目开始 · XO</div>
     <div class="muted small" style="overflow-wrap:anywhere" id="heroSub">编排: RMS 能量缓降 + 调性/BPM 邻接 · After Hours 曲序 · acrossfade 10s 三角窗</div>
     <div class="stat-row">
       <div class="stat"><div class="k">当前 BPM</div><div class="v" id="stBpm">—</div></div>
@@ -308,7 +312,7 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;margin-top:34px;lin
 const SETS = {
   night: {
     label: "NIGHT SHIFT",
-    sub: "53:50 · Agent 技巧版 · 磁带刹停/回声抽离/高通滑入",
+    sub: "53:50 · Agent 技巧版 · 磁带刹停 · 回声抽离 · 高通滑入",
     src: "/sleep-dj-20edc62ee462.mp3",
     xf: 10,
     phaseLabel: {'intro':'OPEN','warmup':'AFTER HOURS','build':'DEEP NIGHT','peak':'3AM','outro':'DAWN FM'},
@@ -339,7 +343,7 @@ function applySet(key){
   $('setSub').textContent = S.sub;
   const ds = $('dockSub'); if (ds) ds.textContent = key === 'flight' ? '25 首 The Weeknd · 89:15 · 长途飞行三幕 · The Abyss 收尾' : '25 首 The Weeknd · 53:50 · Agent DJ 六技巧 · After Hours → Dawn FM';
   $('chipLen') && ($('chipLen').textContent = key === 'flight' ? '89:15 长途飞行' : '55:14 连续夜班');
-  $('chipTec') && ($('chipTec').textContent = key === 'flight' ? '12s 长交叉 · 三幕' : '磁带刹停/回声抽离/高通滑入');
+  $('chipTec') && ($('chipTec').textContent = key === 'flight' ? '12s 长交叉 · 三幕' : '磁带刹停 · 回声抽离 · 高通滑入');
   document.querySelectorAll('.stab').forEach(b => b.classList.toggle('on', b.dataset.k === key));
   buildStatic();
 }
@@ -358,12 +362,12 @@ function buildStatic(){
   SET.forEach((s, i) => {
     const tr = document.createElement('tr');
     tr.className = 'play-row';
-    const tec = s.tec || '—';
+    const tec = s.tec || '--';
     tr.innerHTML = `<td class="num">${i+1}</td><td class="num">${fmt(starts[i])}</td>` +
       `<td><span class="ph ${s.phase}">${PH[s.phase]||s.phase}</span></td>` +
       `<td class="num">${s.bpm.toFixed(1)}</td>` +
       `<td class="num">${s.key}</td>` +
-      `<td class="tec${tec==='cut'?' cut':''}">${({tape_stop:'磁带刹停',tape_start:'磁带慢起',loop_roll:'循环蓄势',echo_out:'回声抽离',filter_build:'高通滑入',blend:'长板交叉',spinback:'SPINBACK',xfade:'BLEND',bass_swap:'BASS SWAP',filter_sweep:'FILTER SWAP',cut:'CUT'})[tec]||tec||'—'}</td>` +
+      `<td class="tec${tec==='cut'?' cut':''}">${({tape_stop:'磁带刹停',tape_start:'磁带慢起',loop_roll:'循环蓄势',echo_out:'回声抽离',filter_build:'高通滑入',blend:'长板交叉',spinback:'SPINBACK',xfade:'BLEND',bass_swap:'BASS SWAP',filter_sweep:'FILTER SWAP',cut:'CUT'})[tec]||tec||'--'}</td>` +
       `<td><div class="tr-title"><img class="tr-cover" loading="lazy" src="${s.cover}" alt=""><span>${esc(s.title.replace(/^\d+\s*/,''))} <span class="muted" style="font-weight:400">· ${esc(s.artist||'')}</span><br><span class="mood-tag">${s.mood}</span></span></div></td>`;
     tr.onclick = () => seek(i);
     tbl.querySelector('tbody').appendChild(tr);
@@ -426,6 +430,51 @@ function syncUI(i){
 }
 au.addEventListener('loadedmetadata', () => { /* duration ready */ });
 
+
+// ===== Deck 波形引擎 (DDJ/Mixxx 式) =====
+let WF = null;                          // {night:{xf,tracks[]}, flight:{...}}
+fetch('/deck-waveforms-20edc62ee462.json').then(r => r.json()).then(d => { WF = d; drawWaves(); });
+const wA = $('waveA'), wB = $('waveB');
+function fitCanvas(c){ const dpr = devicePixelRatio||1, r = c.getBoundingClientRect();
+  c.width = r.width*dpr; c.height = r.height*dpr; return c.getContext('2d'); }
+function drawDeckWave(c, env, frac, color, cue){
+  const ctx = c.getContext('2d'); if (!c.width) fitCanvas(c);
+  const W = c.width, H = c.height, n = env.length, mid = H/2;
+  ctx.clearRect(0,0,W,H);
+  const px = frac*W;
+  // 交叉窗提示区 (cue: 距结尾 XF 秒的归一化位置)
+  if (cue != null && cue < 1){ ctx.fillStyle = 'rgba(64,98,151,.18)'; ctx.fillRect(cue*W, 0, W-cue*W, H); }
+  // 波形: 中心线镜像 (rekordbox 风), 已播亮/未播暗
+  const bw = W/n;
+  for (let i = 0; i < n; i++){
+    const v = env[i]*(H*.46), x = i*bw;
+    ctx.fillStyle = x < px ? color : 'rgba(126,156,196,.22)';
+    ctx.fillRect(x, mid-v, Math.max(bw*.7,.6), v*2);
+  }
+  // 播放头
+  ctx.fillStyle = '#fff'; ctx.fillRect(px-.75, 0, 1.5, H);
+  ctx.fillStyle = 'rgba(255,255,255,.25)'; ctx.fillRect(px-2.5, 0, 5, H);
+}
+function drawWaves(){
+  if (!WF || curIdx < 0) return;
+  const wset = WF[curSet]; if (!wset) return;
+  const a = wset.tracks[curIdx], b = wset.tracks[Math.min(curIdx+1, wset.tracks.length-1)];
+  const t = (au.currentTime - starts[curIdx]) / SET[curIdx].dur;
+  const xfn = 1 - XF / SET[curIdx].dur;   // 交叉窗起点归一化
+  drawDeckWave(wA, a.env, Math.min(Math.max(t,0),1), '#7ee2b8', xfn);
+  if (curIdx+1 < wset.tracks.length){
+    // Deck B: 交叉窗内显示其实际进度 (负→预载 0), 波形色金
+    const tb = (au.currentTime - starts[curIdx+1]) / SET[curIdx+1].dur;
+    drawDeckWave(wB, b.env, Math.min(Math.max(tb,0),1), '#e8c976', null);
+    $('posB').textContent = fmt(Math.max(0, au.currentTime - starts[curIdx+1]));
+  }
+  $('posA').textContent = fmt(Math.max(0, au.currentTime - starts[curIdx]));
+}
+wA.onclick = e => { const r = wA.getBoundingClientRect(), f = (e.clientX-r.left)/r.width;
+  if (curIdx >= 0) seekTo(starts[curIdx] + f*SET[curIdx].dur); };
+wB.onclick = e => { const r = wB.getBoundingClientRect(), f = (e.clientX-r.left)/r.width;
+  if (curIdx >= 0 && curIdx+1 < SET.length) seekTo(starts[curIdx+1] + f*SET[curIdx+1].dur); };
+addEventListener('resize', () => { [wA,wB].forEach(fitCanvas); drawWaves(); });
 
 // ===== DJ 调音台监控 v2 =====
 const PH_CN = ({'intro':'OPEN','warmup':'AFTER HOURS','build':'DEEP NIGHT','peak':'3AM','outro':'DAWN FM'});
@@ -621,11 +670,13 @@ function vuLoop(ts){
     drawXF(xfP);
   }
   drawOverview();
+  drawWaves();
   requestAnimationFrame(vuLoop);
 }
+au.addEventListener('play', () => document.querySelectorAll('.dot').forEach(d => d.style.animation = 'pulse 1.4s infinite'));
+au.addEventListener('pause', () => document.querySelectorAll('.dot').forEach(d => d.style.animation = ''));
 au.addEventListener('timeupdate', updMonitor);
 au.addEventListener('seeked', updMonitor);
-buildEnv(); requestAnimationFrame(vuLoop);
 buildEnv(); requestAnimationFrame(vuLoop);
 
 </script>
