@@ -122,7 +122,7 @@ td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
 
 /* VU LED */
 .vu{display:flex;gap:2px;height:26px;align-items:flex-end;flex-shrink:0;padding:3px 4px;background:#0a0a0a;border-radius:4px}
-.vu i{flex:1;border-radius:1px;background:#242424;transition:background .1s linear;min-width:2px}
+.vu i{flex:1;border-radius:1px;background:#2c2c2c;box-shadow:inset 0 0 0 .5px #3a3a3a;transition:background .1s linear;min-width:2px}
 .vu i.on1{background:#1ed760}.vu i.on2{background:#a8e06c}.vu i.on3{background:#ffd24f}.vu i.on4{background:#f3727f}
 
 /* FX pads */
@@ -207,7 +207,7 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;margin-top:34px;lin
       <button class="stab" data-k="prior" onclick="switchSet('prior')"><b>PRIOR ⚗</b><span>79:02 · 模型版</span></button>
     </div>
     <div style="margin-top:10px">
-      <span class="badge">25 首 The Weeknd</span><span class="badge" id="chipLen">55:14 连续夜班</span><span class="badge">10s 长交叉</span><span class="badge">After Hours → Dawn FM</span><span class="badge">lofi v2 母带</span>
+      <span class="badge">25 首 The Weeknd</span><span class="badge" id="chipLen">55:14 连续夜班</span><span class="badge" id="chipXf">10s 长交叉</span><span class="badge">After Hours → Dawn FM</span><span class="badge">lofi v2 母带</span>
     </div>
   </div>
 </header>
@@ -227,7 +227,7 @@ footer{color:var(--muted);font-size:11.5px;text-align:center;margin-top:34px;lin
 
   <div class="blend" id="blendBar">
     <div class="bl-l">
-      <span class="mix-badge" id="mixBadge">BLEND · TRI ×FADE 10s</span>
+      <span class="mix-badge" id="mixBadge">BLEND · TRI ×FADE</span>
       <span class="mix-count" id="mixCount">--:-- <small>距切歌</small></span>
     </div>
     <div class="xfader"><span class="xf-tag">A</span>
@@ -347,7 +347,8 @@ function applySet(key){
   au.src = S.src; au.load();
   $('setSub').textContent = S.sub;
   const ds = $('dockSub'); if (ds) ds.textContent = key === 'flight' ? '25 首 The Weeknd · 89:15 · 长途飞行三幕 · The Abyss 收尾' : '25 首 The Weeknd · 53:50 · Agent DJ 六技巧 · After Hours → Dawn FM';
-  $('chipLen') && ($('chipLen').textContent = key === 'flight' ? '89:15 长途飞行' : '55:14 连续夜班');
+  $('chipLen') && ($('chipLen').textContent = key === 'flight' ? '89:15 长途飞行' : key === 'prior' ? '79:02 先验编排' : '55:14 连续夜班');
+  $('chipXf') && ($('chipXf').textContent = XF + 's 长交叉');
   $('chipTec') && ($('chipTec').textContent = key === 'flight' ? '12s 长交叉 · 三幕' : '磁带刹停 · 回声抽离 · 高通滑入');
   document.querySelectorAll('.stab').forEach(b => b.classList.toggle('on', b.dataset.k === key));
   buildStatic();
@@ -665,11 +666,11 @@ function vuLoop(ts){
       // 进场交叉: 前一曲(旧A)在出场, 当前曲(curIdx)在进场
       xfP = Math.min(1, Math.max(0, (au.currentTime - starts[curIdx]) / XF));
       gA = Math.exp(-2.2*xfP); gB = 1-Math.exp(-2.2*xfP);
-      $('mixBadge').textContent = 'BLENDING · XF 10s';
+      $('mixBadge').textContent = 'BLENDING · XF ' + XF + 's';
       $('mixBadge').classList.add('live');
       $('mixCount').innerHTML = fmt(Math.max(0, starts[curIdx]+XF-au.currentTime)) + ' <small>距切歌</small>';
     } else {
-      $('mixBadge').textContent = 'BLEND · TRI ×FADE 10s';
+      $('mixBadge').textContent = 'BLEND · TRI ×FADE ' + XF + 's';
       $('mixBadge').classList.remove('live');
       const nxt = SET[curIdx+1];
       $('mixCount').innerHTML = nxt ? fmt(Math.max(0, cueOf(curIdx)-au.currentTime)) + ' <small>距切歌</small>' : '☀ <small>Dawn FM</small>';
