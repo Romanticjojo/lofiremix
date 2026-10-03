@@ -90,3 +90,17 @@ CLI: `dj-agent auto-label <session> [--max-pairs N] [--dry-run]` / `dj-agent pla
 实测 (lofi 25 曲库取 8 首): lookahead 总奖励 3.18 vs 贪心 3.00 (**+6.0%**), 曲序更顺 (能量弧贴合)。
 
 数据先验: djmix-dataset 5,040 真实 mix → 9,671 条带时间戳转场 (transitions.jsonl), 曲目级 BPM/key 分析后喂 reference_choice。
+
+## v3 验收报告 (2026-10-03, tag v3)
+
+| 项目 | 结果 |
+|---|---|
+| 单元测试 | **170 passed / 1 skipped** |
+| 可复现性 | 同参数 3 次重跑 total_score 完全一致 (6.2463) |
+| A/B 提升 | 贪心 2.997 → +先验校准 3.287 (+9.7%) → beam 3.397 (+13.4%) |
+| 规模扩展 | 10曲每曲均值 0.625 / 25曲 0.634 (长程无衰减) |
+| 音乐学达成 | 同圈+邻圈 75%(25曲) / 能量跳变 p50 0.006 (远优于先验 p75 0.108) |
+| 已知偏差 | 半音内 46-56% vs 先验 97.6%: mismatch 线性罚 vs 半音阶跃形态差异; 听感影响=pitch 拉伸≤8%, 可接受 |
+
+先验数据: 2,027 曲特征 / 427 对真实 DJ 转场 (transition_prior v3, 分位数带宽版)。
+验收脚本: `qa-scripts/acceptance_v3.py`。
