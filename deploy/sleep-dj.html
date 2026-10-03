@@ -352,6 +352,16 @@ function applySet(key){
   $('chipTec') && ($('chipTec').textContent = key === 'flight' ? '12s 长交叉 · 三幕' : '磁带刹停 · 回声抽离 · 高通滑入');
   document.querySelectorAll('.stab').forEach(b => b.classList.toggle('on', b.dataset.k === key));
   buildStatic();
+  syncUI(0);   // 切 set 后封面/曲名/统计立即跟随新版, 不滞留旧 set
+  deckStandby(0);
+}
+function deckStandby(i){
+  // 待机态 Deck 跟随新 set 第 1 曲 (无 flash/无播放态文案)
+  const seg = SET[i], nxt = SET[i+1];
+  $('dArt').src = seg.cover; $('dTitle').textContent = seg.title;
+  $('dSub').textContent = `${seg.bpm.toFixed(1)} BPM · ${seg.key} · 待机`;
+  if (nxt){ $('nArt').src = nxt.cover; $('nTitle').textContent = nxt.title; $('nSub').textContent = `${nxt.bpm.toFixed(1)} BPM · ${nxt.key}`; }
+  monIdx = i;
 }
 function buildStatic(){
   emap.innerHTML = ''; tbl.querySelector('tbody').innerHTML = '';
@@ -423,7 +433,7 @@ au.addEventListener('timeupdate', () => {
 function syncUI(i){
   const s = SET[i];
   $('heroArt').src = s.cover; $('dockCover').src = s.cover;
-  $('heroPhase').textContent = ({'intro':'OPEN','warmup':'AFTER HOURS','build':'DEEP NIGHT','peak':'3AM','outro':'DAWN FM'})[s.phase];
+  $('heroPhase').textContent = (SETS[curSet].phaseLabel && SETS[curSet].phaseLabel[s.phase]) || ({'intro':'OPEN','warmup':'AFTER HOURS','build':'DEEP NIGHT','peak':'3AM','outro':'DAWN FM','act1':'ACT 1','act2':'ACT 2','act3':'ACT 3','demo':'PRIOR SET'})[s.phase] || 'SET';
   $('heroTitle').textContent = s.title.replace(/^\d+\s*/,'') + ' — ' + (s.artist||'');
   $('stBpm').textContent = s.bpm.toFixed(1);
   $('stKey').textContent = s.key;
