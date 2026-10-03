@@ -1,4 +1,41 @@
-# LofiRemix — lofi remix 生产流水线
+# LofiRemix — Lofi 流水线 × DJ Agent
+
+两条产线，同一仓库：**lofiremix 流水线**（歌曲 → lofi 版本）与 **DJ Agent**（自主编排 + 混音决策，主力产线）。
+
+## DJ Agent（主要项目）
+
+Agent 自主 DJ 混音系统：曲库分析 → 数据先验 → 编排决策 → 技巧渲染 → 线上播放页，全链闭环。详见 [`dj-project/README.md`](dj-project/README.md)。
+
+### 核心能力
+
+- **真实 DJ 数据先验**：djmix-dataset 5,040 场真实 mix → 9,671 条带时间戳转场；三轮采样 2,027 首、427 对可评转场拟合出 `transition_prior v3`（分位数带宽：BPM p75=0.070 半音、97.6% 转场半音内；严格同圈 27.1%；能量跳变 p50 0.060）
+- **先验校准评分**：planner 权重不拍脑袋，全部由先验数据定标（BPM 匹配 8 / 和声软惩罚 0.3 / 能量弧 1.6）
+- **lookahead beam 规划**：宽度 3 深度 4 整场曲序规划，替代贪心——A/B 实测 **+13.4%**（贪心 2.997 → beam 3.397），同参数重跑完全可复现
+- **自反馈闭环**：9 分量客观评分器（节拍对齐/和声/BPM 折叠/能量弧/低频碰撞/人声冲突…）自动出 A/B 标签，与人标永不混流，纯 DSP 无 LLM 裁判、可复现审计
+- **Agent 技巧引擎**：磁带刹停 / 回声抽离 / 高通滑入 / 循环蓄势 / 长板交叉，ffmpeg 真实渲染非 UI 演示
+- **v3 验收**：170 passed / 1 skipped；25 曲 79min 长程规划每曲均值不衰减（0.634）
+
+### 目录速览
+
+```
+dj-project/
+├── miaomi-dj/source/src/dj_agent/   # 核心 Python 包 (planner/lookahead/transition_score/auto_feedback/...)
+├── lofi-engine/                     # 串烧引擎 (agent_dj.py 技巧决策 + build_v1..v4)
+├── auret-legacy/                    # 第一代渲染脚本
+└── qa-scripts/                      # Playwright 回归 + v3 验收脚本
+```
+
+### 版本谱系（DJ Agent 主线）
+
+| 版本 | 里程碑 |
+|---|---|
+| v1–v4 | 串烧引擎：能量缓降 → Agent 技巧决策 → 精华节奏型 → 89min 长途三幕 |
+| 2026-09 | 自反馈闭环（Task 1–6，170 tests）；lookahead beam 上线（+6.0%） |
+| **v3 (tag)** | **先验校准 + 验收发布**：三轮采样 2,027 曲 → 先验 v3 → 权重校准（+13.4%）→ 10 曲 demo + 79min 长版上线 |
+
+---
+
+## lofiremix 流水线（配套产线）
 
 热门歌曲 → lofi 版本的自动化改编。两条路线：
 
